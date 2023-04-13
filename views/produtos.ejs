@@ -1,0 +1,356 @@
+<%- include('partials/header') %>
+<style>
+body{
+    font-family: Helvetica;
+    -webkit-font-smoothing: antialiased;
+}
+h2{
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    padding: 30px 0;
+}
+
+/* Table Styles */
+
+.table-wrapper{
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+}
+
+.fl-table {
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.fl-table td, .fl-table th {
+    text-align: center;
+    padding: 8px;
+}
+
+.fl-table td {
+    border-right: 1px solid #f8f8f8;
+    font-size: 15px;
+}
+
+.fl-table thead th {
+    color: #ffffff;
+    background: #4FC3A1;
+}
+
+
+.fl-table thead th:nth-child(odd) {
+    color: #ffffff;
+    background: #324960;
+}
+
+.fl-table tr:nth-child(even) {
+    background: #F8F8F8;
+}
+
+/* Responsive */
+
+@media (max-width: 767px) {
+    .fl-table {
+        display: block;
+        width: 100%;
+    }
+    .table-wrapper:before{
+        content: "Scroll horizontally >";
+        display: block;
+        text-align: right;
+        font-size: 11px;
+        color: white;
+        padding: 0 0 10px;
+    }
+    .fl-table thead, .fl-table tbody, .fl-table thead th {
+        display: block;
+    }
+    .fl-table thead th:last-child{
+        border-bottom: none;
+    }
+    .fl-table thead {
+        float: left;
+    }
+    .fl-table tbody {
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+    }
+    .fl-table td, .fl-table th {
+        padding: 20px .625em .625em .625em;
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 120px;
+        font-size: 13px;
+        text-overflow: ellipsis;
+    }
+    .fl-table thead th {
+        text-align: left;
+        border-bottom: 1px solid #f7f7f9;
+    }
+    .fl-table tbody tr {
+        display: table-cell;
+    }
+    .fl-table tbody tr:nth-child(odd) {
+        background: none;
+    }
+    .fl-table tr:nth-child(even) {
+        background: transparent;
+    }
+    .fl-table tr td:nth-child(odd) {
+        background: #F8F8F8;
+        border-right: 1px solid #E6E4E4;
+    }
+    .fl-table tr td:nth-child(even) {
+        border-right: 1px solid #E6E4E4;
+    }
+    .fl-table tbody td {
+        display: block;
+        text-align: center;
+    }
+}
+
+.button-8 {
+  background-color: #e1ecf4;
+  border-radius: 3px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.button-8:hover,
+.button-8:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+
+.button-8:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.button-8:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+</style>
+
+<div style="padding: 1.5%;">
+  <a class="button-8 mb-2" href="/cadastroproduto">Novo Produto</a>
+  <div class="row mb-2">
+    <div class="col-lg-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="myInput2" onkeyup="procuraCodigo()">
+        <label for="descricaoInput">Procurar por código:</label>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="myInput" onkeyup="procuraNome()">
+        <label for="descricaoInput">Procurar por nome:</label>
+      </div>
+    </div>
+  </div>
+  <div class="table-wrapper">
+      <table class="fl-table" id="myTable">
+          <thead>
+          <tr style="height: 25px;">
+              <th>Código</th>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Unidade</th>
+              <th>Grupo</th>
+              <th>Ações</th>
+          </tr>
+          </thead>
+          <tbody>
+          <%produtos.forEach(function(produto){ %>
+          <tr>
+              <td><%=produto.codigo%></td>
+              <td><%=produto.nome%></td>
+              <td><%=produto.tipo%></td>
+              <td><%=produto.un%></td>
+              <td><%=produto.grupo%></td>
+              <td><a class="button-8 mb-2" data-bs-toggle="modal" data-bs-target="#teste<%=produto._id%>">Editar</a></td>
+          </tr>
+          <div class="modal fade" id="teste<%=produto._id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content" style="bottom: 25px; ">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><%=produto.nome%></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                      <form action="/alteraProduto" method="post">
+                        <div class="col-lg mt-2">
+                          <div class="col-lg">
+                            <div class="form-floating">
+                                <textarea name="descri" rows="2" style="border: 1px solid #ced4da; border-radius: 0.25rem; width: 100%;"><%=produto.descri%></textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-4">
+                            <div class="form-floating">
+                              <input class="form-control" id="codigoInput" name='codigo' value="<%=produto.codigo%>">
+                              <label for="codigoInput">Código:</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-floating">
+                              <select class="form-select" id="tipoSelect" aria-label="Floating label" name="tipo">
+                                <option class='valor'><%=produto.tipo%></option>
+                                <option class='valor'>PL</option>
+                                <option class='valor'>MP</option>
+                                <option class='valor'>SV</option>
+                                <option class='valor'>MC</option>
+                              </select>
+                              <label for="tipoSelect">Tipo:</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-floating">
+                              <input class="form-control" id="ncmInput" type="number" name='ncm' value="<%=produto.ncm%>">
+                              <label for="ncmInput">NCM:</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-md-4">
+                            <div class="form-floating">
+                              <input class="form-control" id="gtinInput" type="number" name='gtin' value="<%=produto.gtin%>">
+                              <label for="ncmInput">GTIN:</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-floating">
+                              <select class="form-select" id="grupoSelect" aria-label="Floating label" name="grupo">
+                                <option class='valor'><%=produto.grupo%></option>
+                                <option class='valor' value="0001">Resinas plásticas / Pigmentos</option>
+                                <option class='valor' value="0002">Borrachas</option>
+                                <option class='valor' value="0003">Chapas / Barras / Perfis</option>
+                              </select>
+                              <label for="grupoSelect">Grupo:</label>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-floating">
+                              <input class="form-control" id="unInput" type="text" name='un' value="<%=produto.un%>">
+                              <label for="unInput">UN:</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mt-2">
+                          <div class="col-lg">
+                            <div class="form-floating">
+                              <input class="form-control" id="ipiInput" type="text" name='ipi' value="<%=produto.utilizacao%>">
+                              <label for="ipiInput">IPI:</label>
+                            </div>
+                          </div>
+                          <div class="col-lg">
+                            <div class="form-floating">
+                              <input class="form-control" id="icmsInput" type="text" name='icms' value="<%=produto.familia%>">
+                              <label for="icmsInput">ICMS:</label>
+                            </div>
+                          </div>
+                          <div class="col-lg">
+                            <div class="form-floating">
+                              <input class="form-control" id="cofinsInput" type="text" name='cofins' value="<%=produto.origem%>">
+                              <label for="cofinsInput">COFINS:</label>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  <div class="modal-footer">
+                <button type="button" class="button-8" style="margin-right: 1%;" data-bs-dismiss="modal">Fechar</button>
+                <button type="submit" class="button-8" style='text-align: center;' name="idProdutoPost" value="<%=produto._id%>">Salvar</button>
+                </div>
+              </form>
+              </div>
+            </div>
+          </div>
+          <%})%>
+          <tbody>
+      </table>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+<script>
+  function procuraNome() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function procuraCodigo() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput2");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+  </script>
+
+<%- include('partials/footer') %>
