@@ -170,25 +170,6 @@ app.post('/login', function(req, res){
 
 });
 
-app.post('/api/login', async function(req, res){
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password
-  });
-  req.login(user, function(err){
-    if(err){
-      res.send('Erro')
-    } else{
-      passport.authenticate('local')(req, res, function(){
-        if(user){
-          res.redirect('http://127.0.0.1:5173/home')
-        } else{
-          res.send('Negado')
-        }
-      })
-    }
-  })
-});
 
 ///////////////////////////////////////////////////////////////
 app.get('/register', function(req, res){
@@ -256,10 +237,6 @@ app.get('/inicio', function(req, res){
   }
 });
 ///////////////////////////////////////////////////////////////
-app.get('/submit', function(req, res){
-  res.render('submit');
-});
-///////////////////////////////////////////////////////////////
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
@@ -283,19 +260,22 @@ app.get('/ativos', function(req, res){
 /////////////////////////////////////////////////////////
 app.get("/dados/:dadosId", function(req, res){
   if(req.isAuthenticated()){
-    User.findOne({_id: req.params.dadosId}, function(err, usuario){
-      res.render('dados', {
-        userId: usuario._id,
-        username: usuario.username,
-        nome: usuario.dadosPessoais[0].nome,
-        data: usuario.dadosPessoais[1].nascimento,
-        cpf: usuario.dadosPessoais[2].cpf,
-        rg: usuario.dadosPessoais[3].rg,
-        setor: usuario.setor[1].setorDescri,
-        cargo: usuario.cargo[1].cargoDescri,
-        unidade: usuario.unidade[1].unidadeDescri
-      })
-    });
+    Chamado.find(function(err, chamado) {
+      User.findOne({_id: req.params.dadosId}, function(err, usuario){
+        res.render('dados', {
+          userId: usuario._id,
+          username: usuario.username,
+          nome: usuario.dadosPessoais[0].nome,
+          data: usuario.dadosPessoais[1].nascimento,
+          cpf: usuario.dadosPessoais[2].cpf,
+          rg: usuario.dadosPessoais[3].rg,
+          setor: usuario.setor[1].setorDescri,
+          cargo: usuario.cargo[1].cargoDescri,
+          unidade: usuario.unidade[1].unidadeDescri,
+          chamado: chamado
+        })
+      });
+  });
   }else{
     res.redirect('/login');
   }
@@ -335,17 +315,6 @@ app.post('/deleteUser', function(req, res){
   })
 })
 //////////////////////////////////////////////////////////////////////
-/* app.get("/testepag", function(req, res){
-  axios
-  .get('http://192.168.0.88/video/chamada/7706605042?pwd=Q3dxU002L2Z3REFyZW5ndldVY0FnZz09')
-  .then(res => {
-    console.log(res.data);
-  })
-  .catch(error => {
-    console.error(error);
-  });
-}); */
-///////////////////////////////////////////////
 app.get('/chamadomarketing', function(req, res){
   if(req.isAuthenticated()){
     Chamado.find(function(err, chamado) {

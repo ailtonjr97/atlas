@@ -113,6 +113,7 @@
         <div class="col-lg-12">
           <button type="button" class="button-8" style="margin-right: 1%;" data-bs-dismiss="modal" onclick="mostraBasico()">Básico</button>
           <button type="button" class="button-8" style="margin-right: 1%;" data-bs-dismiss="modal" onclick="mostraFinanceiro()">Financeiro</button>
+          <button type="button" class="button-8" style="margin-right: 1%;" data-bs-dismiss="modal" onclick="mostraMrp()">MRP</button>
         </div>
       </div>
       <!-- Aqui entra os botões do básico -->
@@ -207,21 +208,54 @@
           <div class="form-floating">
             <input class="form-control" id="ipiInput" type="text" name='ipi'>
             <label for="ipiInput">IPI:</label>
-          </div>
+        </div>
         </div>
         <div class="col-lg">
           <div class="form-floating">
             <input class="form-control" id="icmsInput" type="text" name='icms'>
             <label for="icmsInput">ICMS:</label>
-          </div>
+        </div>
         </div>
         <div class="col-lg">
           <div class="form-floating">
             <input class="form-control" id="cofinsInput" type="text" name='cofins'>
             <label for="cofinsInput">COFINS:</label>
-          </div>
         </div>
-  </div>
+        </div>
+    </div>
+    <!-- Aqui entra os botões do MRP -->
+    <div class="row mt-2 MRP">
+      <div class="col-lg">
+        <div class="form-floating">
+          <input class="form-control" id="qtdembalagemInput" type="number" name='qtdembalagem'>
+          <label for="qtdembalagemInput">Quantidade Embalagem:</label>
+        </div>
+      </div>
+      <div class="col-lg">
+        <div class="form-floating">
+          <input class="form-control" id="loteminInput" type="text" name='lotemin'>
+          <label for="loteminInput">Lote mínimo:</label>
+        </div>
+      </div>
+      <div class="col-lg">
+        <div class="form-floating">
+          <input class="form-control" id="estoqueminInput" type="number" name='estoquemin'>
+          <label for="estoqueminInput">Estoque mínimo:</label>
+        </div>
+      </div>
+      <div class="col-lg">
+        <div class="form-floating">
+          <input class="form-control" id="estoquemaxInput" type="number" name='estoquemax'>
+          <label for="estoquemaxInput">Estoque máximo:</label>
+        </div>
+      </div>
+      <div class="col-lg">
+        <div class="form-floating">
+          <input class="form-control" id="prazovalidadeInput" type="date" name='prazovalidade'>
+          <label for="prazovalidadeInput">Prazo validade:</label>
+        </div>
+      </div>
+    </div>
   <div class="file-input mt-3" style="margin-left: 1.5%;">
     <input type="file" id="file" class="file" name="postImage">
     <label for="file">
@@ -235,6 +269,7 @@
 <script>
   for(i = 0; i < document.getElementsByClassName('financeiro').length; i++){
     document.getElementsByClassName('financeiro')[i].style.display = 'none'
+    document.getElementsByClassName('MRP')[i].style.display = 'none'
   }
 
 function mostraBasico(){
@@ -244,12 +279,31 @@ function mostraBasico(){
   for(i = 0; i < document.getElementsByClassName('financeiro').length; i++){
     document.getElementsByClassName('financeiro')[i].style.display = 'none'
   }
+  for(i = 0; i < document.getElementsByClassName('MRP').length; i++){
+    document.getElementsByClassName('MRP')[i].style.display = 'none'
+  }
 }
 
 function mostraFinanceiro(){
   for(i = 0; i < document.getElementsByClassName('financeiro').length; i++){
     document.getElementsByClassName('financeiro')[i].style.display = 'flex'
   }
+  for(i = 0; i < document.getElementsByClassName('basico').length; i++){
+    document.getElementsByClassName('basico')[i].style.display = 'none'
+  }
+  for(i = 0; i < document.getElementsByClassName('MRP').length; i++){
+    document.getElementsByClassName('MRP')[i].style.display = 'none'
+  }
+}
+
+function mostraMrp(){
+  for(i = 0; i < document.getElementsByClassName('MRP').length; i++){
+    document.getElementsByClassName('MRP')[i].style.display = 'flex'
+  }
+  for(i = 0; i < document.getElementsByClassName('financeiro').length; i++){
+    document.getElementsByClassName('financeiro')[i].style.display = 'none'
+  }
+
   for(i = 0; i < document.getElementsByClassName('basico').length; i++){
     document.getElementsByClassName('basico')[i].style.display = 'none'
   }
@@ -269,8 +323,6 @@ function mostraFinanceiro(){
   });
 
   function validate(form) {
-
-
     if (document.getElementsByName('nome')[0].value == '') {
       alert('O campo "nome" não pode ser vazio');
       return false;
