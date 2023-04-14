@@ -606,10 +606,8 @@ app.get("/testaEmail", (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////
 app.get("/cadastroproduto", (req, res) => {
   if (req.isAuthenticated()) {
-    console.log(req.user);
       Chamado.find(function(err, chamado) {
         User.find(function (error, user) {
-          console.log(user);
           res.render("cadastroproduto", {
             chamado: chamado,
             user: user,
@@ -699,15 +697,12 @@ app.post("/cadastroproduto", function(req, res){
 app.get("/produtos", (req, res) => {
   if (req.isAuthenticated()) {
     Chamado.find(function(err, chamado) {
-      User.find(function (error, user) {
         Produto.find(function (error, produto) {
           res.render("produtos", {
             chamado: chamado,
-            user: user,
             produtos: produto
           });
         });
-    });
   });
   }else{
     req.session.returnTo = req.originalUrl; 
