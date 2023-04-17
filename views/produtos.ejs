@@ -201,7 +201,10 @@ h2{
               <td><%=produto.tipo%></td>
               <td><%=produto.un%></td>
               <td><%=produto.grupo%></td>
-              <td><a class="button-8 mb-2" data-bs-toggle="modal" data-bs-target="#teste<%=produto._id%>">Editar</a></td>
+              <td>
+                <a class="button-8 mb-2" href="/produtos/entrada/<%=produto._id%>">Entrada</a>
+                <a class="button-8 mb-2" data-bs-toggle="modal" data-bs-target="#teste<%=produto._id%>">Editar</a>
+              </td>
           </tr>
           <div class="modal fade" id="teste<%=produto._id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">

@@ -180,7 +180,7 @@
       <div class="col-lg">
         <div class="form-floating">
           <input class="form-control" id="unInput" type="text" name='un' required>
-          <label for="ncmInput">UN:</label>
+          <label for="ncmInput">Unidade:</label>
         </div>
       </div>
       <div class="col-lg">
@@ -206,19 +206,19 @@
     <div class="row mt-2 financeiro">
         <div class="col-lg">
           <div class="form-floating">
-            <input class="form-control" id="ipiInput" type="text" name='ipi'>
+            <input class="form-control" id="ipiInput" type="number" name='ipi'>
             <label for="ipiInput">IPI:</label>
         </div>
         </div>
         <div class="col-lg">
           <div class="form-floating">
-            <input class="form-control" id="icmsInput" type="text" name='icms'>
+            <input class="form-control" id="icmsInput" type="number" name='icms'>
             <label for="icmsInput">ICMS:</label>
         </div>
         </div>
         <div class="col-lg">
           <div class="form-floating">
-            <input class="form-control" id="cofinsInput" type="text" name='cofins'>
+            <input class="form-control" id="cofinsInput" type="number" name='cofins'>
             <label for="cofinsInput">COFINS:</label>
         </div>
         </div>
@@ -233,7 +233,7 @@
       </div>
       <div class="col-lg">
         <div class="form-floating">
-          <input class="form-control" id="loteminInput" type="text" name='lotemin'>
+          <input class="form-control" id="loteminInput" type="number" name='lotemin'>
           <label for="loteminInput">Lote mínimo:</label>
         </div>
       </div>
@@ -328,6 +328,9 @@ function mostraMrp(){
       return false;
     } else if(document.getElementsByName('codigo')[0].value == ''){
       alert('O campo "código" não pode ser vazio');
+      return false;
+    }else if(document.getElementsById('estoqueminInput').value > document.getElementById("estoquemaxInput").value){
+      alert('O campo "Estoque mínimo" não pode ser maior que o campo "Estoque máximo"');
       return false;
     }
      else {

@@ -39,16 +39,13 @@
       <div class="col-lg">
         <div class="form-floating">
           <select class="form-select" id="classificacaoSelect" aria-label="Floating label" name="nome">
-            <%  produto.forEach(function(produtos){ %>
-            <option class='valor'><%=produtos.nome%></option>
-            <% }) %>
+            <option class='valor'><%=nome%></option>
           </select>
           <label for="classificacaoSelect">Produto:</label>
         </div>
       </div>
     </div>
     <div class="row mt-2">
-      <div class="row mt-2" id='segundaRow'>
         <div class="col-lg">
           <div class="form-floating">
             <input class="form-control" id="loteInput" type='text' name="lote">
@@ -73,7 +70,6 @@
             <label for="nfInput">Número da NF:</label>
           </div>
         </div>
-      </div>
     </div>
   </div>
   <button type="submit" id='botaoSalva' class="btn btn-success mt-2" style='margin-left: 46%;'>Salvar</button>

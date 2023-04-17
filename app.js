@@ -74,6 +74,11 @@ const produtoSchema = new mongoose.Schema({
   ipi: Number,
   icms: Number,
   cofins: Number,
+  qtdembalagem: Number,
+  lotemin: Number,
+  estoquemin: Number,
+  estoquemax: Number,
+  prazovalidade: Date
 });
 
 const maquinaSchema = new mongoose.Schema({
@@ -98,18 +103,6 @@ const chamadoSchema = new mongoose.Schema({
   arquivado: String,
 });
 
-const pontoSchema = new mongoose.Schema({
-  campo1: String,
-  campo2: String,
-  campo3: String,
-  campo4: String,
-  campo5: String,
-  campo6: String,
-  campo7: String,
-  campo8: String,
-  campo9: String,
-});
-
 const anexoSchema = new mongoose.Schema({
   img: {
     data: String,
@@ -124,7 +117,6 @@ const User = mongoose.model('User', userSchema);
 const Produto = mongoose.model('Produto', produtoSchema);
 const Maquina = mongoose.model('Maquina', maquinaSchema);
 const Chamado = mongoose.model('Chamado', chamadoSchema);
-const Ponto = mongoose.model('Ponto', pontoSchema);
 const Anexo = mongoose.model("Anexo", anexoSchema);
 
 passport.use(User.createStrategy());
@@ -618,6 +610,11 @@ app.post("/cadastroproduto", function(req, res){
                   ipi: req.body.ipi,
                   icms: req.body.icms,
                   cofins: req.body.cofins,
+                  qtdembalagem: req.body.qtdembalagem,
+                  lotemin: req.body.lotemin,
+                  estoquemin: req.body.estoquemin,
+                  estoquemax: req.body.estoquemax,
+                  prazovalidade: req.body.prazovalidade
                 })
                 produto.save(function(err){
                   if(err){
@@ -650,6 +647,11 @@ app.post("/cadastroproduto", function(req, res){
           ipi: req.body.ipi,
           icms: req.body.icms,
           cofins: req.body.cofins,
+          qtdembalagem: req.body.qtdembalagem,
+          lotemin: req.body.lotemin,
+          estoquemin: req.body.estoquemin,
+          estoquemax: req.body.estoquemax,
+          prazovalidade: req.body.prazovalidade
         })
         produto.save(function(err){
           if(err){
@@ -707,24 +709,23 @@ function( error, result){
 });
 })
 ////////////////////////////////////////////////////////////////////////////////////////
-app.get("/api/produtos", (req, res) => {
-    Produto.find(function(err, produtos) {
-      res.send(produtos)
+app.get("/produtos/entrada/:id", (req, res) => {
+  if(req.isAuthenticated()){
+    Chamado.find(function(err, chamado) {
+      Produto.findOne({_id: req.params.id}, function(err, produto){
+        res.render('entradaproduto', {
+          chamado: chamado,
+          nome: produto.nome
+        })
+      });
   });
+  }else{
+    req.session.returnTo = req.originalUrl;
+    res.redirect('/login');
+  }
 });
+///////////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/testeapi", (req, res) => {
-  axios.get('http://192.168.2.58:5000/api/produtos')
-  .then(response => {
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.log(error);
-  });
-});
-
-
-//////////////////////////////////////////////////////////////////////////////////////
 app.listen(5000, function() {
   console.log("Server started on port 5000");
 });
