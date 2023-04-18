@@ -709,6 +709,7 @@ function( error, result){
 });
 })
 ////////////////////////////////////////////////////////////////////////////////////////
+//Entrada de produtos
 app.get("/produtos/entrada/:id", (req, res) => {
   if(req.isAuthenticated()){
     Chamado.find(function(err, chamado) {
@@ -724,7 +725,47 @@ app.get("/produtos/entrada/:id", (req, res) => {
     res.redirect('/login');
   }
 });
+
+app.post("/produtos/entrada/:id", (req, res) => {
+  if(req.isAuthenticated()){
+    Produto.findByIdAndUpdate(
+      {"username": req.body.username },
+      {$set: {
+        'dadosPessoais': [{nome: req.body.nome}, {nascimento: req.body.data}, {cpf: req.body.cpf}, {rg: req.body.rg}],
+        'setor': [{setorId: req.body.setores}, {setorDescri: req.body.setorDescri}],
+        'cargo': [{cargoId: req.body.cargos}, {cargoDescri: req.body.cargoDescri}],
+        'unidade': [{unidadeId: req.body.unidade}, {unidadeDescri: req.body.unidadeDescri}]
+      }
+      },
+      {
+          returnNewDocument: true
+      }
+  , function( error, result){
+    if(error){
+      res.send('erro1')
+    } else{
+      res.redirect('/inicio')
+    }
+  });
+  }else{
+    req.session.returnTo = req.originalUrl;
+    res.redirect('/login');
+  }
+});
 ///////////////////////////////////////////////////////////////////////////////////////////
+app.get("/test", async(req, res, next) => {
+
+  axios.get("", {
+    auth: {
+      username: '',
+      password: ''
+    }
+  })
+      .then(response => {
+        res.render('test', {product: response.data });
+      });
+});
+//////////////////////////////////////////////////////////////
 
 app.listen(5000, function() {
   console.log("Server started on port 5000");
