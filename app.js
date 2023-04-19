@@ -753,17 +753,31 @@ app.post("/produtos/entrada/:id", (req, res) => {
   }
 });
 ///////////////////////////////////////////////////////////////////////////////////////////
-app.get("/test", async(req, res, next) => {
-
-  axios.get("", {
-    auth: {
-      username: '',
-      password: ''
-    }
-  })
+app.get("/protheus/usuarios", async (req, res, next) => {
+  try {
+      await axios.get(process.env.APITOTVS,{
+        auth: {
+          username: process.env.USER,
+          password: process.env.SENHAPITOTVS
+        }
+      })
       .then(response => {
-        res.render('test', {product: response.data });
-      });
+        if(req.isAuthenticated()){
+          Chamado.find(function(err, chamado) {
+            res.render('usuariosprotheus', {
+              users: response.data.resources,
+              chamado: chamado
+             });
+        });
+        }else{
+          req.session.returnTo = req.originalUrl;
+          res.redirect('/login');
+        }
+    });
+  } catch(err) {
+      console.error(err);
+      return res.end('err');
+  }
 });
 //////////////////////////////////////////////////////////////
 
