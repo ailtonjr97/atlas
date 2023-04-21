@@ -187,9 +187,8 @@ h2{
           <tr style="height: 25px;">
               <th>Código</th>
               <th>Nome</th>
-              <th>Tipo</th>
-              <th>Unidade</th>
-              <th>Grupo</th>
+              <th>Login</th>
+              <th>E-mail</th>
               <th>Ações</th>
           </tr>
           </thead>
@@ -198,11 +197,10 @@ h2{
           <tr>
               <td><%=user.id%></td>
               <td><%=user.name.formatted%></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td><%=user.userName%></td>
+              <td><%=user.emails[0].value%></td>
               <td>
-                <a class="button-8 mb-2" href="">Entrada</a>
+                <a class="button-8 mb-2" href="/protheus/usuarios/exclui/<%=user.id%>">Inativar</a>
                 <a class="button-8 mb-2" data-bs-toggle="modal" data-bs-target="">Editar</a>
               </td>
           </tr>

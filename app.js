@@ -776,7 +776,23 @@ app.get("/protheus/usuarios", async (req, res, next) => {
     });
   } catch(err) {
       console.error(err);
-      return res.end('err');
+      return res.send('Erro ao retornar lista dos usuários Protheus, Tente novamente mais tarde');
+  }
+});
+
+app.get("/protheus/usuarios/exclui/:userId", async (req, res, next) => {
+  try {
+      await axios.delete("http://45.6.155.3:1756/rest/users/" + req.params.userId,{
+        auth: {
+          username: process.env.USER,
+          password: process.env.SENHAPITOTVS
+        }
+      })
+      .then(response => {
+        res.redirect('/inicio');
+    });
+  } catch(err) {
+      return res.send('Erro ao excluir usuário');
   }
 });
 //////////////////////////////////////////////////////////////
