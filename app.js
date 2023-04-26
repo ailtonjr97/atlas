@@ -858,7 +858,7 @@ app.get("/protheus/usuarios", async (req, res, next) => {
 app.get("/protheus/usuarios/exclui/:userId", async (req, res, next) => {
   try {
     await axios
-      .delete(process.env.APITOTVS + "Users" + req.params.userId, {
+      .delete(process.env.APITOTVS + "Users/" + req.params.userId, {
         auth: {
           username: process.env.USER,
           password: process.env.SENHAPITOTVS,
@@ -871,7 +871,36 @@ app.get("/protheus/usuarios/exclui/:userId", async (req, res, next) => {
     return res.send("Erro ao excluir usuário");
   }
 });
-//////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
+app.get("/protheus/empresasprotheus", async (req, res, next) => {
+  try {
+    await axios
+      .get(process.env.APITOTVS + "/api/framework/environment/v1/companies", {
+        auth: {
+          username: process.env.USER,
+          password: process.env.SENHAPITOTVS,
+        },
+      })
+      .then((response) => {
+        console.log(response.data)
+        if (req.isAuthenticated()) {
+          Chamado.find(function (err, chamado) {
+            res.render("empresasprotheus", {
+              empresas: response.data.items,
+              chamado: chamado,
+            });
+          });
+        } else {
+          req.session.returnTo = req.originalUrl;
+          res.redirect("/login");
+        }
+      });
+  } catch (err) {
+    return res.send(
+      "Erro ao retornar lista de empresas. Tente novamente mais tarde."
+    );
+  }
+});
 
 app.listen(5000, function () {
   console.log("Server started on port 5000");

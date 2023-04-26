@@ -166,6 +166,7 @@ h2{
 </style>
 
 <div style="padding: 1.5%;">
+  <a class="button-8 mb-2" href="/cadastroproduto">Novo Produto</a>
   <div class="row mb-2">
     <div class="col-lg-6">
       <div class="form-floating">
@@ -186,21 +187,13 @@ h2{
           <tr style="height: 25px;">
               <th>Código</th>
               <th>Nome</th>
-              <th>Login</th>
-              <th>E-mail</th>
-              <th>Ações</th>
           </tr>
           </thead>
           <tbody>
-          <%users.forEach(function(user){ %>
+          <%empresas.forEach(function(empresa){ %>
           <tr>
-              <td><%=user.id%></td>
-              <td><%=user.name.formatted%></td>
-              <td><%=user.userName%></td>
-              <td><%=user.emails[0].value%></td>
-              <td>
-                <a class="button-8 mb-2" href="/protheus/usuarios/exclui/<%=user.id%>">Inativar</a>
-              </td>
+              <td><%=empresa.Code%></td>
+              <td><%=user.CorporateName%></td>
           </tr>
           <%})%>
           <tbody>
