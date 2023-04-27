@@ -129,11 +129,11 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/", function (req, res) {
   res.render("home");
 });
-///////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/login", function (req, res) {
   res.render("login");
 });
@@ -159,7 +159,7 @@ app.post("/login", function (req, res) {
   });
 });
 
-///////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/register", function (req, res) {
   if (req.isAuthenticated()) {
     if (req.user.username == "admin@fibracem.com") {
@@ -228,7 +228,7 @@ app.post("/register", function (req, res) {
     }
   );
 });
-///////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/inicio", function (req, res) {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
@@ -242,12 +242,12 @@ app.get("/inicio", function (req, res) {
     res.redirect("/login");
   }
 });
-///////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
 });
-/////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/ativos", function (req, res) {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
@@ -263,7 +263,7 @@ app.get("/ativos", function (req, res) {
     res.redirect("/login");
   }
 });
-/////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/dados/:dadosId", function (req, res) {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
@@ -324,7 +324,7 @@ app.post("/dados", function (req, res) {
     }
   );
 });
-//////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 //Delete usuários da página dados.
 app.post("/deleteUser", function (req, res) {
   User.deleteOne({ username: req.body.username }, function (err) {
@@ -336,7 +336,7 @@ app.post("/deleteUser", function (req, res) {
     }
   });
 });
-//////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/chamadomarketing", function (req, res) {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
@@ -454,7 +454,7 @@ app.post("/chamadomarketing", function (req, res) {
     });
   }
 });
-/////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/verchamadomkt", (req, res) => {
   if (req.isAuthenticated()) {
     Anexo.find({}, function (err, anexo) {
@@ -525,7 +525,7 @@ app.post("/aprovverchamadomkt", function (req, res) {
   );
 });
 
-//////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/meuschamadosmkt", (req, res) => {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
@@ -542,7 +542,7 @@ app.get("/meuschamadosmkt", (req, res) => {
   }
 });
 
-/////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/aprovChamados", (req, res) => {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
@@ -615,7 +615,7 @@ app.get("/testaEmail", (req, res) => {
   main().catch(console.error);
 });
 
-//////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/cadastroproduto", (req, res) => {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
@@ -719,7 +719,7 @@ app.post("/cadastroproduto", function (req, res) {
   }
 });
 
-//////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/produtos", (req, res) => {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
@@ -735,7 +735,7 @@ app.get("/produtos", (req, res) => {
     res.redirect("/login");
   }
 });
-//////////////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------//
 app.post("/alteraProduto", function (req, res) {
   Produto.updateMany(
     { _id: req.body.idProdutoPost },
@@ -765,7 +765,7 @@ app.post("/alteraProduto", function (req, res) {
     }
   );
 });
-////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 //Entrada de produtos
 app.get("/produtos/entrada/:id", (req, res) => {
   if (req.isAuthenticated()) {
@@ -825,7 +825,7 @@ app.post("/produtos/entrada/:id", (req, res) => {
     res.redirect("/login");
   }
 });
-///////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------
 app.get("/protheus/usuarios", async (req, res, next) => {
   try {
     await axios
@@ -872,17 +872,16 @@ app.get("/protheus/usuarios/exclui/:userId", async (req, res, next) => {
   }
 });
 //-------------------------------------------------------------------------------
-app.get("/protheus/empresasprotheus", async (req, res, next) => {
+app.get("/protheus/empresas", async (req, res, next) => {
   try {
     await axios
-      .get(process.env.APITOTVS + "/api/framework/environment/v1/companies", {
+      .get(process.env.APITOTVS + "api/framework/environment/v1/companies", {
         auth: {
           username: process.env.USER,
           password: process.env.SENHAPITOTVS,
         },
       })
       .then((response) => {
-        console.log(response.data)
         if (req.isAuthenticated()) {
           Chamado.find(function (err, chamado) {
             res.render("empresasprotheus", {
@@ -901,7 +900,55 @@ app.get("/protheus/empresasprotheus", async (req, res, next) => {
     );
   }
 });
-
+//-----------------------------------------------------------------------------------
+app.get("/protheus/filiais", async (req, res, next) => {
+  try {
+    await axios
+      .get(process.env.APITOTVS + "api/framework/environment/v1/branches", {
+        auth: {
+          username: process.env.USER,
+          password: process.env.SENHAPITOTVS,
+        },
+      })
+      .then((response) => {
+        if (req.isAuthenticated()) {
+          Chamado.find(function (err, chamado) {
+            res.render("filiaisprotheus", {
+              filiais: response.data.items,
+              chamado: chamado,
+            });
+          });
+        } else {
+          req.session.returnTo = req.originalUrl;
+          res.redirect("/login");
+        }
+      });
+  } catch (err) {
+    return res.send(
+      "Erro ao retornar lista de filiais. Tente novamente mais tarde."
+    );
+  }
+});
+//------------------------------------------------------------------------------
+app.get("/protheus/intranet/filiais", async (req, res, next) => {
+  try {
+    await axios
+      .get(process.env.APITOTVS + "api/framework/environment/v1/branches", {
+        auth: {
+          username: process.env.USER,
+          password: process.env.SENHAPITOTVS,
+        },
+      })
+      .then((response) => {
+        res.send(response.data.items);
+      });
+  } catch (err) {
+    return res.send(
+      "Erro ao retornar lista de filiais. Tente novamente mais tarde."
+    );
+  }
+});
+//------------------------------------------------------------------------------
 app.listen(5000, function () {
   console.log("Server started on port 5000");
 });
