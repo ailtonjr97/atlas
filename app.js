@@ -948,6 +948,25 @@ app.get("/protheus/intranet/filiais", async (req, res, next) => {
     );
   }
 });
+
+app.get("/protheus/intranet/empresas", async (req, res, next) => {
+  try {
+    await axios
+      .get(process.env.APITOTVS + "api/framework/environment/v1/branches", {
+        auth: {
+          username: process.env.USER,
+          password: process.env.SENHAPITOTVS,
+        },
+      })
+      .then((response) => {
+        res.send(response.data.items);
+      });
+  } catch (err) {
+    return res.send(
+      "Erro ao retornar lista de filiais. Tente novamente mais tarde."
+    );
+  }
+});
 //------------------------------------------------------------------------------
 app.listen(5000, function () {
   console.log("Server started on port 5000");
