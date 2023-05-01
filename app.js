@@ -11,6 +11,7 @@ import path from "path";
 import upload from "express-fileupload";
 import nodemailer from "nodemailer";
 import * as dotenv from "dotenv";
+import { error } from "console";
 dotenv.config();
 const app = express();
 
@@ -968,6 +969,52 @@ app.get("/protheus/intranet/empresas", async (req, res, next) => {
   }
 });
 //------------------------------------------------------------------------------
-app.listen(5000, function () {
-  console.log("Server started on port 5000");
+//Retorna lista de empresas e filiais cadastradas no Protheus Produção
+app.get("/protheus/empresasfiliais", async (req, res, next) => {
+  await axios
+    .all([
+      axios.get(
+        process.env.APITOTVS + "api/framework/environment/v1/companies",
+        {
+          auth: {
+            username: process.env.USER,
+            password: process.env.SENHAPITOTVS,
+          },
+        }
+      ),
+      axios.get(
+        process.env.APITOTVS + "api/framework/environment/v1/branches",
+        {
+          auth: {
+            username: process.env.USER,
+            password: process.env.SENHAPITOTVS,
+          },
+        }
+      ),
+    ])
+    .then(
+      axios.spread((data1, data2) => {
+        if (req.isAuthenticated()) {
+          Chamado.find(function (err, chamado) {
+            res.render("filiaisempresasprotheus", {
+              empresas: data1.data.items,
+              filiais: data2.data.items,
+              chamado: chamado,
+            });
+          });
+        } else {
+          req.session.returnTo = req.originalUrl;
+          res.redirect("/login");
+        }
+      })
+    )
+    .catch((error) => {
+      return res.send(
+        "Erro ao retornar lista de filiais e empresas. Tente novamente mais tarde."
+      );
+    });
+});
+//------------------------------------------------------------------------------
+app.listen(process.env.PORT, function () {
+  console.log("Servidor Node.js operacional na porta " + process.env.PORT);
 });
