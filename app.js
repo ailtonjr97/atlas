@@ -1,18 +1,20 @@
 //jshint esversion:6
-import express from "express";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import session from "express-session";
-import passport from "passport";
-import passportLocalMongoose from "passport-local-mongoose";
-import axios from "axios";
-import findOrCreate from "mongoose-findorcreate";
-import path from "path";
-import upload from "express-fileupload";
-import nodemailer from "nodemailer";
-import * as dotenv from "dotenv";
-import { error } from "console";
+const express = require("express");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const session = require("express-session");
+const passport = require("passport");
+const passportLocalMongoose = require("passport-local-mongoose");
+const axios = require("axios");
+const findOrCreate = require("mongoose-findorcreate");
+const path = require("path");
+const upload = require("express-fileupload");
+const nodemailer = require("nodemailer");
+const bodyParser = require("body-parser");
 dotenv.config();
+const inicio = require("./routes/inicio.js");
+const users = require("./routes/users.js");
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -42,19 +44,6 @@ app.use(upload());
 
 mongoose.connect(process.env.MONGOSTRING);
 
-const userSchema = new mongoose.Schema({
-  nome: String,
-  name: String,
-  email: String,
-  password: String,
-  googleId: String,
-  setor: Array,
-  cargo: Array,
-  dadosPessoais: Array,
-  unidade: Array,
-  realNome: String,
-});
-
 const produtoSchema = new mongoose.Schema({
   nome: String,
   descri: String,
@@ -81,26 +70,13 @@ const produtoSchema = new mongoose.Schema({
   prazovalidade: Date,
 });
 
-const maquinaSchema = new mongoose.Schema({
-  nome: String,
-});
-
-const chamadoSchema = new mongoose.Schema({
-  idChamado: Number,
-  setor: String,
-  descri: String,
-  empresa: String,
-  urgencia: String,
-  area: String,
-  atividade: String,
-  impacto: String,
-  designado: String,
-  requisitante: String,
-  designado: String,
-  listaAprovadores: Array,
-  anexoNome: String,
-  resposta: String,
-  arquivado: String,
+const produtosProtheus = new mongoose.Schema({
+  code: String,
+  barcode: String,
+  description: String,
+  address: Boolean,
+  batch: String,
+  batchs: Array,
 });
 
 const anexoSchema = new mongoose.Schema({
@@ -110,233 +86,13 @@ const anexoSchema = new mongoose.Schema({
   },
 });
 
-userSchema.plugin(passportLocalMongoose);
-userSchema.plugin(findOrCreate);
-
-const User = mongoose.model("User", userSchema);
 const Produto = mongoose.model("Produto", produtoSchema);
-const Maquina = mongoose.model("Maquina", maquinaSchema);
-const Chamado = mongoose.model("Chamado", chamadoSchema);
 const Anexo = mongoose.model("Anexo", anexoSchema);
+const ProdutoProtheus = mongoose.model("ProdutoProtheus", produtosProtheus);
 
-passport.use(User.createStrategy());
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
+app.use("/", inicio);
+app.use("/users", users);
 
-passport.deserializeUser(function (id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
-
-//-------------------------------------------------------------------------------
-app.get("/", function (req, res) {
-  res.render("home");
-});
-//-------------------------------------------------------------------------------
-app.get("/login", function (req, res) {
-  res.render("login");
-});
-
-app.post("/login", function (req, res) {
-  const user = new User({
-    username: req.body.username,
-    password: req.body.password,
-  });
-  req.login(user, function (err) {
-    if (err) {
-      res.send("Erro");
-    } else {
-      passport.authenticate("local")(req, res, function () {
-        if (user) {
-          res.redirect(req.session.returnTo || "/inicio");
-          delete req.session.returnTo;
-        } else {
-          res.send("Negative");
-        }
-      });
-    }
-  });
-});
-
-//-------------------------------------------------------------------------------
-app.get("/register", function (req, res) {
-  if (req.isAuthenticated()) {
-    if (req.user.username == "admin@fibracem.com") {
-      Chamado.find(function (err, chamado) {
-        res.render("register", {
-          user: req.user.realNome,
-          chamado: chamado,
-          logado: req.user.realNome,
-        });
-      });
-    } else {
-      res.send("Acesso negado");
-    }
-  } else {
-    req.session.returnTo = req.originalUrl;
-    res.redirect("/login");
-  }
-});
-
-app.post("/register", function (req, res) {
-  User.register(
-    { username: req.body.username },
-    req.body.password,
-    function (err, user) {
-      if (err) {
-        res.send(err);
-      } else {
-        User.updateMany(
-          { username: req.body.username },
-          {
-            $set: {
-              realNome: req.body.realNome,
-              dadosPessoais: [
-                { nascimento: req.body.data },
-                { cpf: req.body.cpf },
-                { rg: req.body.rg },
-              ],
-              setor: [
-                { setorId: req.body.setores },
-                { setorDescri: req.body.setorDescri },
-              ],
-              cargo: [
-                { cargoId: req.body.cargos },
-                { cargoDescri: req.body.cargoDescri },
-              ],
-              unidade: [
-                { unidadeId: req.body.unidade },
-                { unidadeDescri: req.body.unidadeDescri },
-              ],
-            },
-          },
-          {
-            returnNewDocument: true,
-          },
-          function (error, result) {
-            if (error) {
-              res.send("erro1");
-            } else {
-              passport.authenticate("local")(req, res, function () {
-                res.redirect("/inicio");
-              });
-            }
-          }
-        );
-      }
-    }
-  );
-});
-//-------------------------------------------------------------------------------
-app.get("/inicio", function (req, res) {
-  if (req.isAuthenticated()) {
-    Chamado.find(function (err, chamado) {
-      User.find(function (error, user) {
-        res.render("inicio", {
-          chamado: chamado,
-        });
-      });
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
-//-------------------------------------------------------------------------------
-app.get("/logout", function (req, res) {
-  req.logout();
-  res.redirect("/");
-});
-//-------------------------------------------------------------------------------
-app.get("/ativos", function (req, res) {
-  if (req.isAuthenticated()) {
-    Chamado.find(function (err, chamado) {
-      User.find(function (error, user) {
-        res.render("ativos", {
-          chamado: chamado,
-          usuario: user,
-          logado: req.user.realNome,
-        });
-      });
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
-//-------------------------------------------------------------------------------
-app.get("/dados/:dadosId", function (req, res) {
-  if (req.isAuthenticated()) {
-    Chamado.find(function (err, chamado) {
-      User.findOne({ _id: req.params.dadosId }, function (err, usuario) {
-        res.render("dados", {
-          userId: usuario._id,
-          username: usuario.username,
-          nome: usuario.dadosPessoais[0].nome,
-          data: usuario.dadosPessoais[1].nascimento,
-          cpf: usuario.dadosPessoais[2].cpf,
-          rg: usuario.dadosPessoais[3].rg,
-          setor: usuario.setor[1].setorDescri,
-          cargo: usuario.cargo[1].cargoDescri,
-          unidade: usuario.unidade[1].unidadeDescri,
-          chamado: chamado,
-        });
-      });
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
-
-app.post("/dados", function (req, res) {
-  User.updateMany(
-    { username: req.body.username },
-    {
-      $set: {
-        dadosPessoais: [
-          { nome: req.body.nome },
-          { nascimento: req.body.data },
-          { cpf: req.body.cpf },
-          { rg: req.body.rg },
-        ],
-        setor: [
-          { setorId: req.body.setores },
-          { setorDescri: req.body.setorDescri },
-        ],
-        cargo: [
-          { cargoId: req.body.cargos },
-          { cargoDescri: req.body.cargoDescri },
-        ],
-        unidade: [
-          { unidadeId: req.body.unidade },
-          { unidadeDescri: req.body.unidadeDescri },
-        ],
-      },
-    },
-    {
-      returnNewDocument: true,
-    },
-    function (error, result) {
-      if (error) {
-        res.send("erro1");
-      } else {
-        res.redirect("/inicio");
-      }
-    }
-  );
-});
-//-------------------------------------------------------------------------------
-//Delete usuários da página dados.
-app.post("/deleteUser", function (req, res) {
-  User.deleteOne({ username: req.body.username }, function (err) {
-    if (err) {
-      console.log(err);
-      res.send("Erro ao excluir");
-    } else {
-      res.redirect("/ativos");
-    }
-  });
-});
 //-------------------------------------------------------------------------------
 app.get("/chamadomarketing", function (req, res) {
   if (req.isAuthenticated()) {
@@ -917,6 +673,38 @@ app.get("/protheus/empresasfiliais", async (req, res, next) => {
         "Erro ao retornar lista de filiais e empresas. Tente novamente mais tarde."
       );
     });
+});
+
+//------------------------------------------------------------------------------
+app.get("/protheus/produtos/atualiza", async (req, res, next) => {
+  try {
+    await axios
+      .get(process.env.APITOTVS + "acdmob/products?pagesize=25000", {
+        auth: {
+          username: process.env.USER,
+          password: process.env.SENHAPITOTVS,
+        },
+      })
+      .then((response) => {
+        let produtos = response.data.products;
+        ProdutoProtheus.insertMany(produtos)
+          .then((produtos) => {
+            res.send(produtos);
+          })
+          .catch((error) => {
+            res.send(error);
+          });
+      });
+  } catch (err) {
+    console.log(err);
+    res.send("Deu ruim");
+  }
+});
+
+app.get("/protheus/produtos/consulta", async (req, res, next) => {
+  ProdutoProtheus.find(function (err, produtos) {
+    res.send(produtos);
+  });
 });
 //------------------------------------------------------------------------------
 app.listen(process.env.PORT, function () {
