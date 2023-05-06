@@ -2,7 +2,21 @@ const express = require("express");
 const router = express.Router();
 const dotenv = require("dotenv");
 const axios = require("axios");
+const bodyParser = require("body-parser");
 dotenv.config();
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+
+  next();
+});
 
 router.use("/register", function (req, res) {
   if (req.isAuthenticated()) {
@@ -23,7 +37,7 @@ router.use("/register", function (req, res) {
   }
 });
 
-router.use("/register", function (req, res) {
+router.post("/register", function (req, res) {
   User.register(
     { username: req.body.username },
     req.body.password,
@@ -73,7 +87,7 @@ router.use("/register", function (req, res) {
   );
 });
 
-router.use("/ativos", function (req, res) {
+router.get("/ativos", function (req, res) {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
       User.find(function (error, user) {
@@ -89,7 +103,7 @@ router.use("/ativos", function (req, res) {
   }
 });
 
-router.use("/dados/:dadosId", function (req, res) {
+router.get("/dados/:dadosId", function (req, res) {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
       User.findOne({ _id: req.params.dadosId }, function (err, usuario) {
@@ -112,7 +126,7 @@ router.use("/dados/:dadosId", function (req, res) {
   }
 });
 
-router.use("/dados", function (req, res) {
+router.post("/dados", function (req, res) {
   User.updateMany(
     { username: req.body.username },
     {
@@ -151,7 +165,7 @@ router.use("/dados", function (req, res) {
 });
 
 //Delete usuários da página dados.
-router.use("/deleteUser", function (req, res) {
+router.post("/deleteUser", function (req, res) {
   User.deleteOne({ username: req.body.username }, function (err) {
     if (err) {
       console.log(err);

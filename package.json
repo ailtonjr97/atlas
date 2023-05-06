@@ -1,12 +1,12 @@
 {
-  "name": "secrets",
+  "name": "atlas",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "Protheus(TOTVS) integration system",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Ailton",
+  "author": "Ailton de Souza Junior",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
