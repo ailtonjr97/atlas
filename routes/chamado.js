@@ -3,6 +3,8 @@ const router = express.Router();
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const Chamado = require("../models/chamado.js");
+const Anexo = require("../models/anexos.js");
+const User = require("../models/user.js");
 dotenv.config();
 const app = express();
 
