@@ -4,10 +4,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const axios = require("axios");
-const path = require("path");
 const upload = require("express-fileupload");
-const nodemailer = require("nodemailer");
 const bodyParser = require("body-parser");
 dotenv.config();
 const inicio = require("./routes/inicio.js");
@@ -55,109 +52,6 @@ app.use("/anexos", anexos);
 app.use("/informacoes", informacoes);
 app.use("/usersprotheus", usersprotheus);
 
-//-------------------------------------------------------------------------------
-app.get("/protheus/usuarios", async (req, res, next) => {
-  try {
-    await axios
-      .get(process.env.APITOTVS + "Users", {
-        auth: {
-          username: process.env.USER,
-          password: process.env.SENHAPITOTVS,
-        },
-      })
-      .then((response) => {
-        if (req.isAuthenticated()) {
-          Chamado.find(function (err, chamado) {
-            res.render("usuariosprotheus", {
-              users: response.data.resources,
-              chamado: chamado,
-            });
-          });
-        } else {
-          req.session.returnTo = req.originalUrl;
-          res.redirect("/login");
-        }
-      });
-  } catch (err) {
-    return res.send(
-      "Erro ao retornar lista dos usuários Protheus. Tente novamente mais tarde."
-    );
-  }
-});
-
-app.get("/protheus/usuarios/exclui/:userId", async (req, res, next) => {
-  try {
-    await axios
-      .delete(process.env.APITOTVS + "Users/" + req.params.userId, {
-        auth: {
-          username: process.env.USER,
-          password: process.env.SENHAPITOTVS,
-        },
-      })
-      .then((response) => {
-        res.redirect("/inicio");
-      });
-  } catch (err) {
-    return res.send("Erro ao excluir usuário");
-  }
-});
-//-------------------------------------------------------------------------------
-app.get("/protheus/produtos/atualiza", async (req, res, next) => {
-  try {
-    await axios
-      .get(process.env.APITOTVS + "acdmob/products?pagesize=25000", {
-        auth: {
-          username: process.env.USER,
-          password: process.env.SENHAPITOTVS,
-        },
-      })
-      .then((response) => {
-        let produtos = response.data.products;
-        ProdutoProtheus.insertMany(produtos)
-          .then((produtos) => {
-            res.send(produtos);
-          })
-          .catch((error) => {
-            res.send(error);
-          });
-      });
-  } catch (err) {
-    console.log(err);
-    res.send("Deu ruim");
-  }
-});
-
-app.get("/protheus/produtos/atualiza", async (req, res, next) => {
-  try {
-    await axios
-      .get(process.env.APITOTVS + "acdmob/products?pagesize=25000", {
-        auth: {
-          username: process.env.USER,
-          password: process.env.SENHAPITOTVS,
-        },
-      })
-      .then((response) => {
-        let produtos = response.data.products;
-        ProdutoProtheus.insertMany(produtos)
-          .then((produtos) => {
-            res.send(produtos);
-          })
-          .catch((error) => {
-            res.send(error);
-          });
-      });
-  } catch (err) {
-    console.log(err);
-    res.send("Deu ruim");
-  }
-});
-
-app.get("/protheus/produtos/consulta", async (req, res, next) => {
-  ProdutoProtheus.find(function (err, produtos) {
-    res.send(produtos);
-  });
-});
-//------------------------------------------------------------------------------
 app.listen(process.env.PORT, function () {
   console.log("Servidor Node.js operacional na porta " + process.env.PORT);
 });

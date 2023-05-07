@@ -5,6 +5,8 @@ const axios = require("axios");
 const bodyParser = require("body-parser");
 dotenv.config();
 const app = express();
+const Chamado = require("../models/chamado.js");
+const User = require("../models/user.js");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

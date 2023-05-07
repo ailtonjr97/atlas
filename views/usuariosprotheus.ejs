@@ -16,7 +16,12 @@
   }
 </style>
 
-<div style="padding: 1.5%">
+<div style="padding: 1%">
+  <div class="row mb-1">
+    <div class="col-lg">
+      <a class="button-8" onclick="validate()">Atualizar tabela usuários</a>
+    </div>
+  </div>
   <div class="row mb-2">
     <div class="col-lg-6">
       <div class="form-floating">
@@ -125,6 +130,13 @@
         }
       }
     }
+  }
+
+  function validate() {
+    alert(
+      "A tabela usuários leva, em média, 1 minuto para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro."
+    );
+    return window.location.replace("atualizar");
   }
 </script>
 

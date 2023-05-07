@@ -268,11 +268,17 @@ th:hover #botaoAcoes {
   .nav-link
   > .fa-chart-bar {
   position: relative;
-  padding-left: 40%;
+  padding-left: 35%;
   font-size: 20px;
 }
 
 .navbar-icon-top .navbar-collapse .navbar-nav .nav-item .nav-link > .fa-paste {
+  position: relative;
+  padding-left: 35%;
+  font-size: 18px;
+}
+
+.navbar-icon-top .navbar-collapse .navbar-nav .nav-item .nav-link > .fa-info {
   position: relative;
   padding-left: 35%;
   font-size: 18px;
@@ -469,7 +475,7 @@ th:hover #botaoAcoes {
   .nav-link
   > .fa-chart-pie {
   position: relative;
-  padding-left: 30%;
+  padding-left: 25%;
   font-size: 18px;
 }
 

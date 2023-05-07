@@ -53,7 +53,7 @@ router.get("/exclui/:userId", async (req, res, next) => {
   }
 });
 
-router.get("/atualiza", async (req, res, next) => {
+router.get("/atualizar", async (req, res, next) => {
   try {
     await axios
       .get(process.env.APITOTVS + "users", {
@@ -63,19 +63,67 @@ router.get("/atualiza", async (req, res, next) => {
         },
       })
       .then((response) => {
-        UserProtheus.deleteMany({});
-        let users = response.data.resources;
-        UserProtheus.insertMany(users)
-          .then((users) => {
-            res.send(users);
-          })
-          .catch((error) => {
-            res.send(error);
-          });
+        UserProtheus.deleteMany().then(() => {
+          let users = response.data.resources;
+          UserProtheus.insertMany(users)
+            .then((users) => {
+              res.send(
+                "Tabela atualizada com sucesso. Clique " +
+                  "<a href='/usersprotheus/usuarios'>aqui</a>" +
+                  " para retornar à lista de usuarios Protheus"
+              );
+            })
+            .catch((error) => {
+              res.send(error);
+            });
+        });
       });
   } catch (err) {
     console.log(err);
-    res.send("Erro ao atualizar lista de usuários Protheus.");
+    res.send("Erro ao atualizar tabela de usuários Protheus.");
+  }
+});
+
+router.get("/acessos", function (req, res) {
+  if (req.isAuthenticated()) {
+    Chamado.find(function (err, chamado) {
+      res.render("acessos", {
+        acessos: "",
+        chamado: chamado,
+      });
+    });
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  }
+});
+
+router.post("/acessosprocura", async (req, res, next) => {
+  try {
+    await axios
+      .get(process.env.APITOTVS + "api/framework/v1/menus?pagesize=150", {
+        auth: {
+          username: req.body.login,
+          password: req.body.senha,
+        },
+      })
+      .then((response) => {
+        if (req.isAuthenticated()) {
+          let acessos = response.data.items;
+          Chamado.find(function (err, chamado) {
+            res.render("acessos", {
+              acessos: acessos,
+              chamado: chamado,
+            });
+          });
+        } else {
+          req.session.returnTo = req.originalUrl;
+          res.redirect("/login");
+        }
+      });
+  } catch (err) {
+    console.log(err);
+    res.send("Erro ao retornar lista de acessos do Protheus.");
   }
 });
 

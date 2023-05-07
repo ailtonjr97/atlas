@@ -1,0 +1,124 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+
+<div style="width: 95%; margin-left: 2%">
+  <form action="/usersprotheus/acessosprocura" method="post">
+    <div class="row mt-3" style="width: 100%">
+      <div class="col-sm-2">
+        <div class="form-floating">
+          <input class="form-control" type="text" name="login" />
+          <label for="loteInput">Login:</label>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-floating">
+          <input class="form-control" type="password" name="senha" />
+          <label for="loteInput">Senha:</label>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <button type="submit" id="botaoSalva" class="btn btn-success mt-2">
+          Consultar
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div>
+    <div class="row mt-3">
+      <div class="col-lg-6">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="myInput2"
+            onkeyup="procuraCodigo()"
+          />
+          <label for="descricaoInput">Procurar por código:</label>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="myInput"
+            onkeyup="procuraNome()"
+          />
+          <label for="descricaoInput">Procurar por nome:</label>
+        </div>
+      </div>
+    </div>
+    <%if(acessos != ''){%>
+    <div class="table-wrapper mt-2">
+      <table class="fl-table" id="myTable">
+        <thead>
+          <tr style="height: 25px">
+            <th>Código</th>
+            <th>Nome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%acessos.forEach(function(acesso){ %>
+          <tr>
+            <td><%=acesso.id%></td>
+            <td><%=acesso.name%></td>
+          </tr>
+          <%})%>
+        </tbody>
+
+        <tbody></tbody>
+      </table>
+    </div>
+    <%}%>
+  </div>
+</div>
+
+<script>
+  function procuraNome() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function procuraCodigo() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput2");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+
+<%- include('partials/footer') %>

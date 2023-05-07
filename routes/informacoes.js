@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 dotenv.config();
 const app = express();
 const Chamado = require("../models/chamado.js");
+const Parametro = require("../models/parametros.js");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -62,6 +63,51 @@ router.get("/protheus/empresasfiliais", async (req, res, next) => {
         "Erro ao retornar lista de filiais e empresas. Tente novamente mais tarde."
       );
     });
+});
+
+router.get("/parametros", function (req, res) {
+  if (req.isAuthenticated()) {
+    Parametro.find(function (err, chamado) {
+      res.render("parametros", {
+        acessos: "",
+        chamado: chamado,
+      });
+    });
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  }
+});
+
+router.get("/atualizar", async (req, res, next) => {
+  try {
+    await axios
+      .get(process.env.APITOTVS + "users", {
+        auth: {
+          username: process.env.USER,
+          password: process.env.SENHAPITOTVS,
+        },
+      })
+      .then((response) => {
+        UserProtheus.deleteMany().then(() => {
+          let users = response.data.resources;
+          UserProtheus.insertMany(users)
+            .then((users) => {
+              res.send(
+                "Tabela atualizada com sucesso. Clique " +
+                  "<a href='/usersprotheus/usuarios'>aqui</a>" +
+                  " para retornar à lista de usuarios Protheus"
+              );
+            })
+            .catch((error) => {
+              res.send(error);
+            });
+        });
+      });
+  } catch (err) {
+    console.log(err);
+    res.send("Erro ao atualizar tabela de usuários Protheus.");
+  }
 });
 
 module.exports = router;
