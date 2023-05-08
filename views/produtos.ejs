@@ -63,7 +63,7 @@
         <tr>
           <td><%=produto.code%></td>
           <td><%=produto.barcode%></td>
-          <td><%=produto.description%></td>
+          <td style="font-size: 12px;"><%=produto.description%></td>
           <td><%if(produto.address == true){%> Sim <%} else{%> Não <%}%></td>
         </tr>
         <%})%>
@@ -72,6 +72,7 @@
       <tbody></tbody>
     </table>
   </div>
+</div>
 </div>
 
 <script
