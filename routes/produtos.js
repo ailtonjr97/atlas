@@ -25,6 +25,7 @@ router.get("/", async (req, res, next) => {
     Chamado.find(function (err, chamado) {
       ProdutoProtheus.find(function (error, produtos) {
         res.render("produtos", {
+          atualizado: 0,
           chamado: chamado,
           produtos: produtos,
         });
@@ -50,11 +51,13 @@ router.get("/atualizar", async (req, res, next) => {
           let produtos = response.data.products;
           ProdutoProtheus.insertMany(produtos)
             .then(() => {
-              res.send(
-                "Tabela atualizada com sucesso. Clique " +
-                  "<a href='/produtos'>aqui</a>" +
-                  " para retornar à lista de produtos Protheus"
-              );
+              Chamado.find(function (error, chamado) {
+                res.render("produtos", {
+                  atualizado: 1,
+                  chamado: chamado,
+                  produtos: produtos,
+                });
+              });
             })
             .catch((error) => {
               res.send(error);
@@ -63,7 +66,13 @@ router.get("/atualizar", async (req, res, next) => {
       });
   } catch (err) {
     console.log(err);
-    res.send("Erro ao atualizar tabela de produtos Protheus.");
+    Chamado.find(function (error, chamado) {
+      res.render("produtos", {
+        atualizado: 2,
+        chamado: chamado,
+        produtos: produtos,
+      });
+    });
   }
 });
 

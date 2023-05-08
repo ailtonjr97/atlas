@@ -17,7 +17,13 @@
 </style>
 
 <div style="padding: 1.5%">
-  <a class="button-8 mb-2" onclick="validate()">Atualizar tabela produtos</a>
+  <%if(atualizado == 1){%>
+    <button type="button" class="btn btn-success mb-2">Tabela atualizada com sucesso.</button>
+  <%}else if (atualizado == 0){%>
+    <a class="button-8 mb-2" onclick="validate()">Atualizar tabela produtos</a>
+  <%}else{%>
+    <button type="button" class="btn btn-danger mb-2">Erro ao atualizar tabela. Tente novamente mais tarde</button>
+  <%}%>
   <div class="row mb-2">
     <div class="col-lg-6">
       <div class="form-floating">

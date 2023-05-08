@@ -2,6 +2,26 @@
 <link rel="stylesheet" href="/css/table.css" />
 <link rel="stylesheet" href="/css/button8.css" />
 
+
+
+  <div class="modal" id="myModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <div style="width: 95%; margin-left: 2%">
   <form action="/usersprotheus/acessosprocura" method="post">
     <div class="row mt-3" style="width: 100%">
@@ -24,101 +44,104 @@
       </div>
     </div>
   </form>
-
-  <div>
-    <div class="row mt-3">
-      <div class="col-lg-6">
-        <div class="form-floating">
-          <input
-            type="text"
-            class="form-control"
-            id="myInput2"
-            onkeyup="procuraCodigo()"
-          />
-          <label for="descricaoInput">Procurar por código:</label>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="form-floating">
-          <input
-            type="text"
-            class="form-control"
-            id="myInput"
-            onkeyup="procuraNome()"
-          />
-          <label for="descricaoInput">Procurar por nome:</label>
-        </div>
-      </div>
-    </div>
-    <%if(acessos != ''){%>
-    <div class="table-wrapper mt-2">
-      <table class="fl-table" id="myTable">
-        <thead>
-          <tr style="height: 25px">
-            <th>Código</th>
-            <th>Nome</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%acessos.forEach(function(acesso){ %>
-          <tr>
-            <td><%=acesso.id%></td>
-            <td><%=acesso.name%></td>
-          </tr>
-          <%})%>
-        </tbody>
-
-        <tbody></tbody>
-      </table>
-    </div>
-    <%}%>
-  </div>
 </div>
 
-<script>
-  function procuraNome() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
+<%if(acessos != ''){%>
+    <div class="mb-4" style="width: 95%; margin-left: 2%">
+      <div class="row mt-3">
+        <div class="col-lg-6">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="myInput2"
+              onkeyup="procuraCodigo()"
+            />
+            <label for="descricaoInput">Procurar por código:</label>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="myInput"
+              onkeyup="procuraNome()"
+            />
+            <label for="descricaoInput">Procurar por nome:</label>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="table-wrapper mt-2 mb-3" style="width: 95%; margin-left: 2%">
+        <table class="fl-table" id="myTable">
+          <thead>
+            <tr style="height: 25px">
+              <th>Código</th>
+              <th>Nome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%acessos.forEach(function(acesso){ %>
+            <tr>
+              <td><%=acesso.id%></td>
+              <td><%=acesso.name%></td>
+            </tr>
+            <%})%>
+          </tbody>
 
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[2];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
+          <tbody></tbody>
+        </table>
+      </div>
+<%}%>
+
+<%if(msgError != false){%>
+  <button type="button" class="btn btn-danger mt-2" style="margin-left: 2%">Login ou senha incorretos.</button>
+<%}%>
+
+  <script>
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    
+
+    function procuraCodigo() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput2");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i <tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
         }
       }
     }
-  }
+  </script>
 
-  function procuraCodigo() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput2");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-</script>
-
-<%- include('partials/footer') %>
+  <%- include('partials/footer') %>

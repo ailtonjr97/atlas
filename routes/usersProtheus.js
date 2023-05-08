@@ -25,6 +25,7 @@ router.get("/usuarios", async (req, res, next) => {
     Chamado.find(function (err, chamado) {
       UserProtheus.find(function (error, users) {
         res.render("usuariosprotheus", {
+          atualizado: 0,
           chamado: chamado,
           users: users,
         });
@@ -67,11 +68,15 @@ router.get("/atualizar", async (req, res, next) => {
           let users = response.data.resources;
           UserProtheus.insertMany(users)
             .then((users) => {
-              res.send(
-                "Tabela atualizada com sucesso. Clique " +
-                  "<a href='/usersprotheus/usuarios'>aqui</a>" +
-                  " para retornar à lista de usuarios Protheus"
-              );
+              Chamado.find(function (err, chamado) {
+                UserProtheus.find(function (error, users) {
+                  res.render("usuariosprotheus", {
+                    atualizado: 1,
+                    chamado: chamado,
+                    users: users,
+                  });
+                });
+              });
             })
             .catch((error) => {
               res.send(error);
@@ -79,15 +84,23 @@ router.get("/atualizar", async (req, res, next) => {
         });
       });
   } catch (err) {
-    console.log(err);
-    res.send("Erro ao atualizar tabela de usuários Protheus.");
+    Chamado.find(function (err, chamado) {
+      UserProtheus.find(function (error, users) {
+        res.render("usuariosprotheus", {
+          atualizado: 2,
+          chamado: chamado,
+          users: users,
+        });
+      });
+    });
   }
 });
 
 router.get("/acessos", function (req, res) {
   if (req.isAuthenticated()) {
-    Chamado.find(function (err, chamado) {
+    Chamado.find(function (error, chamado) {
       res.render("acessos", {
+        msgError: false,
         acessos: "",
         chamado: chamado,
       });
@@ -110,8 +123,9 @@ router.post("/acessosprocura", async (req, res, next) => {
       .then((response) => {
         if (req.isAuthenticated()) {
           let acessos = response.data.items;
-          Chamado.find(function (err, chamado) {
+          Chamado.find(function (error, chamado) {
             res.render("acessos", {
+              msgError: false,
               acessos: acessos,
               chamado: chamado,
             });
@@ -122,8 +136,13 @@ router.post("/acessosprocura", async (req, res, next) => {
         }
       });
   } catch (err) {
-    console.log(err);
-    res.send("Erro ao retornar lista de acessos do Protheus.");
+    Chamado.find(function (error, chamado) {
+      res.render("acessos", {
+        msgError: true,
+        acessos: "",
+        chamado: chamado,
+      });
+    });
   }
 });
 
