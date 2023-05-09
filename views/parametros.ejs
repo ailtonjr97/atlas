@@ -16,39 +16,46 @@
   }
 </style>
 
-<div style="padding: 1%">
-  <div class="row mb-1">
-    <div class="col-lg">
-      <%if(atualizado == 1){%>
-        <button type="button" class="btn btn-success mb-2">Tabela atualizada com sucesso.</button>
-      <%}else if (atualizado == 0){%>
-        <a class="button-8 mb-2" onclick="validate()">Atualizar tabela usuários</a>
-      <%}else{%>
-        <button type="button" class="btn btn-danger mb-2">Erro ao atualizar tabela. Tente novamente mais tarde</button>
-      <%}%>
-    </div>
-  </div>
+<div style="padding: 1.5%">
+  <%if(atualizado == 1){%>
+    <button type="button" class="btn btn-success mb-2">Tabela atualizada com sucesso.</button>
+  <%}else if (atualizado == 0){%>
+    <a class="button-8 mb-2" onclick="validate()">Atualizar tabela paramêtros</a>
+  <%}else{%>
+    <button type="button" class="btn btn-danger mb-2">Erro ao atualizar tabela. Tente novamente mais tarde.</button>
+  <%}%>
   <div class="row mb-2">
-    <div class="col-lg-6">
+    <div class="col-lg-4">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="myInput"
+            onkeyup="procuraId()"
+          />
+          <label for="descricaoInput">Procurar por Id do parâmetro:</label>
+        </div>
+      </div>
+    <div class="col-lg-4">
       <div class="form-floating">
         <input
           type="text"
           class="form-control"
-          id="myInput2"
+          id="myInput1"
           onkeyup="procuraCodigo()"
         />
         <label for="descricaoInput">Procurar por código:</label>
       </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
       <div class="form-floating">
         <input
           type="text"
           class="form-control"
-          id="myInput"
+          id="myInput2"
           onkeyup="procuraNome()"
         />
-        <label for="descricaoInput">Procurar por nome:</label>
+        <label for="descricaoInput">Procurar por descritivo:</label>
       </div>
     </div>
   </div>
@@ -56,29 +63,21 @@
     <table class="fl-table" id="myTable">
       <thead>
         <tr style="height: 25px">
+          <th>Id do parâmetro</th>
+          <th>Filial</th>
+          <th>Tipo</th>
           <th>Código</th>
-          <th>Nome</th>
-          <th>Login</th>
-          <th>E-mail</th>
-          <th>Ativo(a)</th>
-          <th>Ações</th>
+          <th>Descritivo</th>
         </tr>
       </thead>
       <tbody>
-        <%users.forEach(function(user){ %>
+        <%parametros.forEach(function(parametro){ %>
         <tr>
-          <td><%=user.id%></td>
-          <td><%=user.name[0].formatted%></td>
-          <td><%=user.userName%></td>
-          <td><%=user.emails[0].value%></td>
-          <td><%if(user.active == true){%> Sim <%} else{%> Não <%}%></td>
-          <td>
-            <a
-              class="button-8 mb-2"
-              href="/protheus/usuarios/exclui/<%=user.id%>"
-              >Inativar</a
-            >
-          </td>
+          <td><%=parametro.systemparameterid%></td>
+          <td><%=parametro.branchid%></td>
+          <td><%=parametro.type%></td>
+          <td><%=parametro.code%></td>
+          <td><%=parametro.description[0].descriptionText%></td>
         </tr>
         <%})%>
       </tbody>
@@ -87,6 +86,7 @@
     </table>
   </div>
 </div>
+</div>
 
 <script
   src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
@@ -94,32 +94,10 @@
   crossorigin="anonymous"
 ></script>
 <script>
-  function procuraNome() {
+  function procuraId() {
     // Declare variables
     var input, filter, table, tr, td, i, txtValue;
     input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-
-  function procuraCodigo() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput2");
     filter = input.value.toUpperCase();
     table = document.getElementById("myTable");
     tr = table.getElementsByTagName("tr");
@@ -138,11 +116,55 @@
     }
   }
 
+  function procuraCodigo() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput1");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[3];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function procuraNome() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput2");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[4];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
   function validate() {
     alert(
-      "A tabela usuários leva, em média, 1 minuto para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro."
+      "A tabela parâmetros leva, em média, 30 segundos para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro."
     );
-    return window.location.replace("atualizar");
+    return window.location.replace("/parametros/atualizar");
   }
 </script>
 

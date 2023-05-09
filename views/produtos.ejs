@@ -22,7 +22,7 @@
   <%}else if (atualizado == 0){%>
     <a class="button-8 mb-2" onclick="validate()">Atualizar tabela produtos</a>
   <%}else{%>
-    <button type="button" class="btn btn-danger mb-2">Erro ao atualizar tabela. Tente novamente mais tarde</button>
+    <button type="button" class="btn btn-danger mb-2">Erro ao atualizar tabela. Tente novamente mais tarde.</button>
   <%}%>
   <div class="row mb-2">
     <div class="col-lg-6">
@@ -48,7 +48,7 @@
       </div>
     </div>
   </div>
-  <div class="table-wrapper">
+  <div class="table-wrapper table-responsive">
     <table class="fl-table" id="myTable">
       <thead>
         <tr style="height: 25px">
@@ -63,7 +63,7 @@
         <tr>
           <td><%=produto.code%></td>
           <td><%=produto.barcode%></td>
-          <td style="font-size: 12px;"><%=produto.description%></td>
+          <td><%=produto.description%></td>
           <td><%if(produto.address == true){%> Sim <%} else{%> Não <%}%></td>
         </tr>
         <%})%>
@@ -72,7 +72,6 @@
       <tbody></tbody>
     </table>
   </div>
-</div>
 </div>
 
 <script

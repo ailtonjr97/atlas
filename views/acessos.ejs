@@ -54,7 +54,7 @@
             <input
               type="text"
               class="form-control"
-              id="myInput2"
+              id="myInput"
               onkeyup="procuraCodigo()"
             />
             <label for="descricaoInput">Procurar por código:</label>
@@ -65,7 +65,7 @@
             <input
               type="text"
               class="form-control"
-              id="myInput"
+              id="myInput1"
               onkeyup="procuraNome()"
             />
             <label for="descricaoInput">Procurar por nome:</label>
@@ -73,7 +73,7 @@
         </div>
       </div>
     </div>
-      <div class="table-wrapper mt-2 mb-3" style="width: 95%; margin-left: 2%">
+      <div class="table-wrapper table-responsive mt-2 mb-3" style="width: 95%; margin-left: 2%">
         <table class="fl-table" id="myTable">
           <thead>
             <tr style="height: 25px">
@@ -100,6 +100,7 @@
 <%}%>
 
   <script>
+    function procuraCodigo() {
       // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("myInput");
@@ -108,8 +109,8 @@
       tr = table.getElementsByTagName("tr");
 
       // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[2];
+      for (i = 0; i <tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
         if (td) {
           txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -119,19 +120,20 @@
           }
         }
       }
+    }
     
 
-    function procuraCodigo() {
+    function procuraNome() {
       // Declare variables
       var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("myInput2");
+      input = document.getElementById("myInput1");
       filter = input.value.toUpperCase();
       table = document.getElementById("myTable");
       tr = table.getElementsByTagName("tr");
 
       // Loop through all table rows, and hide those who don't match the search query
       for (i = 0; i <tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
+        td = tr[i].getElementsByTagName("td")[1];
         if (td) {
           txtValue = td.textContent || td.innerText;
           if (txtValue.toUpperCase().indexOf(filter) > -1) {

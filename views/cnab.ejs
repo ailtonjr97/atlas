@@ -1,0 +1,265 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<style>
+  body {
+    font-family: Helvetica;
+    -webkit-font-smoothing: antialiased;
+  }
+  h2 {
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    padding: 30px 0;
+  }
+</style>
+
+<div style="padding: 1.5%">
+  <div class="row mb-2">
+    <div class="col-sm-2">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="myInput"
+            onkeyup="procuraBanco()"
+          />
+          <label for="descricaoInput">Procurar por banco:</label>
+        </div>
+      </div>
+    <div class="col-sm-2">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="myInput1"
+          onkeyup="procuraVersao()"
+        />
+        <label for="descricaoInput">Procurar por versão:</label>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="myInput2"
+          onkeyup="procuraModulo()"
+        />
+        <label for="descricaoInput">Procurar por módulo:</label>
+      </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="myInput3"
+            onkeyup="procuraTipo()"
+          />
+          <label for="descricaoInput">Procurar por tipo:</label>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="myInput4"
+            onkeyup="procuraFuncao()"
+          />
+          <label for="descricaoInput">Procurar por função:</label>
+        </div>
+      </div>
+      <div class="col-sm-2">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="myInput5"
+            onkeyup="procuraRelease()"
+          />
+          <label for="descricaoInput">Procurar por release:</label>
+        </div>
+      </div>
+  </div>
+  <div class="table-wrapper table-responsive">
+    <table class="fl-table" id="myTable">
+      <thead>
+        <tr style="height: 25px">
+          <th>Banco</th>
+          <th>Versão</th>
+          <th>Módulo</th>
+          <th>Tipo</th>
+          <th>Função</th>
+          <th>Release</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%cnabs.forEach(function(cnab){ %>
+        <tr>
+          <td><%=cnab.banco%></td>
+          <td><%=cnab.versao%></td>
+          <td><%=cnab.modulo%></td>
+          <td><%=cnab.tipo%></td>
+          <td><%=cnab.funcao%></td>
+          <td><%=cnab.release%></td>
+        </tr>
+        <%})%>
+      </tbody>
+
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+  integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+  crossorigin="anonymous"
+></script>
+<script>
+  function procuraBanco() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function procuraVersao() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput1");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function procuraModulo() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput2");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[2];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function procuraTipo() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput3");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[3];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function procuraFuncao() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput4");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[4];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function procuraRelease() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput5");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[5];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  function validate() {
+    alert(
+      "A tabela parâmetros leva, em média, 30 segundos para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro."
+    );
+    return window.location.replace("/parametros/atualizar");
+  }
+</script>
+
+<%- include('partials/footer') %>

@@ -14,6 +14,8 @@ const produtos = require("./routes/produtos.js");
 const anexos = require("./routes/anexos.js");
 const informacoes = require("./routes/informacoes.js");
 const usersprotheus = require("./routes/usersProtheus.js");
+const parametros = require("./routes/parametros.js");
+const cnab = require("./routes/cnab.js");
 
 const app = express();
 
@@ -51,6 +53,8 @@ app.use("/produtos", produtos);
 app.use("/anexos", anexos);
 app.use("/informacoes", informacoes);
 app.use("/usersprotheus", usersprotheus);
+app.use("/parametros", parametros);
+app.use("/cnab", cnab);
 
 app.listen(process.env.PORT, function () {
   console.log("Servidor Node.js operacional na porta " + process.env.PORT);
