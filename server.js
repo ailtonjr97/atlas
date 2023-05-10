@@ -16,6 +16,9 @@ const informacoes = require("./routes/informacoes.js");
 const usersprotheus = require("./routes/usersProtheus.js");
 const parametros = require("./routes/parametros.js");
 const cnab = require("./routes/cnab.js");
+const contratos = require("./routes/contratos.js");
+const calendariocontabil = require("./routes/calendariocontabil.js");
+const centrodecusto = require("./routes/centrodecusto.js");
 
 const app = express();
 
@@ -55,6 +58,9 @@ app.use("/informacoes", informacoes);
 app.use("/usersprotheus", usersprotheus);
 app.use("/parametros", parametros);
 app.use("/cnab", cnab);
+app.use("/contratos", contratos);
+app.use("/calendariocontabil", calendariocontabil);
+app.use("/centrodecusto", centrodecusto);
 
 app.listen(process.env.PORT, function () {
   console.log("Servidor Node.js operacional na porta " + process.env.PORT);
