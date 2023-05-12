@@ -4,10 +4,11 @@
   top: 0;
   left: 0;
   z-index: 100;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(192, 192, 192, 0.5);
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/a/ad/YouTube_loading_symbol_3_%28transparent%29.gif");
+  width: 50%;
+  height: 50%;
+  margin-left: 25%;
+  margin-top: 10%;
+  background-image: url("https://i.pinimg.com/originals/49/23/29/492329d446c422b0483677d0318ab4fa.gif");
   background-repeat: no-repeat;
   background-position: center;
 }
