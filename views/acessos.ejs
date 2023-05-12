@@ -1,26 +1,9 @@
 <%- include('partials/header') %>
 <link rel="stylesheet" href="/css/table.css" />
 <link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
 
-
-
-  <div class="modal" id="myModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<div id="loading"></div>
 
 <div style="width: 95%; margin-left: 2%">
   <form action="/usersprotheus/acessosprocura" method="post">
@@ -54,8 +37,8 @@
             <input
               type="text"
               class="form-control"
-              id="myInput"
-              onkeyup="procuraCodigo()"
+              id="procuraBtn0"
+              onkeyup="procura(0, 'procuraBtn0')"
             />
             <label for="descricaoInput">Procurar por código:</label>
           </div>
@@ -65,8 +48,8 @@
             <input
               type="text"
               class="form-control"
-              id="myInput1"
-              onkeyup="procuraNome()"
+              id="procuraBtn1"
+              onkeyup="procura(1,'procuraBtn1')"
             />
             <label for="descricaoInput">Procurar por nome:</label>
           </div>
@@ -99,51 +82,8 @@
   <button type="button" class="btn btn-danger mt-2" style="margin-left: 2%">Login ou senha incorretos.</button>
 <%}%>
 
-  <script>
-    function procuraCodigo() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("myTable");
-      tr = table.getElementsByTagName("tr");
-
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i <tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-    
-
-    function procuraNome() {
-      // Declare variables
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("myInput1");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("myTable");
-      tr = table.getElementsByTagName("tr");
-
-      // Loop through all table rows, and hide those who don't match the search query
-      for (i = 0; i <tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[1];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-  </script>
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/validate.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>
 
   <%- include('partials/footer') %>

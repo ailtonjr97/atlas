@@ -1,6 +1,7 @@
 <%- include('partials/header') %>
 <link rel="stylesheet" href="/css/table.css" />
 <link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
 <style>
   body {
     font-family: Helvetica;
@@ -16,6 +17,8 @@
   }
 </style>
 
+<div id="loading"></div>
+
 <div style="padding: 1.5%">
   <div class="row mb-2">
     <div class="col-sm-2">
@@ -23,8 +26,8 @@
           <input
             type="text"
             class="form-control"
-            id="myInput"
-            onkeyup="procuraEmpresa()"
+            id="procuraBtn0"
+            onkeyup="procura(0, 'procuraBtn0')"
           />
           <label for="descricaoInput">Procurar por empresa:</label>
         </div>
@@ -34,8 +37,8 @@
         <input
           type="text"
           class="form-control"
-          id="myInput1"
-          onkeyup="procuraCodigo()"
+          id="procuraBtn1"
+          onkeyup="procura(1, 'procuraBtn1')"
         />
         <label for="descricaoInput">Procurar por código:</label>
       </div>
@@ -45,8 +48,8 @@
         <input
           type="text"
           class="form-control"
-          id="myInput2"
-          onkeyup="procuraSituacaoRegistro()"
+          id="procuraBtn2"
+          onkeyup="procura(2, 'procuraBtn2')"
         />
         <label for="descricaoInput">Procurar por sit. registro:</label>
       </div>
@@ -56,8 +59,8 @@
           <input
             type="text"
             class="form-control"
-            id="myInput3"
-            onkeyup="procuraNome()"
+            id="procuraBtn3"
+            onkeyup="procura(3, 'procuraBtn3')"
           />
           <label for="descricaoInput">Procurar por nome:</label>
         </div>
@@ -67,8 +70,8 @@
           <input
             type="text"
             class="form-control"
-            id="myInput4"
-            onkeyup="procuraClasse()"
+            id="procuraBtn4"
+            onkeyup="procura(4, 'procuraBtn4')"
           />
           <label for="descricaoInput">Procurar por classe:</label>
         </div>
@@ -78,8 +81,8 @@
           <input
             type="text"
             class="form-control"
-            id="myInput5"
-            onkeyup="procuraTopCode()"
+            id="procuraBtn5"
+            onkeyup="procura(5, 'procuraBtn5')"
           />
           <label for="descricaoInput">Procurar por Top Code:</label>
         </div>
@@ -116,143 +119,8 @@
 </div>
 </div>
 
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-  integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
-  crossorigin="anonymous"
-></script>
-<script>
-  function procuraEmpresa() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-
-  function procuraCodigo() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput1");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[1];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-
-  function procuraSituacaoRegistro() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput2");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[2];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-
-  function procuraNome() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput3");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[3];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-
-  function procuraClasse() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput4");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[4];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-
-  function procuraTopCode() {
-    // Declare variables
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("myInput5");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("myTable");
-    tr = table.getElementsByTagName("tr");
-
-    // Loop through all table rows, and hide those who don't match the search query
-    for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[5];
-      if (td) {
-        txtValue = td.textContent || td.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          tr[i].style.display = "";
-        } else {
-          tr[i].style.display = "none";
-        }
-      }
-    }
-  }
-</script>
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/validate.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>
 
 <%- include('partials/footer') %>
