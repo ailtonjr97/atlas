@@ -37,6 +37,23 @@ router.get("/usuarios", async (req, res, next) => {
   }
 });
 
+router.get("/atualizada", async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    Chamado.find(function (err, chamado) {
+      UserProtheus.find(function (error, users) {
+        res.render("usuariosprotheus", {
+          atualizado: 1,
+          chamado: chamado,
+          users: users,
+        });
+      });
+    });
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  }
+});
+
 router.get("/exclui/:userId", async (req, res, next) => {
   try {
     await axios
@@ -47,7 +64,7 @@ router.get("/exclui/:userId", async (req, res, next) => {
         },
       })
       .then((response) => {
-        res.redirect("usersprotheus/usuarios");
+        res.redirect("/usersprotheus/usuarios");
       });
   } catch (err) {
     return res.send("Erro ao excluir usuário");
@@ -68,15 +85,7 @@ router.get("/atualizar", async (req, res, next) => {
           let users = response.data.resources;
           UserProtheus.insertMany(users)
             .then((users) => {
-              Chamado.find(function (err, chamado) {
-                UserProtheus.find(function (error, users) {
-                  res.render("usuariosprotheus", {
-                    atualizado: 1,
-                    chamado: chamado,
-                    users: users,
-                  });
-                });
-              });
+              res.redirect("/usersprotheus/atualizada")
             })
             .catch((error) => {
               res.send(error);

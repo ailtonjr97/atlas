@@ -23,7 +23,7 @@
   <%if(atualizado == 1){%>
     <button type="button" class="btn btn-success mb-2">Tabela atualizada com sucesso.</button>
   <%}else if (atualizado == 0){%>
-    <a class="button-8 mb-2" onclick="validate()">Atualizar tabela paramêtros</a>
+    <a class="button-8 mb-2" onclick="confirmation('A tabela paramêtros leva, em média, 50 segundos para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro. Você deseja realmente atualizar essa tabela?' , '/parametros/atualizar')">Atualizar tabela paramêtros</a>
   <%}else{%>
     <button type="button" class="btn btn-danger mb-2">Erro ao atualizar tabela. Tente novamente mais tarde.</button>
   <%}%>
@@ -93,6 +93,7 @@
           <th>Tipo</th>
           <th>Código</th>
           <th>Descritivo</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -103,6 +104,9 @@
           <td><%=parametro.type%></td>
           <td><%=parametro.code%></td>
           <td><%=parametro.description[0].descriptionText%></td>
+          <td>
+            <a class="button-8 mb-2" onclick="confirmation('Esse parâmetro será atualizado. Deseja prosseguir?' , '/parametros/atualizarunico/<%=parametro.systemparameterid%>')">Atualizar</a>
+          </td>
         </tr>
         <%})%>
       </tbody>
@@ -114,7 +118,7 @@
 </div>
 
 <script type="text/javascript" src="/js/carregador.js"></script>
-<script type="text/javascript" src="/js/validate.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
 <script type="text/javascript" src="/js/procura.js"></script>
 
 

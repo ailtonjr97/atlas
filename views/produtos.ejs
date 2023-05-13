@@ -21,11 +21,11 @@
 
 <div style="padding: 1.5%">
   <%if(atualizado == 1){%>
-    <button type="button" class="btn btn-success mb-2">Tabela atualizada com sucesso.</button>
+    <button type="button" class="btn btn-success mb-2">Ação executada com sucesso!</button>
   <%}else if (atualizado == 0){%>
-    <a class="button-8 mb-2" onclick="validate('/produtos/atualizar')">Atualizar tabela produtos</a>
+    <a class="button-8 mb-2" onclick="confirmation('A tabela produtos leva, em média, 40 segundos para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro. Você deseja realmente atualizar essa tabela?' , '/produtos/atualizar')">Atualizar tabela produtos</a>
   <%}else{%>
-    <button type="button" class="btn btn-danger mb-2">Erro ao atualizar tabela. Tente novamente mais tarde.</button>
+    <button type="button" class="btn btn-danger mb-2">Ação não pode ser executada. Tente novamente mais tarde.</button>
   <%}%>
   <div class="row mb-2">
     <div class="col-md-3">
@@ -81,6 +81,7 @@
           <th>Código de barras</th>
           <th>Nome</th>
           <th>Endereçamento</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -90,6 +91,9 @@
           <td><%=produto.barcode%></td>
           <td><%=produto.description%></td>
           <td><%if(produto.address == true){%> Sim <%} else{%> Não <%}%></td>
+          <td>
+            <a class="button-8 mb-2" onclick="confirmation('Esse produto será atualizado. Deseja prosseguir?' , '/produtos/atualizarunico/<%=produto.code%>')">Atualizar</a>
+          </td>
         </tr>
         <%})%>
       </tbody>
@@ -100,7 +104,7 @@
 </div>
 
 <script type="text/javascript" src="/js/carregador.js"></script>
-<script type="text/javascript" src="/js/validate.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
 <script type="text/javascript" src="/js/procura.js"></script>
 
 <%- include('partials/footer') %>
