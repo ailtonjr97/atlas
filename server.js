@@ -19,6 +19,7 @@ const cnab = require("./routes/cnab.js");
 const contratos = require("./routes/contratos.js");
 const calendariocontabil = require("./routes/calendariocontabil.js");
 const centrodecusto = require("./routes/centrodecusto.js");
+const itemcontabil = require("./routes/itemcontabil.js");
 
 const app = express();
 
@@ -61,6 +62,7 @@ app.use("/cnab", cnab);
 app.use("/contratos", contratos);
 app.use("/calendariocontabil", calendariocontabil);
 app.use("/centrodecusto", centrodecusto);
+app.use("/itemcontabil", itemcontabil);
 
 app.listen(process.env.PORT, function () {
   console.log("Servidor Node.js operacional na porta " + process.env.PORT);

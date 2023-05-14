@@ -1,0 +1,84 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+<style>
+  body {
+    font-family: Helvetica;
+    -webkit-font-smoothing: antialiased;
+  }
+  h2 {
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    padding: 30px 0;
+  }
+</style>
+
+<div id="loading"></div>
+
+<div style="padding: 1.5%">
+  <%if(atualizado == 1){%>
+    <button type="button" class="btn btn-success mb-2">Ação executada com sucesso!</button>
+  <%}else if (atualizado == 0){%>
+    <a class="button-8 mb-2" onclick="confirmation('A tabela item contábil leva, em média, 30 segundos para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro. Você deseja realmente atualizar essa tabela?' , '/itemcontabil/atualizar')">Atualizar tabela item contábil</a>
+  <%}else{%>
+    <button type="button" class="btn btn-danger mb-2">Ação não pode ser executada. Tente novamente mais tarde.</button>
+  <%}%>
+  <div class="row mb-2">
+    <div class="col-md-3">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn0"
+          onkeyup="procura(0, 'procuraBtn0')"
+        />
+        <label for="descricaoInput">Procurar por código:</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn1"
+          onkeyup="procura(1, 'procuraBtn1')"
+        />
+        <label for="descricaoInput">Procurar por nome:</label>
+      </div>
+    </div>
+  </div>
+  <div class="table-wrapper table-responsive">
+    <table class="fl-table" id="myTable">
+      <thead>
+        <tr style="height: 25px">
+          <th>Código</th>
+          <th>Nome</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%itemcontabeis.forEach(function(itemcontabil){ %>
+        <tr>
+          <td><%=itemcontabil.Code%></td>
+          <td><%=itemcontabil.Description%></td>
+          <td>
+            <a class="button-8 mb-2" onclick="confirmation('Esse item contábil será atualizado. Deseja prosseguir?' , '/itemcontabil/atualizarunico/<%=itemcontabil.InternalId%>')">Atualizar</a>
+          </td>
+        </tr>
+        <%})%>
+      </tbody>
+
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>
+
+<%- include('partials/footer') %>
