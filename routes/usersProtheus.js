@@ -64,7 +64,7 @@ router.get("/exclui/:userId", async (req, res, next) => {
         },
       })
       .then((response) => {
-        res.redirect("/usersprotheus/usuarios");
+        res.redirect("/usersprotheus/atualizada");
       });
   } catch (err) {
     return res.send("Erro ao excluir usuário");

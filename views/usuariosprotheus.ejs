@@ -23,11 +23,11 @@
   <div class="row mb-1">
     <div class="col-lg">
       <%if(atualizado == 1){%>
-        <button type="button" class="btn btn-success mb-2">Tabela atualizada com sucesso.</button>
+        <button type="button" class="btn btn-success mb-2">Ação executada com sucesso.</button>
       <%}else if (atualizado == 0){%>
         <a class="button-8 mb-2" onclick="confirmation('A tabela usuários leva, em média, 50 segundos para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro. Você deseja realmente atualizar essa tabela?' , '/usersprotheus/atualizar')">Atualizar tabela usuários</a>
       <%}else{%>
-        <button type="button" class="btn btn-danger mb-2">Erro ao atualizar tabela. Tente novamente mais tarde</button>
+        <button type="button" class="btn btn-danger mb-2">Erro ao executar ação. Tente novamente mais tarde.</button>
       <%}%>
     </div>
   </div>
