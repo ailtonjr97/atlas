@@ -64,7 +64,9 @@ router.get("/exclui/:userId", async (req, res, next) => {
         },
       })
       .then((response) => {
-        res.redirect("/usersprotheus/atualizada");
+        UserProtheus.deleteOne({"id": req.params.userId}).then(() => {
+            res.redirect("/usersprotheus/atualizada");
+        });
       });
   } catch (err) {
     return res.send("Erro ao excluir usuário");
