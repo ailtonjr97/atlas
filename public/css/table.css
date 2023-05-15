@@ -4,7 +4,7 @@
 
 .fl-table {
     border-radius: 5px;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: normal;
     border: none;
     border-collapse: collapse;
@@ -16,23 +16,23 @@
 
 .fl-table td, .fl-table th {
     text-align: center;
-    padding: 8px;
+    padding: 4px;
 }
 
 .fl-table td {
     border-right: 1px solid #f8f8f8;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .fl-table thead th {
     color: #ffffff;
-    background: #4FC3A1;
+    background: #172a5e;
 }
 
 
 .fl-table thead th:nth-child(odd) {
     color: #ffffff;
-    background: #324960;
+    background: #7f97af;
 }
 
 .fl-table tr:nth-child(even) {
