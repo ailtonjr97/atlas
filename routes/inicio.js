@@ -33,7 +33,7 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
-router.get("/home", function (req, res) {
+router.get("/", function (req, res) {
   res.render("home");
 });
 
@@ -76,9 +76,10 @@ router.get("/inicio", function (req, res) {
   }
 });
 
+
 router.get("/logout", function (req, res) {
   req.logout();
-  res.redirect("/home");
+  res.redirect("/");
 });
 
 module.exports = router;

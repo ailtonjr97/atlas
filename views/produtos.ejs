@@ -8,26 +8,6 @@
     font-family: Helvetica;
     -webkit-font-smoothing: antialiased;
   }
-
-  @keyframes myAnimation{
-  0%{
-    opacity: 1;
-  }
-  50%{
-    opacity: 0.5;
-  }
-  100%{
-    display: none;
-    opacity: 0;
-  }
-}
-
-#execSuc{
-    animation-name: myAnimation;
-    animation-delay: 3000ms;
-    animation-duration: 5000ms;
-    animation-fill-mode: forwards;
-}
 </style>
 
 <div id="loading"></div>
@@ -52,7 +32,7 @@
     </div>
   </div>
   <div class="row mb-2">
-    <div class="col-md-3">
+    <div class="col-sm-2">
       <div class="form-floating">
         <input
           type="text"
@@ -60,10 +40,10 @@
           id="procuraBtn0"
           onkeyup="procura(0, 'procuraBtn0')"
         />
-        <label for="procuraBtn0">Código:</label>
+        <label for="procuraBtn0">Filial:</label>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-sm-2">
       <div class="form-floating">
         <input
           type="text"
@@ -71,10 +51,10 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Código de barras:</label>
+        <label for="procuraBtn1">Código:</label>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="form-floating">
         <input
           type="text"
@@ -82,10 +62,10 @@
           id="procuraBtn2"
           onkeyup="procura(2, 'procuraBtn2')"
         />
-        <label for="procuraBtn2">Nome:</label>
+        <label for="procuraBtn2">Descritivo:</label>
       </div>
     </div>
-    <div class="col-lg-3">
+    <div class="col-sm-2">
       <div class="form-floating">
         <input
           type="text"
@@ -93,11 +73,22 @@
           id="procuraBtn3"
           onkeyup="procura(3, 'procuraBtn3')"
         />
-        <label for="procuraBtn3">Endereçamento:</label>
+        <label for="procuraBtn3">Tipo:</label>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn4"
+          onkeyup="procura(4, 'procuraBtn4')"
+        />
+        <label for="procuraBtn4">Unidade:</label>
       </div>
     </div>
   </div>
-  <div class="table-wrapper table-responsive">
+  <div class="table-wrapper table-responsive table-striped">
     <table class="fl-table" id="myTable">
       <thead>
         <tr style="height: 25px">
@@ -105,7 +96,6 @@
           <th>Código</th>
           <th>Descritivo</th>
           <th>Tipo</th>
-          <th>Código item</th>
           <th>Unidade</th>
           <th>Ação</th>
         </tr>
@@ -117,10 +107,10 @@
           <td><%=produto.cod%></td>
           <td><%=produto.desc%></td>
           <td><%=produto.tipo%></td>
-          <td><%=produto.codite%></td>
           <td><%=produto.um%></td>
           <td>
             <a class="button-8 mb-2" onclick="confirmation('Esse produto será atualizado. Deseja prosseguir?' , '/produtos/atualizarunico/<%=produto.cod%>')">Atualizar</a>
+            <a class="button-8 mb-2" href="/produtos/detalhes">Detalhes</a>
           </td>
         </tr>
         <%})%>

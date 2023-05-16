@@ -3,6 +3,8 @@ const router = express.Router();
 const dotenv = require("dotenv");
 const axios = require("axios");
 const bodyParser = require("body-parser");
+const session = require("express-session");
+const passport = require("passport");
 dotenv.config();
 const app = express();
 const Chamado = require("../models/chamado.js");
@@ -19,6 +21,17 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use(
+  session({
+    secret: process.env.PASSWORD,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 router.use("/register", function (req, res) {
   if (req.isAuthenticated()) {
@@ -39,7 +52,7 @@ router.use("/register", function (req, res) {
   }
 });
 
-router.post("/register", function (req, res) {
+router.post("/cadastra", function (req, res) {
   User.register(
     { username: req.body.username },
     req.body.password,
@@ -96,7 +109,7 @@ router.get("/ativos", function (req, res) {
         res.render("ativos", {
           chamado: chamado,
           usuario: user,
-          logado: req.user.realNome,
+          logado: req.user.username,
         });
       });
     });
@@ -164,6 +177,59 @@ router.post("/dados", function (req, res) {
       }
     }
   );
+});
+
+router.get("/resetarsenha/:id", function (req, res) {
+  User.updateMany(
+    { _id: req.params.id },
+    {
+      $set: {
+        salt: process.env.SALT,
+        hash: process.env.HASH
+      },
+    },
+    {
+      returnNewDocument: true,
+    },
+    function (error, result) {
+      if (error) {
+        res.send("erro1");
+      } else {
+        res.redirect("/inicio");
+      }
+    }
+  );
+});
+
+router.use("/trocasenha", function (req, res) {
+  if (req.isAuthenticated()) {
+      Chamado.find(function (err, chamado) {
+        res.render("trocasenha", {
+          user: req.user._id,
+          chamado: chamado,
+        });
+      });
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  }
+});
+
+router.post('/changepassword/:id', function (req, res) {
+  User.findById(req.params.id, (err, user) => {
+      if (err) {
+          res.send(err);
+      } else {
+          user.changePassword(req.body.oldpassword, 
+          req.body.newpassword, function (err) {
+              if (err) {
+                  res.send("Não foi possível trocar senha")
+              } else {
+                  res.redirect('/inicio')
+              }
+          });
+      }
+  });
 });
 
 //Delete usuários da página dados.

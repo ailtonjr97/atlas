@@ -153,9 +153,6 @@ tr{
         <tr>
             <th>Usuário</th>
             <th>E-mail</th>
-            <th>Cargo</th>
-            <th>Setor</th>
-            <th>Unidade</th>
             <th>Ações</th>
         </tr>
         </thead>
@@ -164,11 +161,14 @@ tr{
         <tr>
             <td><%=usuarios.realNome%></td>
             <td><%=usuarios.username%></td>
-            <td><%=usuarios.cargo[1].cargoDescri%></td>
-            <td><%=usuarios.setor[1].setorDescri%></td>
-            <td><%=usuarios.unidade[1].unidadeDescri%></td>
             <td>
-              <a href="/dados/<%=usuarios._id%>" class="btn btn-success">Editar</a>
+            <%if(logado == "admin@fibracem.com"){%>
+              <a href="/users/dados/<%=usuarios._id%>" class="btn btn-success">Editar</a>
+              <a href="/users/resetarsenha/<%=usuarios._id%>" class="btn btn-success">Resetar</a>
+              <%}%>
+              <%if(logado == usuarios.username){%>
+              <a href="/users/trocasenha/<%=usuarios._id%>" class="btn btn-success">Trocar senha</a>
+              <%}%>
             </td>
         </tr>
         <% }) %>
