@@ -2,31 +2,55 @@
 <link rel="stylesheet" href="/css/table.css" />
 <link rel="stylesheet" href="/css/button8.css" />
 <link rel="stylesheet" href="/css/loading.css" />
+<link rel="stylesheet" href="/css/contador.css" />
 <style>
   body {
     font-family: Helvetica;
     -webkit-font-smoothing: antialiased;
   }
-  h2 {
-    text-align: center;
-    font-size: 18px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: white;
-    padding: 30px 0;
+
+  @keyframes myAnimation{
+  0%{
+    opacity: 1;
   }
+  50%{
+    opacity: 0.5;
+  }
+  100%{
+    display: none;
+    opacity: 0;
+  }
+}
+
+#execSuc{
+    animation-name: myAnimation;
+    animation-delay: 5000ms;
+    animation-duration: 5000ms;
+    animation-fill-mode: forwards;
+}
 </style>
 
 <div id="loading"></div>
 
 <div style="padding: 1.5%">
-  <%if(atualizado == 1){%>
-    <button type="button" class="btn btn-success mb-2">Ação executada com sucesso!</button>
-  <%}else if (atualizado == 0){%>
-    <a class="button-8 mb-2" onclick="confirmation('A tabela produtos leva, em média, 40 segundos para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro. Você deseja realmente atualizar essa tabela?' , '/produtos/atualizar')">Atualizar tabela produtos</a>
-  <%}else{%>
-    <button type="button" class="btn btn-danger mb-2">Ação não pode ser executada. Tente novamente mais tarde.</button>
-  <%}%>
+  <div class="row">
+    <div class="col-md-4">
+      <a class="button-8 mb-2" onclick="confirmation('A tabela produtos leva, em média, 15 segundos para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro. Você deseja realmente atualizar essa tabela?' , '/produtos/atualizar')">Atualizar tabela produtos</a>
+    </div>
+    <div class="col-lg-6">
+      <%if(atualizado == 1){%>
+        <button type="button" class="btn btn-success mb-2" id="execSuc" style="margin-left: 15%;">Ação executada com sucesso!</button>
+      <%}else if (atualizado == 2){%>
+        <button type="button" class="btn btn-danger mb-2" id="execErr">Ação não pode ser executada. Tente novamente mais tarde.</button>
+      <%}%>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
+        <span class="counter-value"><%=resultados%></span>
+        resultados
+      </button>
+    </div>
+  </div>
   <div class="row mb-2">
     <div class="col-md-3">
       <div class="form-floating">
@@ -77,22 +101,26 @@
     <table class="fl-table" id="myTable">
       <thead>
         <tr style="height: 25px">
+          <th>Filial</th>
           <th>Código</th>
-          <th>Código de barras</th>
-          <th>Nome</th>
-          <th>Endereçamento</th>
-          <th>Ações</th>
+          <th>Descritivo</th>
+          <th>Tipo</th>
+          <th>Código item</th>
+          <th>Unidade</th>
+          <th>Ação</th>
         </tr>
       </thead>
       <tbody>
         <%produtos.forEach(function(produto){ %>
         <tr>
-          <td><%=produto.code%></td>
-          <td><%=produto.barcode%></td>
-          <td><%=produto.description%></td>
-          <td><%if(produto.address == true){%> Sim <%} else{%> Não <%}%></td>
+          <td><%=produto.filial%></td>
+          <td><%=produto.cod%></td>
+          <td><%=produto.desc%></td>
+          <td><%=produto.tipo%></td>
+          <td><%=produto.codite%></td>
+          <td><%=produto.um%></td>
           <td>
-            <a class="button-8 mb-2" onclick="confirmation('Esse produto será atualizado. Deseja prosseguir?' , '/produtos/atualizarunico/<%=produto.code%>')">Atualizar</a>
+            <a class="button-8 mb-2" onclick="confirmation('Esse produto será atualizado. Deseja prosseguir?' , '/produtos/atualizarunico/<%=produto.cod%>')">Atualizar</a>
           </td>
         </tr>
         <%})%>
@@ -102,9 +130,9 @@
     </table>
   </div>
 </div>
+<%- include('partials/footer') %>
 
 <script type="text/javascript" src="/js/carregador.js"></script>
 <script type="text/javascript" src="/js/confirmation.js"></script>
 <script type="text/javascript" src="/js/procura.js"></script>
-
-<%- include('partials/footer') %>
+<script type="text/javascript" src="/js/contador.js"></script>

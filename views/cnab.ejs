@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="/css/table.css" />
 <link rel="stylesheet" href="/css/button8.css" />
 <link rel="stylesheet" href="/css/loading.css" />
+<link rel="stylesheet" href="/css/contador.css" />
 
 <style>
   body {
@@ -20,7 +21,16 @@
 
 <div id="loading"></div>
 
-<div style="padding: 1.5%">
+<div style="padding: 1.5%; padding-top: 0.5%;">
+  <div class="row">
+    <div class="col-lg-10"></div>
+    <div class="col-sm-2">
+      <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
+        <span class="counter-value">792</span>
+        resultados
+      </button>
+    </div>
+  </div>
   <div class="row mb-2">
     <div class="col-sm-2">
         <div class="form-floating">
@@ -123,5 +133,6 @@
 <script type="text/javascript" src="/js/carregador.js"></script>
 <script type="text/javascript" src="/js/validate.js"></script>
 <script type="text/javascript" src="/js/procura.js"></script>
+<script type="text/javascript" src="/js/contador.js"></script>
 
 <%- include('partials/footer') %>

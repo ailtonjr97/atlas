@@ -20,11 +20,14 @@ app.use((req, res, next) => {
   next();
 });
 
+
 router.get("/", async (req, res, next) => {
   if (req.isAuthenticated()) {
+    let resultados = await ProdutoProtheus.countDocuments(); 
     Chamado.find(function (err, chamado) {
       ProdutoProtheus.find(function (error, produtos) {
         res.render("produtos", {
+          resultados: resultados,
           atualizado: 0,
           chamado: chamado,
           produtos: produtos,
@@ -39,9 +42,11 @@ router.get("/", async (req, res, next) => {
 
 router.get("/atualizada", async (req, res, next) => {
   if (req.isAuthenticated()) {
+    let resultados = await ProdutoProtheus.countDocuments();
     Chamado.find(function (err, chamado) {
       ProdutoProtheus.find(function (error, produtos) {
         res.render("produtos", {
+          resultados: resultados,
           atualizado: 1,
           chamado: chamado,
           produtos: produtos,
@@ -57,7 +62,7 @@ router.get("/atualizada", async (req, res, next) => {
 router.get("/atualizar", async (req, res, next) => {
   try {
     await axios
-      .get(process.env.APITOTVS + "ACDMOB/products/?pagesize=21000", {
+      .get(process.env.APITOTVS + "zWSProdutos/get_all?limit=20000", {
         auth: {
           username: process.env.USER,
           password: process.env.SENHAPITOTVS,
@@ -65,7 +70,7 @@ router.get("/atualizar", async (req, res, next) => {
       })
       .then((response) => {
         ProdutoProtheus.deleteMany().then(() => {
-          let produtos = response.data.products;
+          let produtos = response.data.objects;
           ProdutoProtheus.insertMany(produtos)
             .then(() => {
               res.redirect("/produtos/atualizada")
@@ -91,15 +96,15 @@ router.get("/atualizar", async (req, res, next) => {
 router.get("/atualizarunico/:id", async (req, res, next) => {
   try {
     await axios
-      .get(process.env.APITOTVS + "acdmob/products?searchkey=" + req.params.id, {
+      .get(process.env.APITOTVS + "zWSProdutos/get_id?id=" + req.params.id, {
         auth: {
           username: process.env.USER,
           password: process.env.SENHAPITOTVS,
         },
       })
       .then((response) => {
-        ProdutoProtheus.deleteOne({"code": response.data.products[0].code}).then(() => {
-          ProdutoProtheus.create(response.data.products).then(()=>{
+        ProdutoProtheus.deleteOne({"cod": response.data.cod}).then(() => {
+          ProdutoProtheus.create(response.data).then(()=>{
             res.redirect("/produtos/atualizada");
           })
         });
