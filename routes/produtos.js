@@ -23,17 +23,37 @@ app.use((req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   if (req.isAuthenticated()) {
-    let resultados = await ProdutoProtheus.countDocuments(); 
-    Chamado.find(function (err, chamado) {
-      ProdutoProtheus.find(function (error, produtos) {
-        res.render("produtos", {
-          resultados: resultados,
-          atualizado: 0,
-          chamado: chamado,
-          produtos: produtos,
-        });
-      }).sort({"code": 1});
-    });
+    try {
+      let resultados = await ProdutoProtheus.countDocuments();
+      let chamado = await Chamado.find();
+      let produtos = await ProdutoProtheus.find().sort({"cod": 1});
+      res.render("produtos", {
+        resultados: resultados,
+        atualizado: 0,
+        chamado: chamado,
+        produtos: produtos,
+      });
+    } catch (error) {
+      res.send("Erro ao retornar página web. Tente novamente mais tarde.");
+    }
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  }
+});
+
+router.get("/detalhes/:id", async (req, res, next) => {
+  if (req.isAuthenticated()) { 
+    try {
+      let chamado = await Chamado.find()
+      let dados = await ProdutoProtheus.findById({"_id": req.params.id})
+      res.render("detalhes", {
+        chamado: chamado,
+        dados: dados,
+    })
+    } catch (error) {
+      res.send("Erro ao retornar página web. Tente novamente mais tarde.");
+    }
   } else {
     req.session.returnTo = req.originalUrl;
     res.redirect("/login");
@@ -42,44 +62,37 @@ router.get("/", async (req, res, next) => {
 
 router.get("/atualizada", async (req, res, next) => {
   if (req.isAuthenticated()) {
-    let resultados = await ProdutoProtheus.countDocuments();
-    Chamado.find(function (err, chamado) {
-      ProdutoProtheus.find(function (error, produtos) {
-        res.render("produtos", {
-          resultados: resultados,
-          atualizado: 1,
-          chamado: chamado,
-          produtos: produtos,
-        });
-      }).sort({"code": 1});;
-    });
+    try {
+      let resultados = await ProdutoProtheus.countDocuments();
+      let chamado = await Chamado.find();
+      let produtos = await ProdutoProtheus.find().sort({"cod": 1});
+      res.render("produtos", {
+        resultados: resultados,
+        atualizado: 1,
+        chamado: chamado,
+        produtos: produtos,
+      });
+    } catch (error) {
+      res.send("Erro ao retornar página web. Tente novamente mais tarde.");
+    }
   } else {
     req.session.returnTo = req.originalUrl;
     res.redirect("/login");
   }
 });
 
-router.get("/atualizar", async (req, res, next) => {
+router.get("/atualizar", (req, res, next) => {
   try {
-    await axios
-      .get(process.env.APITOTVS + "zWSProdutos/get_all?limit=20000", {
+    ProdutoProtheus.deleteMany().then(async()=>{
+      let api = await axios.get(process.env.APITOTVS + "zWSProdutos/get_all?limit=20000", {
         auth: {
           username: process.env.USER,
           password: process.env.SENHAPITOTVS,
         },
       })
-      .then((response) => {
-        ProdutoProtheus.deleteMany().then(() => {
-          let produtos = response.data.objects;
-          ProdutoProtheus.insertMany(produtos)
-            .then(() => {
-              res.redirect("/produtos/atualizada")
-            })
-            .catch((error) => {
-              res.send(error);
-            });
-        });
-      });
+      await ProdutoProtheus.insertMany(api)
+      res.redirect("/produtos/atualizada")
+    })
   } catch (err) {
     Chamado.find(function (err, chamado) {
       ProdutoProtheus.find(function (error, produtos) {
