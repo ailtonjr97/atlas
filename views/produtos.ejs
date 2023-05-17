@@ -109,7 +109,7 @@
           <td><%=produto.tipo%></td>
           <td><%=produto.um%></td>
           <td>
-            <a class="button-8 mb-2" onclick="confirmation('Esse produto será atualizado. Deseja prosseguir?' , '/produtos/atualizarunico/<%=produto.cod%>')">Atualizar</a>
+            <a class="button-8 mb-2" onclick="confirmation('Esse produto será atualizado. Deseja prosseguir?' , '/produtos/atualizarunico/<%=produto._id%>/<%=produto.cod%>')">Atualizar</a>
             <a class="button-8 mb-2" href="/produtos/detalhes/<%=produto._id%>">Detalhes</a>
           </td>
         </tr>

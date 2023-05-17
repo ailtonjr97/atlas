@@ -45,8 +45,8 @@ router.get("/", async (req, res, next) => {
 router.get("/detalhes/:id", async (req, res, next) => {
   if (req.isAuthenticated()) { 
     try {
-      let chamado = await Chamado.find()
-      let dados = await ProdutoProtheus.findById({"_id": req.params.id})
+      let chamado = await Chamado.find();
+      let dados = await ProdutoProtheus.findById({"_id": req.params.id});
       res.render("detalhes", {
         chamado: chamado,
         dados: dados,
@@ -81,57 +81,59 @@ router.get("/atualizada", async (req, res, next) => {
   }
 });
 
-router.get("/atualizar", (req, res, next) => {
-  try {
-    ProdutoProtheus.deleteMany().then(async()=>{
-      let api = await axios.get(process.env.APITOTVS + "zWSProdutos/get_all?limit=20000", {
-        auth: {
-          username: process.env.USER,
-          password: process.env.SENHAPITOTVS,
-        },
+router.get("/atualizar", async(req, res, next) => {
+  if(req.isAuthenticated){
+    try {
+      ProdutoProtheus.deleteMany().then(async()=>{
+        let api = await axios.get(process.env.APITOTVS + "zWSProdutos/get_all?limit=20000", {
+          auth: {
+            username: process.env.USER,
+            password: process.env.SENHAPITOTVS,
+          },
+        })
+        await ProdutoProtheus.insertMany(api.data.objects);
+        res.redirect("/produtos/atualizada");
       })
-      await ProdutoProtheus.insertMany(api)
-      res.redirect("/produtos/atualizada")
-    })
-  } catch (err) {
-    Chamado.find(function (err, chamado) {
-      ProdutoProtheus.find(function (error, produtos) {
-        res.render("produtos", {
-          atualizado: 2,
-          chamado: chamado,
-          produtos: produtos,
-        });
+    } catch (err) {
+      let chamado = await Chamado.find();
+      let produtos = await ProdutoProtheus.find();
+      res.render("produtos", {
+        atualizado: 2,
+        chamado: chamado,
+        produtos: produtos,
       });
-    });
+    }
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
   }
 });
 
-router.get("/atualizarunico/:id", async (req, res, next) => {
-  try {
-    await axios
-      .get(process.env.APITOTVS + "zWSProdutos/get_id?id=" + req.params.id, {
-        auth: {
-          username: process.env.USER,
-          password: process.env.SENHAPITOTVS,
-        },
+router.get("/atualizarunico/:id/:cod", async (req, res, next) => {
+  if(req.isAuthenticated){
+    try {
+      ProdutoProtheus.deleteOne({"_id": req.params.id}).then(async() => {
+      let api =  await axios.get(process.env.APITOTVS + "zWSProdutos/get_id?id=" + req.params.cod, {
+          auth: {
+            username: process.env.USER,
+            password: process.env.SENHAPITOTVS,
+          },
+        })
+        await ProdutoProtheus.create(api.data);
+        res.redirect("/produtos/atualizada");
       })
-      .then((response) => {
-        ProdutoProtheus.deleteOne({"cod": response.data.cod}).then(() => {
-          ProdutoProtheus.create(response.data).then(()=>{
-            res.redirect("/produtos/atualizada");
-          })
-        });
+    } catch (err) {
+      let chamado = await Chamado.find();
+      let produtos = await ProdutoProtheus.find();
+      res.render("produtos", {
+        atualizado: 2,
+        chamado: chamado,
+        produtos: produtos,
       });
-  } catch (err) {
-    Chamado.find(function (err, chamado) {
-      ProdutoProtheus.find(function (error, produtos) {
-        res.render("produtos", {
-          atualizado: 2,
-          chamado: chamado,
-          produtos: produtos,
-        });
-      });
-    });
+    }
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
   }
 });
 
