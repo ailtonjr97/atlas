@@ -37,9 +37,6 @@
           <div class="form-floating">
             <select class="form-select" id="tipo" aria-label="Floating label" name="tipo" required>
               <option class="valor" value="<%=dados.tipo%>"><%=dados.tipo%></option>
-              <option class="valor" value="AI">AI - ATIVO IMOBILIZADO</option>
-              <option class="valor" value="GG">GG - GASTOS GERAIS</option>
-              <option class="valor" value="GN">GN - GENERICO</option>
             </select>
             <label for="tipo">Tipo:</label>
           </div>
@@ -48,9 +45,6 @@
           <div class="form-floating">
             <select class="form-select" id="um" aria-label="Floating label" name="um" required>
               <option class="valor" value="<%=dados.tipo%>"><%=dados.um%></option>
-              <option class="valor" value="PCT">PCT - PACOTE</option>
-              <option class="valor" value="CX">CX - CAIXA</option>
-              <option class="valor" value="PK">PK - PACK</option>
             </select>
             <label for="um">Unidade:</label>
           </div>
@@ -58,10 +52,7 @@
         <div class="col">
           <div class="form-floating">
             <select class="form-select" id="locpad" aria-label="Floating label" name="locpad" required>
-              <option class="valor" value="14">14</option>
-              <option class="valor" value="01">01 - ARMAZEM</option>
-              <option class="valor" value="10">10 - ALMOXARIFADO GERAL</option>
-              <option class="valor" value="21">21 - INTERMEDIÁRIO</option>
+              <option class="valor" value="<%=dados.locpad%>"><%=dados.locpad%></option>
             </select>
             <label for="locpad">Armazém padrão:</label>
           </div>

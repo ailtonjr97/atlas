@@ -6,7 +6,8 @@ const produtosProtheus = new mongoose.Schema({
   desc: String,
   tipo: String,
   codite: String,
-  um: String
+  um: String,
+  locpad: String
 });
 
 module.exports = mongoose.model("ProdutoProtheus", produtosProtheus);
