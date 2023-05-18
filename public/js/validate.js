@@ -1,7 +1,31 @@
-function validate(endereco) {
+function validate(form) {
+  if (document.getElementsByName("nome")[0].value == "") {
+    alert('O campo "nome" não pode ser vazio');
+    return false;
+  } else if (document.getElementsByName("codigo")[0].value == "") {
+    alert('O campo "código" não pode ser vazio');
+    return false;
+  } else if (
+    document.getElementsById("estoqueminInput").value >
+    document.getElementById("estoquemaxInput").value
+  ) {
     alert(
-      "A tabela será atualizada, podendo levar até dois minutos. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro. Você deseja realmente atualizar essa tabela?"
+      'O campo "Estoque mínimo" não pode ser maior que o campo "Estoque máximo"'
     );
-    document.getElementById('loading').style.display = 'block';
-    return window.location.replace(endereco);
+    return false;
+  } else {
+    return confirm("Você realmente quer cadastrar esse produto?");
+    const file = document.querySelector("#file");
+    file.addEventListener("change", (e) => {
+      // Get the selected file
+      const [file] = e.target.files;
+      // Get the file name and size
+      const { name: fileName, size } = file;
+      // Convert size in bytes to kilo bytes
+      const fileSize = (size / 1000).toFixed(2);
+      // Set the text content
+      const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+      document.querySelector(".file-name").textContent = fileNameAndSize;
+    });
   }
+}

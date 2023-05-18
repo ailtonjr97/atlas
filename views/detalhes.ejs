@@ -1,4 +1,7 @@
 <%- include('partials/header') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/files.css" />
 
 <form
   action="produto/cadastroproduto"
@@ -6,221 +9,78 @@
   enctype="multipart/form-data"
   onsubmit="return validate(this);"
 >
-  <div class="row" id="descritivoCadastro" style="margin-left: none">
-    <div class="col-lg-12 mt-2" id="titulo">
-      <h3 class="descritivoCadastro">Cadastro de Produto</h3>
+
+<div class="container-fluid">
+  <div class="row" style="padding: 1%; max-width: 100%">
+    <div class="row mb-2" style>
+      <div class="col-lg-12">
+        <button type="button" class="button-8" style="margin-right: 0.5%" onclick="trocaMenu()">Cadastrais</button>
+      </div>
     </div>
-  </div>
-  <div class="row mb-2">
-    <div class="col-lg-12">
-      <button type="button" class="button-8" style="margin-right: 1%" data-bs-dismiss="modal" onclick="mostraBasico()">Básico</button>
-      <button type="button" class="button-8" style="margin-right: 1%" data-bs-dismiss="modal" onclick="mostraFinanceiro()">Financeiro</button>
-      <button type="button" class="button-8" style="margin-right: 1%" data-bs-dismiss="modal" onclick="mostraMrp()">MRP</button>
-    </div>
-  </div>
-  <!-- Aqui entra os botões do básico -->
-  <div class="row basico">
-    <div class="col-lg">
-      <div class="form-floating">
-        <input class="form-control" id="nameInput" name="nome" />
-        <label for="descricaoInput">Nome:</label>
+    <div class="cadastrais">
+      <div class="row mb-2">
+        <div class="col-md-4">
+          <div class="form-floating">
+            <input class="form-control" id="cod" name="cod" value="<%=dados.cod%>" required/>
+            <label for="cod">Código:</label>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="form-floating">
+            <input class="form-control" id="desc" name="desc" value="<%=dados.desc%>" required/>
+            <label for="desc">Descritivo:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="tipo" aria-label="Floating label" name="tipo" required>
+              <option class="valor" value="<%=dados.tipo%>"><%=dados.tipo%></option>
+              <option class="valor" value="AI">AI - ATIVO IMOBILIZADO</option>
+              <option class="valor" value="GG">GG - GASTOS GERAIS</option>
+              <option class="valor" value="GN">GN - GENERICO</option>
+            </select>
+            <label for="tipo">Tipo:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="um" aria-label="Floating label" name="um" required>
+              <option class="valor" value="<%=dados.tipo%>"><%=dados.um%></option>
+              <option class="valor" value="PCT">PCT - PACOTE</option>
+              <option class="valor" value="CX">CX - CAIXA</option>
+              <option class="valor" value="PK">PK - PACK</option>
+            </select>
+            <label for="um">Unidade:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="locpad" aria-label="Floating label" name="locpad" required>
+              <option class="valor" value="14">14</option>
+              <option class="valor" value="01">01 - ARMAZEM</option>
+              <option class="valor" value="10">10 - ALMOXARIFADO GERAL</option>
+              <option class="valor" value="21">21 - INTERMEDIÁRIO</option>
+            </select>
+            <label for="locpad">Armazém padrão:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="grupo" aria-label="Floating label" name="grupo" required>
+              <option class="valor" value="0001">14</option>
+              <option class="valor" value="0002">01 - ARMAZEM</option>
+              <option class="valor" value="0003">10 - ALMOXARIFADO GERAL</option>
+              <option class="valor" value="0004">21 - INTERMEDIÁRIO</option>
+            </select>
+            <label for="grupo">Grupo:</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="row mt-2 basico" id="rowTerceira">
-    <div class="col-lg">
-      <div class="form-floating">
-        <input class="form-control" id="descricaoInput" name="descri" />
-        <label for="descricaoInput">Descrição:</label>
-      </div>
-    </div>
-  </div>
-  <div class="row mt-2 basico">
-    <div class="col-lg">
-      <div class="form-floating">
-        <input class="form-control" id="codigoInput" name="codigo" />
-        <label for="codigoInput">Código:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <select
-          class="form-select"
-          id="tipoSelect"
-          aria-label="Floating label"
-          name="tipo"
-        >
-          <option class="valor"></option>
-          <option class="valor">PL</option>
-          <option class="valor">MP</option>
-          <option class="valor">SV</option>
-          <option class="valor">MC</option>
-        </select>
-        <label for="tipoSelect">Tipo:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <select
-          class="form-select"
-          id="grupoSelect"
-          aria-label="Floating label"
-          name="grupo"
-        >
-          <option class="valor"></option>
-          <option class="valor" value="0001">
-            Resinas plásticas / Pigmentos
-          </option>
-          <option class="valor" value="0002">Borrachas</option>
-          <option class="valor" value="0003">Chapas / Barras / Perfis</option>
-        </select>
-        <label for="grupoSelect">Grupo:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input class="form-control" id="ncmInput" type="number" name="ncm" />
-        <label for="ncmInput">NCM:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input class="form-control" id="gtinInput" type="number" name="gtin" />
-        <label for="ncmInput">GTIN:</label>
-      </div>
-    </div>
-  </div>
-  <div class="row mt-2 basico">
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="unInput"
-          type="text"
-          name="un"
-          required
-        />
-        <label for="ncmInput">Unidade:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="utilizacaoInput"
-          type="text"
-          name="utilizacao"
-        />
-        <label for="ncmInput">Utilização:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="familiaInput"
-          type="text"
-          name="familia"
-        />
-        <label for="ncmInput">Família:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="origemInput"
-          type="text"
-          name="origem"
-        />
-        <label for="ncmInput">Origem:</label>
-      </div>
-    </div>
-  </div>
-  <!-- Aqui entra os botões do financeiro -->
-  <div class="row mt-2 financeiro">
-    <div class="col-lg">
-      <div class="form-floating">
-        <input class="form-control" id="ipiInput" type="number" name="ipi" />
-        <label for="ipiInput">IPI:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input class="form-control" id="icmsInput" type="number" name="icms" />
-        <label for="icmsInput">ICMS:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="cofinsInput"
-          type="number"
-          name="cofins"
-        />
-        <label for="cofinsInput">COFINS:</label>
-      </div>
-    </div>
-  </div>
-  <!-- Aqui entra os botões do MRP -->
-  <div class="row mt-2 MRP">
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="qtdembalagemInput"
-          type="number"
-          name="qtdembalagem"
-        />
-        <label for="qtdembalagemInput">Quantidade Embalagem:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="loteminInput"
-          type="number"
-          name="lotemin"
-        />
-        <label for="loteminInput">Lote mínimo:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="estoqueminInput"
-          type="number"
-          name="estoquemin"
-        />
-        <label for="estoqueminInput">Estoque mínimo:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="estoquemaxInput"
-          type="number"
-          name="estoquemax"
-        />
-        <label for="estoquemaxInput">Estoque máximo:</label>
-      </div>
-    </div>
-    <div class="col-lg">
-      <div class="form-floating">
-        <input
-          class="form-control"
-          id="prazovalidadeInput"
-          type="date"
-          name="prazovalidade"
-        />
-        <label for="prazovalidadeInput">Prazo validade:</label>
-      </div>
-    </div>
-  </div>
+</div>
   <div class="file-input mt-3" style="margin-left: 1.5%">
     <input type="file" id="file" class="file" name="postImage" />
     <label for="file">
@@ -238,6 +98,8 @@
   </button>
 </form>
 
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/validate.js"></script>
 <script>
   for (i = 0; i < document.getElementsByClassName("financeiro").length; i++) {
     document.getElementsByClassName("financeiro")[i].style.display = "none";
@@ -256,31 +118,6 @@
     }
   }
 
-  function mostraFinanceiro() {
-    for (i = 0; i < document.getElementsByClassName("financeiro").length; i++) {
-      document.getElementsByClassName("financeiro")[i].style.display = "flex";
-    }
-    for (i = 0; i < document.getElementsByClassName("basico").length; i++) {
-      document.getElementsByClassName("basico")[i].style.display = "none";
-    }
-    for (i = 0; i < document.getElementsByClassName("MRP").length; i++) {
-      document.getElementsByClassName("MRP")[i].style.display = "none";
-    }
-  }
-
-  function mostraMrp() {
-    for (i = 0; i < document.getElementsByClassName("MRP").length; i++) {
-      document.getElementsByClassName("MRP")[i].style.display = "flex";
-    }
-    for (i = 0; i < document.getElementsByClassName("financeiro").length; i++) {
-      document.getElementsByClassName("financeiro")[i].style.display = "none";
-    }
-
-    for (i = 0; i < document.getElementsByClassName("basico").length; i++) {
-      document.getElementsByClassName("basico")[i].style.display = "none";
-    }
-  }
-
   const file = document.querySelector("#file");
   file.addEventListener("change", (e) => {
     // Get the selected file
@@ -293,36 +130,5 @@
     const fileNameAndSize = `${fileName} - ${fileSize}KB`;
     document.querySelector(".file-name").textContent = fileNameAndSize;
   });
-
-  function validate(form) {
-    if (document.getElementsByName("nome")[0].value == "") {
-      alert('O campo "nome" não pode ser vazio');
-      return false;
-    } else if (document.getElementsByName("codigo")[0].value == "") {
-      alert('O campo "código" não pode ser vazio');
-      return false;
-    } else if (
-      document.getElementsById("estoqueminInput").value >
-      document.getElementById("estoquemaxInput").value
-    ) {
-      alert(
-        'O campo "Estoque mínimo" não pode ser maior que o campo "Estoque máximo"'
-      );
-      return false;
-    } else {
-      return confirm("Você realmente quer cadastrar esse produto?");
-      const file = document.querySelector("#file");
-      file.addEventListener("change", (e) => {
-        // Get the selected file
-        const [file] = e.target.files;
-        // Get the file name and size
-        const { name: fileName, size } = file;
-        // Convert size in bytes to kilo bytes
-        const fileSize = (size / 1000).toFixed(2);
-        // Set the text content
-        const fileNameAndSize = `${fileName} - ${fileSize}KB`;
-        document.querySelector(".file-name").textContent = fileNameAndSize;
-      });
-    }
-  }
+  
 </script>

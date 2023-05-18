@@ -85,7 +85,7 @@ router.get("/atualizar", async(req, res, next) => {
   if(req.isAuthenticated){
     try {
       ProdutoProtheus.deleteMany().then(async()=>{
-        let api = await axios.get(process.env.APITOTVS + "zWSProdutos/get_all?limit=20000", {
+        let api = await axios.get(process.env.APITOTVS + "zWSProduto/get_all?limit=20000", {
           auth: {
             username: process.env.USER,
             password: process.env.SENHAPITOTVS,
@@ -113,7 +113,7 @@ router.get("/atualizarunico/:id/:cod", async (req, res, next) => {
   if(req.isAuthenticated){
     try {
       ProdutoProtheus.deleteOne({"_id": req.params.id}).then(async() => {
-      let api =  await axios.get(process.env.APITOTVS + "zWSProdutos/get_id?id=" + req.params.cod, {
+      let api =  await axios.get(process.env.APITOTVS + "zWSProduto/get_id?id=" + req.params.cod, {
           auth: {
             username: process.env.USER,
             password: process.env.SENHAPITOTVS,
