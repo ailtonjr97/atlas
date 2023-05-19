@@ -21,10 +21,7 @@ app.use((req, res, next) => {
 });
 
 router.get("/protheus/empresasfiliais", async (req, res, next) => {
-  await axios
-    .all([
-      axios.get(
-        process.env.APITOTVS + "api/framework/environment/v1/companies",
+  await axios.all([axios.get(process.env.APITOTVS + "api/framework/environment/v1/companies",
         {
           auth: {
             username: process.env.USER,
@@ -32,8 +29,7 @@ router.get("/protheus/empresasfiliais", async (req, res, next) => {
           },
         }
       ),
-      axios.get(
-        process.env.APITOTVS + "api/framework/environment/v1/branches",
+      axios.get(process.env.APITOTVS + "api/framework/environment/v1/branches",
         {
           auth: {
             username: process.env.USER,

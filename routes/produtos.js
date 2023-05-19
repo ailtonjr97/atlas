@@ -46,10 +46,15 @@ router.get("/detalhes/:id", async (req, res, next) => {
   if (req.isAuthenticated()) { 
     try {
       let chamado = await Chamado.find();
-      let dados = await ProdutoProtheus.findById({"_id": req.params.id});
+      let dados = await axios.get(process.env.APITOTVS + "zWSProduto/get_id?id=" + req.params.id, {
+        auth: {
+          username: process.env.USER,
+          password: process.env.SENHAPITOTVS,
+        },
+      })
       res.render("detalhes", {
         chamado: chamado,
-        dados: dados,
+        dados: dados.data,
     })
     } catch (error) {
       res.send("Erro ao retornar página web. Tente novamente mais tarde.");
@@ -85,13 +90,13 @@ router.get("/atualizar", async(req, res, next) => {
   if(req.isAuthenticated){
     try {
       ProdutoProtheus.deleteMany().then(async()=>{
-        let api = await axios.get(process.env.APITOTVS + "zWSProduto/get_all?limit=20000", {
+        let apiProdutos = await axios.get(process.env.APITOTVS + "zWSProduto/get_all?limit=20000", {
           auth: {
             username: process.env.USER,
             password: process.env.SENHAPITOTVS,
           },
         })
-        await ProdutoProtheus.insertMany(api.data.objects);
+        await ProdutoProtheus.insertMany(apiProdutos.data.objects);
         res.redirect("/produtos/atualizada");
       })
     } catch (err) {
@@ -113,13 +118,13 @@ router.get("/atualizarunico/:id/:cod", async (req, res, next) => {
   if(req.isAuthenticated){
     try {
       ProdutoProtheus.deleteOne({"_id": req.params.id}).then(async() => {
-      let api =  await axios.get(process.env.APITOTVS + "zWSProduto/get_id?id=" + req.params.cod, {
+      let apiProdutos =  await axios.get(process.env.APITOTVS + "zWSProduto/get_id?id=" + req.params.cod, {
           auth: {
             username: process.env.USER,
             password: process.env.SENHAPITOTVS,
           },
         })
-        await ProdutoProtheus.create(api.data);
+        await ProdutoProtheus.create(apiProdutos.data);
         res.redirect("/produtos/atualizada");
       })
     } catch (err) {

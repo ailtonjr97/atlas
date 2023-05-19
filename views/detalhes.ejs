@@ -60,12 +60,25 @@
         <div class="col">
           <div class="form-floating">
             <select class="form-select" id="grupo" aria-label="Floating label" name="grupo" required>
-              <option class="valor" value="0001">14</option>
-              <option class="valor" value="0002">01 - ARMAZEM</option>
-              <option class="valor" value="0003">10 - ALMOXARIFADO GERAL</option>
-              <option class="valor" value="0004">21 - INTERMEDIÁRIO</option>
+              <option class="valor" value="<%=dados.grupo%>"><%=dados.grupo%></option>
             </select>
             <label for="grupo">Grupo:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="te" aria-label="Floating label" name="te" required>
+              <option class="valor" value="<%=dados.te%>"><%=dados.te%></option>
+            </select>
+            <label for="te">TE padrão:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="ts" aria-label="Floating label" name="ts" required>
+              <option class="valor" value="<%=dados.ts%>"><%=dados.ts%></option>
+            </select>
+            <label for="te">TS padrão:</label>
           </div>
         </div>
       </div>
