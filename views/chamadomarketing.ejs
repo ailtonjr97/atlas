@@ -78,20 +78,21 @@ input:focus + label {
 
 <form action="/chamadomarketing" method="post" enctype="multipart/form-data">
   <div class="row" id='rowMestra'>
-    <div class="row" id='descritivoCadastro'>
-        <div class="col-lg-3 mb-3 mt-3" style="margin-left: 350px; width: 290px;">
-            <h3 class='descritivoCadastro'>Abrir chamado para:</h3>
-        </div>
-        <div class="col-lg-3 mb-3 mt-3" style="padding-left: 0px;">
-            <select class="form-select" id="setorSelect" aria-label="Floating label" name="setor">
-                <option class='valor'>Marketing</option>
-            </select>
-        </div>
+    <div class="row mb-3 mt-3">
+      <div class="col">
+        <div class="form-floating">
+          <select class="form-select" id="setor" aria-label="Floating label" name="setor">
+              <option class='valor'>Marketing</option>
+          </select>
+        <label for="setor">New ticket to:</label>
+      </div>
+      </div>
     </div>
     <div class="row" id='rowTerceira'>
       <div class="col-lg">
         <div class="form-floating">
-            <textarea name="descri" cols="174" rows="2" placeholder="Descrição:" style="border: 1px solid #ced4da; border-radius: 0.25rem;"></textarea>
+          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+          <label for="floatingTextarea">Write your ticket here...</label>
         </div>
       </div>
     </div>
@@ -101,7 +102,7 @@ input:focus + label {
           <select class="form-select" id="requisitanteSelect" aria-label="Floating label" name="requisitante">
             <option class='valor'><%=user%></option>
           </select>
-          <label for="requisitanteSelect">Requisitante:</label>
+          <label for="requisitanteSelect">Requester:</label>
         </div>
       </div>
     </div>
@@ -115,41 +116,19 @@ input:focus + label {
                     <option class='valor'>CD - Pinhais</option>
                     <option class='valor'>Injeções</option>
                 </select>
-                <label for="empresaSelect">Empresa:</label>
+                <label for="empresaSelect">Branch:</label>
             </div>
         </div>
         <div class="col-lg">
             <div class="form-floating">
                 <select class="form-select" id="urgenciaSelect" aria-label="Floating label" name="urgencia">
                     <option class='valor'>Normal</option>
-                    <option class='valor'>Urgente</option>
-                    <option class='valor'>Crítico</option>
+                    <option class='valor'>Urgent</option>
+                    <option class='valor'>Critical</option>
                 </select>
-                <label for="urgenciaSelect">Urgência:</label>
+                <label for="urgenciaSelect">Urgency:</label>
             </div>
         </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col-lg">
-            <div class="form-floating">
-              <select class="form-select" id="areaSelect" aria-label="Floating label" name="area">
-                <option class='valor'>Desenhos</option>
-                <option class='valor'>Artes</option>
-                <option class='valor'>E-mail</option>
-              </select>
-              <label for="areaSelect">Área de atuação:</label>
-            </div>
-          </div>
-          <div class="col-lg">
-            <div class="form-floating">
-              <select class="form-select" id="atividadeSelect" aria-label="Floating label" name="atividade">
-                <option class='valor'>Photoshop</option>
-                <option class='valor'>Adobe</option>
-                <option class='valor'>After Effects</option>
-              </select>
-              <label for="atividadeSelect">Atividade:</label>
-            </div>
-          </div>
     </div>
   </div>
   <br>
