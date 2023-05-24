@@ -233,12 +233,6 @@ th:hover #botaoAcoes {
   padding-left: 8px;
 }
 
-.navbar-icon-top .navbar-collapse .navbar-nav .nav-item .nav-link > .fa-user {
-  position: relative;
-  padding-left: 35%;
-  font-size: 18px;
-}
-
 .navbar-icon-top
   .navbar-collapse
   .navbar-nav
@@ -406,6 +400,17 @@ th:hover #botaoAcoes {
   .navbar-nav
   .nav-item
   .nav-link
+  > .fa-ticket {
+  position: relative;
+  padding-left: 19%;
+  font-size: 18px;
+}
+
+.navbar-icon-top
+  .navbar-collapse
+  .navbar-nav
+  .nav-item
+  .nav-link
   > .fa-money-bill-alt {
   position: relative;
   padding-left: 25%;
@@ -498,7 +503,7 @@ th:hover #botaoAcoes {
 
 .navbar-icon-top .navbar-collapse .navbar-nav .nav-item .nav-link > .fa-user {
   position: relative;
-  padding-left: 35%;
+  padding-left: 20%;
   font-size: 18px;
 }
 
@@ -844,11 +849,6 @@ li.nav-item.dropdown {
     width: 100%;
     background-color: #22577a;
     padding: 5px 0;
-  }
-
-  .descricao-menu {
-    display: block;
-    font-size: 22px;
   }
 
   .dropdown-item {

@@ -137,23 +137,23 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <i class="fa fa-bullhorn"></i><br />
-              <span class="descricao-menu">Marketing</span>
+              <i class="fa fa-ticket"></i><br />
+              <span class="descricao-menu">Ticket</span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
                 <a class="dropdown-item" href="/chamados/chamadomarketing"
-                  >Abrir Chamado</a
+                  >New ticket</a
                 >
               </li>
               <li>
                 <a class="dropdown-item" href="/chamados/verchamadomkt"
-                  >Chamados</a
+                  >Tickets</a
                 >
               </li>
               <li>
                 <a class="dropdown-item" href="/chamados/meuschamadosmkt"
-                  >Meus Chamados</a
+                  >My tickets</a
                 >
               </li>
             </ul>
@@ -168,15 +168,15 @@
               aria-expanded="false"
             >
               <i class="fa fa-dolly"></i><br />
-              <span class="descricao-menu">Logística</span>
+              <span class="descricao-menu">Logistic</span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" href="/produtos">Produtos</a>
+                <a class="dropdown-item" href="/produtos">Products</a>
               </li>
             </ul>
           </li>
-          <li class="nav-item dropdown" style="width: 100px">
+          <li class="nav-item dropdown" style="width: 80px">
             <a
               class="nav-link active"
               href="#"
@@ -186,10 +186,10 @@
               aria-expanded="false"
             >
               <i class="fa fa-chart-bar"></i>
-              <span class="descricao-menu">Controladoria</span>
+              <span class="descricao-menu">Controlling</span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="/produtos">Produtos</a></li>
+              <li><a class="dropdown-item" href="/produtos">Products</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -202,7 +202,7 @@
               aria-expanded="false"
             >
               <i class="fa fa-dollar-sign"></i><br />
-              <span class="descricao-menu">Financeiro</span>
+              <span class="descricao-menu">Finance</span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="/cnab">CNAB's ativos</a></li>
@@ -222,7 +222,7 @@
               aria-expanded="false"
             >
               <i class="fa fa-info"></i>
-              <span class="descricao-menu">Informações</span>
+              <span class="descricao-menu">Informations</span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
@@ -253,32 +253,15 @@
               chamados.listaAprovadores[i][0].nome &&
               chamados.listaAprovadores[i][1].status == "Em aprovação") { %>
               <%console.log(i)%>
-              <span
-                class="notificSpan"
-                style="
-                  position: absolute;
-                  left: 50%;
-                  bottom: 45px;
-                  z-index: 999;
-                "
-                ><button
-                  class="button-8"
-                  style="
-                    padding: 1px 5px;
-                    color: white;
-                    background-color: red;
-                    border-color: red;
-                    box-shadow: none;
-                    font-size: 11px;
-                  "
-                >
+              <span class="notificSpan" style="position: absolute; left: 50%; bottom: 45px; z-index: 999;">
+                <button class="button-8" style="padding: 1px 5px; color: white; background-color: red; border-color: red;box-shadow: none;font-size: 11px;">
                   1
-                </button></span
-              >
+                </button>
+              </span>
               <%}%> <%}%> <%})%>
               <i class="fa fa-user"></i>
               <br />
-              <span class="descricao-menu" id="arruma-titulo">Usuário</span>
+              <span class="descricao-menu" id="arruma-titulo">User</span>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <% chamado.forEach(function(chamados){ %> <%for(let i = 0; i <
