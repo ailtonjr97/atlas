@@ -20,9 +20,16 @@ app.use((req, res, next) => {
   next();
 });
 
-router.get("/", (req, res) => {
+router.get("/", async(req, res) => {
   if (req.isAuthenticated()){
-
+    Ticket.find().then((tickets)=>{
+      Ticket.find().countDocuments().then((results)=>{
+        res.render("ticketall",{
+          results: results,
+          tickets: tickets
+        })
+      })
+    });
   } else {
     req.session.returnTo = req.originalUrl;
     res.redirect("/login");
@@ -32,7 +39,7 @@ router.get("/", (req, res) => {
 router.get("/newticket", async(req, res)=>{
   if(req.isAuthenticated()){
     try {
-      res.render("ticket")
+      res.render("ticketnew")
     } catch (error) {
       res.send("Error. Try again later")
     }
@@ -58,127 +65,10 @@ router.post("/newticket", async(req, res)=>{
         inactive: false,
       });
       await Ticket.create(ticket);
-      res.redirect("/tickets")
+      res.redirect("/ticketall")
     } catch (error) {
       res.send("Error. Try again later.")
     }
-  }
-});
-
-router.post("/verchamadomkt", function (req, res) {
-  Chamado.updateMany(
-    { _id: req.body.idChamadoPost },
-    {
-      $set: {
-        empresa: req.body.empresa,
-        urgencia: req.body.urgencia,
-        area: req.body.area,
-        atividade: req.body.atividade,
-        designado: req.body.designado,
-        resposta: req.body.resposta,
-        arquivado: req.body.arquivado,
-      },
-    },
-    {
-      returnNewDocument: true,
-    },
-    function (error, result) {
-      if (error) {
-        res.send(error);
-      } else {
-        res.redirect("/verchamadomkt");
-      }
-    }
-  );
-});
-
-router.post("/aprovverchamadomkt", function (req, res) {
-  Chamado.updateMany(
-    { _id: req.body.idChamadoPost },
-    {
-      $push: {
-        listaAprovadores: [
-          { nome: req.body.aprovador },
-          { status: "Em aprovação" },
-        ],
-      },
-    },
-    {
-      returnNewDocument: true,
-    },
-    function (error, result) {
-      if (error) {
-        res.send(error);
-      } else {
-        res.redirect("/verchamadomkt");
-      }
-    }
-  );
-});
-
-//-------------------------------------------------------------------------------
-router.get("/meuschamadosmkt", (req, res) => {
-  if (req.isAuthenticated()) {
-    Chamado.find(function (err, chamado) {
-      User.find(function (error, user) {
-        res.render("meuschamadosmkt", {
-          chamado: chamado,
-          user: user,
-          logado: req.user.realNome,
-        });
-      });
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
-
-//-------------------------------------------------------------------------------
-router.get("/aprovChamados", (req, res) => {
-  if (req.isAuthenticated()) {
-    Chamado.find(function (err, chamado) {
-      User.find(function (error, user) {
-        res.render("aprovchamados", {
-          chamado: chamado,
-          user: user,
-          logado: req.user.realNome,
-        });
-      });
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
-
-router.post("/respostaAprovChamado", function (req, res) {
-  if (req.isAuthenticated()) {
-    const updatePromises = [];
-    for (let i = 0; i < req.body.indiceAprov; i++) {
-      updatePromises.push(
-        Chamado.updateOne(
-          {
-            _id: req.body.idChamadoPost,
-            ["listaAprovadores." + i + ".nome"]: req.user.realNome,
-          },
-          {
-            $set: {
-              ["listaAprovadores." + i]: [
-                { nome: req.user.realNome },
-                { status: req.body.respostaAprov },
-              ],
-            },
-          },
-          {
-            returnNewDocument: true,
-          }
-        )
-      );
-    }
-    Promise.all(updatePromises)
-      .then((result) => res.redirect("/aprovChamados"))
-      .catch((error) => res.send(error));
-  } else {
-    return res.redirect("/login");
   }
 });
 
