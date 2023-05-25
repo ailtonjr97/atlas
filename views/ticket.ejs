@@ -76,57 +76,45 @@ input:focus + label {
 </style>
 
 
-<form action="/chamadomarketing" method="post" enctype="multipart/form-data">
+<form action="/newticket" method="post" enctype="multipart/form-data">
   <div class="row" id='rowMestra'>
     <div class="row mb-3 mt-3">
       <div class="col">
         <div class="form-floating">
-          <select class="form-select" id="setor" aria-label="Floating label" name="setor">
-              <option class='valor'>Marketing</option>
+          <select class="form-select" id="department" aria-label="Floating label" name="department">
+              <option >Marketing</option>
           </select>
-        <label for="setor">New ticket to:</label>
+        <label for="department">New ticket to:</label>
       </div>
       </div>
     </div>
     <div class="row" id='rowTerceira'>
       <div class="col-lg">
         <div class="form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-          <label for="floatingTextarea">Write your ticket here...</label>
-        </div>
-      </div>
-    </div>
-    <div class="row mt-2">
-      <div class="col-lg">
-        <div class="form-floating">
-          <select class="form-select" id="requisitanteSelect" aria-label="Floating label" name="requisitante">
-            <option class='valor'><%=user%></option>
-          </select>
-          <label for="requisitanteSelect">Requester:</label>
+          <textarea class="form-control" placeholder="Write your ticket here..." id="description" name="description"></textarea>
+          <label for="description">Write your ticket here...</label>
         </div>
       </div>
     </div>
     <div class="row mt-2">
         <div class="col-lg">
             <div class="form-floating">
-                <select class="form-select" id="empresaSelect" aria-label="Floating label" name="empresa">
-                    <option class='valor'>Matriz</option>
-                    <option class='valor'>CDD - Linhares</option>
-                    <option class='valor'>Indústria - Linhares</option>
-                    <option class='valor'>CD - Pinhais</option>
-                    <option class='valor'>Injeções</option>
+                <select class="form-select" id="branch" aria-label="Floating label" name="branch">
+                    <option class='valor'>Example 1</option>
+                    <option class='valor'>Example 2</option>
+                    <option class='valor'>Example 3</option>
                 </select>
-                <label for="empresaSelect">Branch:</label>
+                <label for="branch">Branch:</label>
             </div>
         </div>
         <div class="col-lg">
             <div class="form-floating">
-                <select class="form-select" id="urgenciaSelect" aria-label="Floating label" name="urgencia">
+                <select class="form-select" id="urgency" aria-label="Floating label" name="urgency">
                     <option class='valor'>Normal</option>
                     <option class='valor'>Urgent</option>
                     <option class='valor'>Critical</option>
                 </select>
-                <label for="urgenciaSelect">Urgency:</label>
+                <label for="urgency">Urgency:</label>
             </div>
         </div>
     </div>
@@ -136,13 +124,13 @@ input:focus + label {
   <div class="file-input" style="margin-left: 2%;">
     <input type="file" id="file" class="file" name="postImage">
     <label for="file">
-      Escolher Anexo
+      New anex
       <p class="file-name" style="width: 500px;"></p>
     </label>
   </div>
 
   <br>
-  <button type="submit" id='botaoSalva' class="btn btn-success" style="margin-left: 45%;">Abrir chamado</button>
+  <button type="submit" id='botaoSalva' class="btn btn-success" style="margin-left: 45%;">Open ticket</button>
 </form>
 
 <script type="text/javascript">

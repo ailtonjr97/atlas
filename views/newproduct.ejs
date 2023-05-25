@@ -1,0 +1,256 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/files.css" />
+
+<form
+  action="produto/cadastroproduto"
+  method="post"
+  enctype="multipart/form-data"
+  onsubmit="return validate(this);"
+>
+
+<div class="container-fluid">
+  <div class="row" style="padding: 1%; max-width: 100%">
+    <div class="row mb-2" style>
+      <div class="col-lg-12">
+        <button type="button" class="button-8" style="margin-right: 0.5%" onclick="trocaMenu()">Cadastrais</button>
+      </div>
+    </div>
+    <div class="cadastrais">
+      <div class="row mb-2">
+        <div class="col-md-4">
+          <div class="form-floating">
+            <input class="form-control" id="cod" name="cod" value="<%=dados.cod%>" required/>
+            <label for="cod">Código:</label>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="form-floating">
+            <input class="form-control" id="desc" name="desc" value="<%=dados.desc%>" required/>
+            <label for="desc">Descritivo:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="tipo" aria-label="Floating label" name="tipo" required>
+              <option class="valor" value="<%=dados.tipo%>"><%=dados.tipo%></option>
+            </select>
+            <label for="tipo">Tipo:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="um" aria-label="Floating label" name="um" required>
+              <option class="valor" value="<%=dados.tipo%>"><%=dados.um%></option>
+            </select>
+            <label for="um">Unidade:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="locpad" aria-label="Floating label" name="locpad" required>
+              <option class="valor" value="<%=dados.locpad%>"><%=dados.locpad%></option>
+            </select>
+            <label for="locpad">Armazém padrão:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="grupo" aria-label="Floating label" name="grupo" required>
+              <option class="valor" value="<%=dados.grupo%>"><%=dados.grupo%></option>
+            </select>
+            <label for="grupo">Grupo:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="te" aria-label="Floating label" name="te" required>
+              <option class="valor" value="<%=dados.te%>"><%=dados.te%></option>
+            </select>
+            <label for="te">TE padrão:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="ts" aria-label="Floating label" name="ts" required>
+              <option class="valor" value="<%=dados.ts%>"><%=dados.ts%></option>
+            </select>
+            <label for="te">TS padrão:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="segum" aria-label="Floating label" name="segum" required>
+              <option class="valor" value="<%=dados.segum%>"><%=dados.segum%></option>
+            </select>
+            <label for="segum">Segunda unidade de medida:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <input class="form-control" id="conv" name="conv" value="<%=dados.conv%>" type="number" required/>
+            <label for="conv">Fator de conversão:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="tipconv" aria-label="Floating label" name="tipconv" required>
+              <option class="valor" value="<%=dados.tipconv%>"><%=dados.tipconv%></option>
+            </select>
+            <label for="tipconv">Tipo de conversão:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="alter" aria-label="Floating label" name="alter" required>
+              <option class="valor" value="<%=dados.alter%>"><%=dados.alter%></option>
+            </select>
+            <label for="alter">Alternativo:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col">
+          <div class="form-floating">
+            <input class="form-control" id="prv1" name="prv1" value="<%=dados.prv1%>" type="number" required/>
+            <label for="prv1">Preço de venda:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <input class="form-control" id="custd" name="custd" value="<%=dados.custd%>" type="number" required/>
+            <label for="custd">Custo Standard:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <input class="form-control" id="ucalstd" name="ucalstd" value="<%=dados.ucalstd%>" type="text" required/>
+            <label for="ucalstd">Último cálculo:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <input class="form-control" id="uprc" name="uprc" value="<%=dados.uprc%>" type="number" required/>
+            <label for="uprc">Último preço:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="mcustd" aria-label="Floating label" name="mcustd" required>
+              <option class="valor" value="<%=dados.mcustd%>"><%=dados.mcustd%></option>
+            </select>
+            <label for="mcustd">Moeda Custo Standard:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <input class="form-control" id="ucom" name="ucom" value="<%=dados.ucom%>" type="number" required/>
+            <label for="ucom">Última compra:</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col">
+          <div class="form-floating">
+            <input class="form-control" id="peso" name="peso" value="<%=dados.peso%>" type="number" required/>
+            <label for="peso">Peso líquido:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <input class="form-control" id="pesbru" name="pesbru" value="<%=dados.pesbru%>" type="number" required/>
+            <label for="pesbru">Peso bruto:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="conta" aria-label="Floating label" name="conta" required>
+              <option class="valor" value="<%=dados.conta%>"><%=dados.conta%></option>
+            </select>
+            <label for="conta">Conta contábil:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="cc" aria-label="Floating label" name="cc" required>
+              <option class="valor" value="<%=dados.cc%>"><%=dados.cc%></option>
+            </select>
+            <label for="cc">Conta contábil:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="itemcc" aria-label="Floating label" name="itemcc" required>
+              <option class="valor" value="<%=dados.itemcc%>"><%=dados.itemcc%></option>
+            </select>
+            <label for="itemcc">Item contábil:</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-floating">
+            <select class="form-select" id="familia" aria-label="Floating label" name="familia" required>
+              <option class="valor" value="<%=dados.familia%>"><%=dados.familia%></option>
+            </select>
+            <label for="familia">Família:</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="file-input mt-3" style="margin-left: 1.5%">
+    <input type="file" id="file" class="file" name="postImage" />
+    <label for="file">
+      Escolher Foto
+      <p class="file-name" style="width: 500px"></p>
+    </label>
+  </div>
+<!--   <button
+    type="submit"
+    id="botaoSalva"
+    class="btn btn-success mt-3"
+    style="margin-left: 46.5%"
+  >
+    Cadastrar
+  </button> -->
+</form>
+
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/validate.js"></script>
+<script>
+  for (i = 0; i < document.getElementsByClassName("financeiro").length; i++) {
+    document.getElementsByClassName("financeiro")[i].style.display = "none";
+    document.getElementsByClassName("MRP")[i].style.display = "none";
+  }
+
+  function mostraBasico() {
+    for (i = 0; i < document.getElementsByClassName("basico").length; i++) {
+      document.getElementsByClassName("basico")[i].style.display = "flex";
+    }
+    for (i = 0; i < document.getElementsByClassName("financeiro").length; i++) {
+      document.getElementsByClassName("financeiro")[i].style.display = "none";
+    }
+    for (i = 0; i < document.getElementsByClassName("MRP").length; i++) {
+      document.getElementsByClassName("MRP")[i].style.display = "none";
+    }
+  }
+
+  const file = document.querySelector("#file");
+  file.addEventListener("change", (e) => {
+    // Get the selected file
+    const [file] = e.target.files;
+    // Get the file name and size
+    const { name: fileName, size } = file;
+    // Convert size in bytes to kilo bytes
+    const fileSize = (size / 1000).toFixed(2);
+    // Set the text content
+    const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+    document.querySelector(".file-name").textContent = fileNameAndSize;
+  });
+  
+</script>

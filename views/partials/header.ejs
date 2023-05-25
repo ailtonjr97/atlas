@@ -56,7 +56,7 @@
     id="nav-page"
   >
     <div class="container-fluid" id="container-da-navbar">
-      <a class="navbar-brand" href="/inicio">
+      <a class="navbar-brand" href="/home">
         <img id="logo-atlas" src="/images/logo.png" />
       </a>
       <button class="navbar-toggler" id="botao-fechador2" type="button">
@@ -142,7 +142,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" href="/chamados/chamadomarketing"
+                <a class="dropdown-item" href="/tickets/"
                   >New ticket</a
                 >
               </li>
@@ -240,51 +240,13 @@
             </ul>
           </li>
           <li class="nav-item dropdown float-end" id="usuarios">
-            <a
-              class="nav-link active"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <% chamado.forEach(function(chamados){ %> <%for(let i = 0; i <
-              chamados.listaAprovadores.length; i++){%> <%if (logado ==
-              chamados.listaAprovadores[i][0].nome &&
-              chamados.listaAprovadores[i][1].status == "Em aprovação") { %>
-              <%console.log(i)%>
-              <span class="notificSpan" style="position: absolute; left: 50%; bottom: 45px; z-index: 999;">
-                <button class="button-8" style="padding: 1px 5px; color: white; background-color: red; border-color: red;box-shadow: none;font-size: 11px;">
-                  1
-                </button>
-              </span>
-              <%}%> <%}%> <%})%>
-              <i class="fa fa-user"></i>
-              <br/>
-              <span class="descricao-menu" id="arruma-titulo">User</span>
-            </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <% chamado.forEach(function(chamados){ %> <%for(let i = 0; i <
-              chamados.listaAprovadores.length; i++){%> <%if (logado ==
-              chamados.listaAprovadores[i][0].nome &&
-              chamados.listaAprovadores[i][1].status == "Em aprovação") { %>
               <li>
-                <a class="dropdown-item" href="/aprovChamados"
-                  >Aguardando aprovação dos seguintes chamados:
-                  <span
-                    ><button class="button-8" style="padding: 2px 10px">
-                      <%=chamados.idChamado%>
-                    </button></span
-                  >
-                  <%}%> <%}%> <%})%>
-                </a>
+                <a class="dropdown-item" href="/users/register">New user</a>
               </li>
               <li>
-                <a class="dropdown-item" href="/users/register">Novo Usuário</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="/users/ativos"
-                  >Usuários Ativos</a
+                <a class="dropdown-item" href="/users/actives"
+                  >Users</a
                 >
               </li>
               <li>
@@ -297,7 +259,7 @@
                   >Meus acessos TOTVS</a
                 >
               </li>
-              <li><a class="dropdown-item" href="/logout">Sair</a></li>
+              <li><a class="dropdown-item" href="/logout">Logout</a></li>
             </ul>
           </li>
         </ul>

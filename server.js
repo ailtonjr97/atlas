@@ -7,9 +7,9 @@ const passport = require("passport");
 const upload = require("express-fileupload");
 const bodyParser = require("body-parser");
 dotenv.config();
-const inicio = require("./routes/inicio.js");
+const initiation = require("./routes/initiation.js");
 const users = require("./routes/users.js");
-const chamados = require("./routes/chamado.js");
+const tickets = require("./routes/tickets.js");
 const produtos = require("./routes/produtos.js");
 const anexos = require("./routes/anexos.js");
 const informacoes = require("./routes/informacoes.js");
@@ -50,9 +50,9 @@ app.use(upload());
 
 mongoose.connect(process.env.MONGOSTRING);
 
-app.use("/", inicio);
+app.use("/", initiation);
 app.use("/users", users);
-app.use("/chamados", chamados);
+app.use("/tickets", tickets);
 app.use("/produtos", produtos);
 app.use("/anexos", anexos);
 app.use("/informacoes", informacoes);

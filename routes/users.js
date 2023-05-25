@@ -44,7 +44,7 @@ router.use("/register", function (req, res) {
         });
       });
     } else {
-      res.send("Acesso negado");
+      res.send("No access to this page.");
     }
   } else {
     req.session.returnTo = req.originalUrl;
@@ -52,7 +52,7 @@ router.use("/register", function (req, res) {
   }
 });
 
-router.post("/cadastra", function (req, res) {
+router.post("/register", function (req, res) {
   User.register(
     { username: req.body.username },
     req.body.password,
@@ -89,10 +89,10 @@ router.post("/cadastra", function (req, res) {
           },
           function (error, result) {
             if (error) {
-              res.send("erro1");
+              res.send("Error");
             } else {
               passport.authenticate("local")(req, res, function () {
-                res.redirect("/inicio");
+                res.redirect("/home");
               });
             }
           }
@@ -102,11 +102,11 @@ router.post("/cadastra", function (req, res) {
   );
 });
 
-router.get("/ativos", function (req, res) {
+router.get("/actives", function (req, res) {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
       User.find(function (error, user) {
-        res.render("ativos", {
+        res.render("actives", {
           chamado: chamado,
           usuario: user,
           logado: req.user.username,

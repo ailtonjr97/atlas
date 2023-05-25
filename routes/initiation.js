@@ -41,7 +41,7 @@ router.get("/login", function (req, res) {
   res.render("login");
 });
 
-router.post("/autentica", function (req, res) {
+router.post("/authenticate", function (req, res) {
   const user = new User({
     username: req.body.username,
     password: req.body.password,
@@ -52,7 +52,7 @@ router.post("/autentica", function (req, res) {
     } else {
       passport.authenticate("local")(req, res, function () {
         if (user) {
-          res.redirect(req.session.returnTo || "/inicio");
+          res.redirect(req.session.returnTo || "/home");
           delete req.session.returnTo;
         } else {
           res.send("Negative");
@@ -62,7 +62,7 @@ router.post("/autentica", function (req, res) {
   });
 });
 
-router.get("/inicio", function (req, res) {
+router.get("/home", function (req, res) {
   if (req.isAuthenticated()) {
     Chamado.find(function (err, chamado) {
       User.find(function (error, user) {

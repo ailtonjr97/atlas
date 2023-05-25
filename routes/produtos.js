@@ -42,6 +42,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+
 router.get("/detalhes/:id", async (req, res, next) => {
   if (req.isAuthenticated()) { 
     try {
@@ -87,7 +88,7 @@ router.get("/atualizada", async (req, res, next) => {
 });
 
 router.get("/atualizar", async(req, res, next) => {
-  if(req.isAuthenticated){
+  if(req.isAuthenticated()){
     try {
       ProdutoProtheus.deleteMany().then(async()=>{
         let apiProdutos = await axios.get(process.env.APITOTVS + "zWSProduto/get_all?limit=20000", {
@@ -115,7 +116,7 @@ router.get("/atualizar", async(req, res, next) => {
 });
 
 router.get("/atualizarunico/:id/:cod", async (req, res, next) => {
-  if(req.isAuthenticated){
+  if(req.isAuthenticated()){
     try {
       ProdutoProtheus.deleteOne({"_id": req.params.id}).then(async() => {
       let apiProdutos =  await axios.get(process.env.APITOTVS + "zWSProduto/get_id?id=" + req.params.cod, {

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const Chamado = require("../models/chamado.js");
+const Ticket = require("../models/ticket.js");
 const Anexo = require("../models/anexos.js");
 const User = require("../models/user.js");
 dotenv.config();
@@ -20,106 +20,48 @@ app.use((req, res, next) => {
   next();
 });
 
-router.get("/chamadomarketing", function (req, res) {
-  if (req.isAuthenticated()) {
-    Chamado.find(function (err, chamado) {
-      res.render("chamadomarketing", {
-        user: req.user.realNome,
-        chamado: chamado,
-        logado: req.user.realNome,
-      });
-    })
-      .sort({ _id: -1 })
-      .limit(1);
+router.get("/", (req, res) => {
+  if (req.isAuthenticated()){
+
   } else {
+    req.session.returnTo = req.originalUrl;
     res.redirect("/login");
   }
 });
 
-router.post("/chamadomarketing", function (req, res) {
-  if (req.files) {
-    let file = req.files.postImage;
-    let filename = file.name;
-    Chamado.countDocuments({}, function (err, count) {
-      if (err) {
-        console.log(err);
-      } else {
-        let count2 = count + 1;
-        file.mv("./public/anexos/" + count2 + "-" + filename, function (err) {
-          if (err) {
-            res.send("Erro ao subir arquivo. Favor abrir chamado.");
-          } else {
-            const chamado = new Chamado({
-              idChamado: count2,
-              setor: req.body.setor,
-              descri: req.body.descri,
-              empresa: req.body.empresa,
-              urgencia: req.body.urgencia,
-              area: req.body.area,
-              atividade: req.body.atividade,
-              requisitante: req.body.requisitante,
-              designado: "",
-              anexoNome: count2 + "-" + filename,
-              resposta: "",
-              arquivado: "",
-            });
-            chamado.save(function (err) {
-              if (err) {
-              } else {
-                res.redirect("/verchamadomkt");
-              }
-            });
-          }
-        });
-      }
-    });
+router.get("/newticket", async(req, res)=>{
+  if(req.isAuthenticated()){
+    try {
+      res.render("ticket")
+    } catch (error) {
+      res.send("Error. Try again later")
+    }
   } else {
-    Chamado.countDocuments({}, function (err, count) {
-      if (err) {
-        console.log(err);
-      } else {
-        let count2 = count + 1;
-        const chamado = new Chamado({
-          idChamado: count2,
-          setor: req.body.setor,
-          descri: req.body.descri,
-          empresa: req.body.empresa,
-          urgencia: req.body.urgencia,
-          area: req.body.area,
-          atividade: req.body.atividade,
-          requisitante: req.body.requisitante,
-          designado: "",
-          anexoNome: "",
-          resposta: "",
-          arquivado: "",
-        });
-        chamado.save(function (err) {
-          if (err) {
-          } else {
-            res.redirect("/verchamadomkt");
-          }
-        });
-      }
-    });
-  }
-});
-
-router.get("/verchamadomkt", (req, res) => {
-  if (req.isAuthenticated()) {
-    Anexo.find({}, function (err, anexo) {
-      Chamado.find(function (err, chamado) {
-        User.find(function (error, user) {
-          res.render("verchamadomkt", {
-            anexo: anexo,
-            chamado: chamado,
-            user: user,
-            logado: req.user.realNome,
-          });
-        });
-      });
-    });
-  } else {
+    req.session.returnTo = req.originalUrl;
     res.redirect("/login");
+  }
+})
+
+router.post("/newticket", async(req, res)=>{
+  if(req.isAuthenticated()){
+    try {
+      let ticketid = await Ticket.find().countDocuments;
+      const ticket = new Ticket({
+        idticket: ticketid,
+        department: req.body.department,
+        description: req.body.description,
+        branch: req.body.branch,
+        urgency: req.body.urgency,
+        requester: req.user.dadosPessoais[0].nome,
+        designated: "",
+        response: "",
+        inactive: false,
+      });
+      await Ticket.create(ticket);
+      res.redirect("/tickets")
+    } catch (error) {
+      res.send("Error. Try again later.")
+    }
   }
 });
 

@@ -15,13 +15,14 @@
 <div style="padding: 1.5%">
   <div class="row">
     <div class="col-md-4">
-      <a class="button-8 mb-2" onclick="confirmation('A tabela produtos leva, em média, 15 segundos para atualizar. Favor não fechar a aba do Chrome enquanto o processo é executado. Quando concluído irá aparecer uma mensagem de sucesso ou de erro. Você deseja realmente atualizar essa tabela?' , '/produtos/atualizar')">Atualizar tabela produtos</a>
+      <a class="button-8 mb-2" onclick="confirmation('This table will take 15 seconds to update. Please do not closa Chrome while the actions takes place. When done, a message of error or success will appear. Do you really want to update this table?' , '/produtos/atualizar')">Update products table</a>
+      <a class="button-8 mb-2" href="">New product</a>
     </div>
     <div class="col-lg-6">
       <%if(atualizado == 1){%>
-        <button type="button" class="btn btn-success mb-2" id="execSuc" style="margin-left: 15%;">Ação executada com sucesso!</button>
+        <button type="button" class="btn btn-success mb-2" id="execSuc" style="margin-left: 15%;">Success!</button>
       <%}else if (atualizado == 2){%>
-        <button type="button" class="btn btn-danger mb-2" id="execErr">Ação não pode ser executada. Tente novamente mais tarde.</button>
+        <button type="button" class="btn btn-danger mb-2" id="execErr">Error.</button>
       <%}%>
     </div>
     <div class="col-sm-2">
@@ -40,7 +41,7 @@
           id="procuraBtn0"
           onkeyup="procura(0, 'procuraBtn0')"
         />
-        <label for="procuraBtn0">Filial:</label>
+        <label for="procuraBtn0">Branch:</label>
       </div>
     </div>
     <div class="col-sm-2">
@@ -51,7 +52,7 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Código:</label>
+        <label for="procuraBtn1">Code:</label>
       </div>
     </div>
     <div class="col-md-4">
@@ -62,7 +63,7 @@
           id="procuraBtn2"
           onkeyup="procura(2, 'procuraBtn2')"
         />
-        <label for="procuraBtn2">Descritivo:</label>
+        <label for="procuraBtn2">Description:</label>
       </div>
     </div>
     <div class="col-sm-2">
@@ -73,7 +74,7 @@
           id="procuraBtn3"
           onkeyup="procura(3, 'procuraBtn3')"
         />
-        <label for="procuraBtn3">Tipo:</label>
+        <label for="procuraBtn3">Type:</label>
       </div>
     </div>
     <div class="col-sm-2">
@@ -84,7 +85,7 @@
           id="procuraBtn4"
           onkeyup="procura(4, 'procuraBtn4')"
         />
-        <label for="procuraBtn4">Unidade:</label>
+        <label for="procuraBtn4">Unit:</label>
       </div>
     </div>
   </div>
@@ -92,12 +93,12 @@
     <table class="fl-table" id="myTable">
       <thead>
         <tr style="height: 25px">
-          <th>Filial</th>
-          <th>Código</th>
-          <th>Descritivo</th>
-          <th>Tipo</th>
-          <th>Unidade</th>
-          <th>Ação</th>
+          <th>Branch</th>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Unit</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -109,8 +110,8 @@
           <td><%=produto.tipo%></td>
           <td><%=produto.um%></td>
           <td>
-            <a class="button-8 mb-2" onclick="confirmation('Esse produto será atualizado. Deseja prosseguir?' , '/produtos/atualizarunico/<%=produto._id%>/<%=produto.cod%>')">Atualizar</a>
-            <a class="button-8 mb-2" target="_blank" href="/produtos/detalhes/<%=produto.cod%>">Detalhes</a>
+            <a class="button-8 mb-2" onclick="confirmation('Esse produto será atualizado. Deseja prosseguir?' , '/produtos/atualizarunico/<%=produto._id%>/<%=produto.cod%>')">Update</a>
+            <a class="button-8 mb-2" target="_blank" href="/produtos/detalhes/<%=produto.cod%>">Details</a>
           </td>
         </tr>
         <%})%>
