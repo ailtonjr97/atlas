@@ -16,6 +16,7 @@
   <div class="row">
     <div class="col-md-4">
       <a class="button-8 mb-2" href="/tickets/newticket">New ticket</a>
+      <a class="button-8 mb-2" href="/tickets/">Tickets</a>
     </div>
     <div class="col-lg-6">
     </div>
@@ -49,6 +50,17 @@
         <label for="procuraBtn1">Description:</label>
       </div>
     </div>
+    <div class="col">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn2"
+          onkeyup="procura(2, 'procuraBtn2')"
+        />
+        <label for="procuraBtn1">Response:</label>
+      </div>
+    </div>
   </div>
   <div class="table-wrapper table-responsive table-striped">
     <table class="fl-table" id="myTable">
@@ -56,6 +68,7 @@
         <tr style="height: 25px">
           <th>ID</th>
           <th>Description</th>
+          <th>Response</th>
         </tr>
       </thead>
       <tbody>
@@ -71,6 +84,7 @@
             <%}%>
           </td>
           <td style="width: 90%; white-space: normal;"><%=ticket.description%></td>
+          <td style="width: 90%; white-space: normal;"><%=ticket.response%></td>
         </tr>
         <%})%>
       </tbody>

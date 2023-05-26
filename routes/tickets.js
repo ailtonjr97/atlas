@@ -111,4 +111,19 @@ router.get("/mytickets", async(req, res)=>{
   }
 })
 
+router.post("/response", async(req, res)=>{
+  if(req.isAuthenticated()){
+    try {
+      Ticket.findOneAndUpdate({"idticket": req.body.idticket}, {$set: {"response": req.body.response}}).then(()=>{
+        res.redirect("/tickets/")
+      })
+    } catch (error) {
+      res.send("Error. Contact your IT department.")
+    }
+  }else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  }
+})
+
 module.exports = router;

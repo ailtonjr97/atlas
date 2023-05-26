@@ -16,6 +16,7 @@
   <div class="row">
     <div class="col-md-4">
       <a class="button-8 mb-2" href="/tickets/newticket">New ticket</a>
+      <a class="button-8 mb-2" href="/tickets/mytickets">My tickets</a>
     </div>
     <div class="col-lg-6">
     </div>
@@ -71,17 +72,6 @@
         <label for="procuraBtn2">Branch:</label>
       </div>
     </div>
-    <div class="col">
-      <div class="form-floating">
-        <input
-          type="text"
-          class="form-control"
-          id="procuraBtn4"
-          onkeyup="procura(4, 'procuraBtn4')"
-        />
-        <label for="procuraBtn2">Urgency:</label>
-      </div>
-    </div>
   </div>
   <div class="table-wrapper table-responsive table-striped">
     <table class="fl-table" id="myTable">
@@ -91,7 +81,6 @@
           <th>Description</th>
           <th>Requester</th>
           <th>Branch</th>
-          <th>Urgency</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -99,21 +88,50 @@
         <%tickets.forEach(function(ticket){ %>
           <%if(!ticket.inactive){%>
         <tr>
-          <td><%=ticket.idticket%></td>
+          <td>
+            <%if(ticket.urgency == "Normal"){%>
+              <button type="button" class="btn btn-primary"><%=ticket.idticket%></button>
+            <%} else if(ticket.urgency == "Urgent"){%>
+              <button type="button" class="btn btn-warning"><%=ticket.idticket%></button>
+            <%} else{%>
+              <button type="button" class="btn btn-danger"><%=ticket.idticket%></button>
+            <%}%>
+          </td>
           <td style="width: 40%; white-space: normal;"><%=ticket.description%></td>
           <td><%=ticket.requester%></td>
           <td><%=ticket.branch%></td>
           <td>
-            <%if(ticket.urgency == "Normal"){%>
-              <button type="button" class="btn btn-primary">Normal</button>
-            <%} else if(ticket.urgency == "Urgent"){%>
-              <button type="button" class="btn btn-warning">Urgent</button>
-            <%} else{%>
-              <button type="button" class="btn btn-danger">Critical</button>
+            <%if(ticket.response == ''){%>
+            <button type="button" class="button-8" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Respond
+            </button>
             <%}%>
-          </td>
-          <td>
+            <%if(ticket.response != ''){%>
             <a class="button-8 mb-2" href="/tickets/inactivate/<%=ticket._id%>">Inactivate</a>
+            <%}%>
+            <!-- Modal -->
+            <form action="/tickets/response" method="post">
+            <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Response of ticket <%=ticket.idticket%></h5>
+                  </div>
+                  <div class="modal-body">
+                    <div class="form-floating">
+                      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="response"></textarea>
+                      <label for="floatingTextarea">Write here your response...</label>
+                    </div>
+                    <input style="display: none;" type="text" name="idticket" value="<%=ticket.idticket%>">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
           </td>
         </tr>
         <%}%>
