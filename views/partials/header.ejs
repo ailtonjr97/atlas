@@ -142,19 +142,13 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" href="/tickets/"
-                  >New ticket</a
-                >
+                <a class="dropdown-item" href="/tickets/newticket">New ticket</a>
               </li>
               <li>
-                <a class="dropdown-item" href="/verchamadomkt/"
-                  >Tickets</a
-                >
+                <a class="dropdown-item" href="/tickets/">Tickets</a>
               </li>
               <li>
-                <a class="dropdown-item" href="/chamados/meuschamadosmkt"
-                  >My tickets</a
-                >
+                <a class="dropdown-item" href="/tickets/mytickets">My tickets</a>
               </li>
             </ul>
           </li>
@@ -239,7 +233,18 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item dropdown float-end" id="usuarios">
+          <li class="nav-item dropdown" id="usuarios">
+            <a
+            class="nav-link active"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="fa fa-user"></i>
+            <span class="descricao-menu">User</span>
+          </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
                 <a class="dropdown-item" href="/users/register">New user</a>

@@ -3,8 +3,6 @@ const router = express.Router();
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const Ticket = require("../models/ticket.js");
-const Anexo = require("../models/anexos.js");
-const User = require("../models/user.js");
 dotenv.config();
 const app = express();
 
@@ -22,14 +20,14 @@ app.use((req, res, next) => {
 
 router.get("/", async(req, res) => {
   if (req.isAuthenticated()){
-    Ticket.find().then((tickets)=>{
-      Ticket.find().countDocuments().then((results)=>{
+    Ticket.find().sort({"idticket": -1}).then((tickets)=>{
+      Ticket.countDocuments({"inactive": {$eq: false}}).then((results)=>{
         res.render("ticketall",{
           results: results,
           tickets: tickets
         })
       })
-    });
+    })
   } else {
     req.session.returnTo = req.originalUrl;
     res.redirect("/login");
@@ -41,7 +39,7 @@ router.get("/newticket", async(req, res)=>{
     try {
       res.render("ticketnew")
     } catch (error) {
-      res.send("Error. Try again later")
+      res.send("Error. Contact your IT department.")
     }
   } else {
     req.session.returnTo = req.originalUrl;
@@ -52,9 +50,9 @@ router.get("/newticket", async(req, res)=>{
 router.post("/newticket", async(req, res)=>{
   if(req.isAuthenticated()){
     try {
-      let ticketid = await Ticket.find().countDocuments;
+      let counting = await Ticket.countDocuments();
       const ticket = new Ticket({
-        idticket: ticketid,
+        idticket: counting,
         department: req.body.department,
         description: req.body.description,
         branch: req.body.branch,
@@ -64,12 +62,53 @@ router.post("/newticket", async(req, res)=>{
         response: "",
         inactive: false,
       });
-      await Ticket.create(ticket);
-      res.redirect("/ticketall")
+      Ticket.create(ticket).then(()=>{
+        res.redirect("/tickets/")
+      });
     } catch (error) {
-      res.send("Error. Try again later.")
+      res.send("Error. Contact your IT department.")
     }
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
   }
 });
+
+router.get("/inactivate/:id", async(req,res)=>{
+  if(req.isAuthenticated()){
+    try {
+      Ticket.findOneAndUpdate({"_id": req.params.id}, {$set: {inactive: true}}).then(()=>{
+        res.redirect("/tickets/")
+      })
+
+    } catch (error) {
+      res.send("Error. Contact your IT department.")
+    }
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  }
+})
+
+router.get("/mytickets", async(req, res)=>{
+  if(req.isAuthenticated()){
+    try {
+      Ticket.find({"requester": req.user.dadosPessoais[0].nome}).sort({"idticket": -1}).then((tickets)=>{
+        Ticket.countDocuments({"requester": req.user.dadosPessoais[0].nome}).then((results)=>{
+          res.render("ticketsmy", {
+            tickets: tickets,
+            results: results
+          })
+        })
+      })
+    } catch (error) {
+      res.send("Error. Contact your IT department.")
+    }
+  } 
+  else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  }
+})
 
 module.exports = router;
