@@ -87,7 +87,9 @@ router.get("/inactiveusers", async(req, res)=>{
       let isAdmin = req.user.isAdmin;
       let users = await User.find({"isActive": "False"})
       let results = await User.countDocuments({"isActive": "False"});
+      let loggedin = req.user.username
       res.render("users", {
+        loggedin: loggedin,
         users: users,
         isAdmin: isAdmin,
         results: results

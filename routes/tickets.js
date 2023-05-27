@@ -93,8 +93,8 @@ router.get("/inactivate/:id", async(req,res)=>{
 router.get("/mytickets", async(req, res)=>{
   if(req.isAuthenticated()){
     try {
-      Ticket.find({"requester": req.user.dadosPessoais[0].nome}).sort({"idticket": -1}).then((tickets)=>{
-        Ticket.countDocuments({"requester": req.user.dadosPessoais[0].nome}).then((results)=>{
+      Ticket.find({"requester": req.user.name}).sort({"idticket": -1}).then((tickets)=>{
+        Ticket.countDocuments({"requester": req.user.name}).then((results)=>{
           res.render("ticketsmy", {
             tickets: tickets,
             results: results
@@ -102,7 +102,7 @@ router.get("/mytickets", async(req, res)=>{
         })
       })
     } catch (error) {
-      res.send("Error. Contact your IT department.")
+      res.send("Error. Contact your IT department." + error)
     }
   } 
   else {
