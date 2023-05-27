@@ -9,8 +9,9 @@ const userSchema = new mongoose.Schema({
   password: String,
   branch: String,
   department: String,
-  isAdmin: Boolean,
-  isActive: Boolean
+  userId: Number,
+  isAdmin: String,
+  isActive: String
 });
 
 userSchema.plugin(passportLocalMongoose);

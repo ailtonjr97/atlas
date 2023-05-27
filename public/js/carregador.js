@@ -10,6 +10,6 @@ const setVisible = (elementOrSelector, visible) =>
 setVisible('#loading', true);
 
 document.addEventListener('DOMContentLoaded', () =>
-wait(500).then(() => {
+wait(100).then(() => {
   setVisible('#loading', false);
 }));

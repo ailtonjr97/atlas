@@ -10,17 +10,23 @@
         <div class="col">
             <div class="form-floating">
               <textarea class="form-control" placeholder="Write your ticket here..." id="name" name="name"></textarea>
-              <label for="name">Name of the user</label>
+              <label for="name">Name of the user:</label>
             </div>
         </div>
         <div class="col">
             <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="username" placeholder="name@example.com" name="username">
-                <label for="username">Email address</label>
+                <input type="email" class="form-control" id="username" placeholder="Email address" name="username">
+                <label for="username">Email address:</label>
               </div>
         </div>
     </div>
     <div class="row mt-1">
+      <div class="col-lg">
+        <div class="form-floating">
+          <input type="password" class="form-control" id="password" placeholder="User password" name="password">
+          <label for="password">User password:</label>
+        </div>
+    </div>
         <div class="col-lg">
             <div class="form-floating">
                 <select class="form-select" id="branch" aria-label="Floating label" name="branch">
@@ -38,24 +44,31 @@
                   <option >Accounting</option>
                   <option >Human Resources</option>
                   <option >Engineering</option>
+                  <option >Information Technology</option>
               </select>
             <label for="department">Department:</label>
             </div>
           </div>
     </div>
     <div class="row mt-2">
-        <div class="col-1">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="isadmin" name="isadmin">
-                <label class="form-check-label" for="isadmin">Is admin?</label>
-              </div>
-        </div>
-        <div class="col">
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="isactive" name="isactive">
-                <label class="form-check-label" for="isactive">Is active?</label>
-              </div>
-        </div>
+          <div class="col">
+            <div class="form-floating">
+              <select class="form-select" id="isAdmin" aria-label="Floating label" name="isAdmin">
+                  <option value="False">No</option>
+                  <option value="True">Yes</option>
+              </select>
+            <label for="isAdmin">Is admin?:</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-floating">
+              <select class="form-select" id="isActive" aria-label="Floating label" name="isActive">
+                  <option value="False">No</option>
+                  <option value="True">Yes</option>
+              </select>
+            <label for="isActive">Is active?:</label>
+            </div>
+          </div>
     </div>
     <div class="file-input mt-2">
         <input type="file" id="file" class="file" name="postImage">
@@ -67,6 +80,6 @@
   </div>
 
   <br>
-  <button type="submit" id='botaoSalva' class="btn btn-success" style="margin-left: 45%;">Open ticket</button>
+  <button type="submit" id='botaoSalva' class="btn btn-success" style="margin-left: 45%;">Save</button>
 </form>
 <%- include('partials/footer') %>
