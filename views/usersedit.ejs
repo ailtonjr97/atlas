@@ -1,0 +1,83 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/files.css" />
+
+
+<form action="/users/edituser/<%=user._id%>" method="POST" enctype="multipart/form-data">
+  <div class="row" id='masterRow' style="max-width: 99%; margin-left: 1%">
+    <div class="row mt-3">
+        <div class="col">
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="<%=user.name%>" id="name" name="name"><%=user.name%></textarea>
+              <label for="name"><%=user.name%></label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="username" placeholder="<%=user.username%>" name="username" value="<%=user.username%>">
+                <label for="username"><%=user.username%></label>
+              </div>
+        </div>
+    </div>
+    <div class="row mt-1">
+        <div class="col-lg">
+            <div class="form-floating">
+                <select class="form-select" id="branch" aria-label="Floating label" name="branch">
+                    <option class='valor'><%=user.branch%></option>
+                    <option class='valor'>US</option>
+                    <option class='valor'>GERMANY</option>
+                    <option class='valor'>AUSTRALIA</option>
+                </select>
+                <label for="branch">Branch:</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+              <select class="form-select" id="department" aria-label="Floating label" name="department">
+                <option class='valor'><%=user.department%></option>
+                  <option >Marketing</option>
+                  <option >Accounting</option>
+                  <option >Human Resources</option>
+                  <option >Engineering</option>
+                  <option >Information Technology</option>
+              </select>
+            <label for="department">Department:</label>
+            </div>
+          </div>
+    </div>
+    <div class="row mt-2">
+          <div class="col">
+            <div class="form-floating">
+              <select class="form-select" id="isAdmin" aria-label="Floating label" name="isAdmin">
+                <option value="<%=user.isAdmin%>"><%=user.isAdmin%></option>
+                <option value="False">No</option>
+                <option value="True">Yes</option>
+              </select>
+            <label for="isAdmin">Is admin?:</label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-floating">
+              <select class="form-select" id="isActive" aria-label="Floating label" name="isActive">
+                  <option value="<%=user.isActive%>"><%=user.isActive%></option>
+                  <option value="False">No</option>
+                  <option value="True">Yes</option>
+              </select>
+            <label for="isActive">Is active?:</label>
+            </div>
+          </div>
+    </div>
+    <div class="file-input mt-2">
+        <input type="file" id="file" class="file" name="postImage">
+        <label for="file">
+          New anex
+          <p class="file-name" style="width: 500px;"></p>
+        </label>
+      </div>
+  </div>
+
+  <br>
+  <button type="submit" id='botaoSalva' class="btn btn-success" style="margin-left: 45%;">Save</button>
+</form>
+<%- include('partials/footer') %>

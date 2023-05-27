@@ -122,8 +122,14 @@
             <p><%=user.department%></p>
           </td>
           <td style="padding-bottom: 15px;">
-            <a class="button-8" href="">Edit</a>
+            <%if(isAdmin == "True"){%>
+            <a class="button-8" href="/users/edituser/<%=user._id%>">Edit</a>
             <a class="button-8" href="">Inactivate</a>
+            <a class="button-8" href="/users/resetpassword/<%=user._id%>">Reset password</a>
+            <%}%>
+            <%if(loggedin == user.username){%>
+            <a class="button-8" href="/users/changepassword/<%=user._id%>">Change password</a>
+            <%}%>
           </td>
         </tr>
         <%})%>
