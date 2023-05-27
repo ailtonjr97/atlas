@@ -872,9 +872,6 @@ li.nav-item.dropdown {
     display: none;
   } */
 
-  #usuarios {
-    margin-left: 0;
-  }
 }
 
 @media (min-width: 950px) {

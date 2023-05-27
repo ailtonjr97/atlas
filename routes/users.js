@@ -1,13 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const dotenv = require("dotenv");
-const axios = require("axios");
 const bodyParser = require("body-parser");
-const session = require("express-session");
 const passport = require("passport");
 dotenv.config();
 const app = express();
-const Chamado = require("../models/chamado.js");
 const User = require("../models/user.js");
 
 app.use(bodyParser.json());
@@ -22,84 +19,51 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(
-  session({
-    secret: process.env.PASSWORD,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-router.use("/register", function (req, res) {
+router.get("/", async(req, res)=>{
   if (req.isAuthenticated()) {
-    if (req.user.username == "admin@fibracem.com") {
-      Chamado.find(function (err, chamado) {
-        res.render("register", {
-          user: req.user.realNome,
-          chamado: chamado,
-          logado: req.user.realNome,
-        });
+    try {
+      let users = await User.find();
+      let results = await User.countDocuments();
+      res.render("users", {
+        users: users,
+        results: results
       });
-    } else {
-      res.send("No access to this page.");
+    } catch (error) {
+      res.render("error.ejs");
+    };
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  };
+});
+
+router.get("/newuser", async(req, res)=>{
+  if (req.isAuthenticated()) {
+    try {
+      res.render("usersnew");
+    } catch (error) {
+      res.render("error.ejs");
+    };
+  } else {
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  };
+});
+
+router.post("/register", function (req, res) {
+  if(req.isAuthenticated()){
+    try {
+      User.register({username: req.body.username }, req.body.password, (err, user)=> {
+          User.updateMany();
+      }
+    );
+    } catch (error) {
+      
     }
   } else {
     req.session.returnTo = req.originalUrl;
     res.redirect("/login");
-  }
-});
-
-router.post("/register", function (req, res) {
-  User.register(
-    { username: req.body.username },
-    req.body.password,
-    function (err, user) {
-      if (err) {
-        res.send(err);
-      } else {
-        User.updateMany(
-          { username: req.body.username },
-          {
-            $set: {
-              realNome: req.body.realNome,
-              dadosPessoais: [
-                { nascimento: req.body.data },
-                { cpf: req.body.cpf },
-                { rg: req.body.rg },
-              ],
-              setor: [
-                { setorId: req.body.setores },
-                { setorDescri: req.body.setorDescri },
-              ],
-              cargo: [
-                { cargoId: req.body.cargos },
-                { cargoDescri: req.body.cargoDescri },
-              ],
-              unidade: [
-                { unidadeId: req.body.unidade },
-                { unidadeDescri: req.body.unidadeDescri },
-              ],
-            },
-          },
-          {
-            returnNewDocument: true,
-          },
-          function (error, result) {
-            if (error) {
-              res.send("Error");
-            } else {
-              passport.authenticate("local")(req, res, function () {
-                res.redirect("/home");
-              });
-            }
-          }
-        );
-      }
-    }
-  );
+  };
 });
 
 router.get("/actives", function (req, res) {

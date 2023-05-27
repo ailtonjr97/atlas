@@ -2,10 +2,7 @@ const express = require("express");
 const router = express.Router();
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const session = require("express-session");
 const passport = require("passport");
-const Chamado = require("../models/chamado.js");
 const User = require("../models/user.js");
 dotenv.config();
 const app = express();
@@ -34,7 +31,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 router.get("/", function (req, res) {
-  res.render("home");
+  res.render("landing");
 });
 
 router.get("/login", function (req, res) {
@@ -48,7 +45,7 @@ router.post("/authenticate", function (req, res) {
   });
   req.login(user, function (err) {
     if (err) {
-      res.send("Erro");
+      res.send(err);
     } else {
       passport.authenticate("local")(req, res, function () {
         if (user) {
@@ -64,13 +61,11 @@ router.post("/authenticate", function (req, res) {
 
 router.get("/home", function (req, res) {
   if (req.isAuthenticated()) {
-    Chamado.find(function (err, chamado) {
-      User.find(function (error, user) {
-        res.render("inicio", {
-          chamado: chamado,
-        });
-      });
-    });
+    try {
+      res.render("home")
+    } catch (error) {
+      res.sendFile("/images/error.jpg")
+    }
   } else {
     res.redirect("/login");
   }

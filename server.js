@@ -65,5 +65,5 @@ app.use("/centrodecusto", centrodecusto);
 app.use("/itemcontabil", itemcontabil);
 
 app.listen(process.env.PORT, function () {
-  console.log("Servidor Node.js operacional na porta " + process.env.PORT);
+  console.log("Node.js operational at port " + process.env.PORT);
 });
