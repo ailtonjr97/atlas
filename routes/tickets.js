@@ -57,7 +57,7 @@ router.post("/newticket", async(req, res)=>{
         description: req.body.description,
         branch: req.body.branch,
         urgency: req.body.urgency,
-        requester: req.user.dadosPessoais[0].nome,
+        requester: req.user.name,
         designated: "",
         response: "",
         inactive: false,
