@@ -53,6 +53,21 @@ router.get("/newbranch", async(req, res)=>{
       }
 })
 
-router.post("")
+router.post("/newbranch", async(req, res)=>{
+    if(req.isAuthenticated()){
+        try {
+            let result = req.body;
+            await Branch.create(result);
+            let counter = await  Branch.countDocuments();
+            await Branch.findOneAndUpdate({"name": req.body.name}, {$set: {"id": counter}})
+            res.redirect("/branch");
+        } catch (error) {
+            res.render("error.ejs")
+        }
+    } else {
+        req.session.returnTo = req.originalUrl;
+        res.redirect("/login");
+      }
+})
 
 module.exports = router;

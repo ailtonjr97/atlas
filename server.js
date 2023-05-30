@@ -21,6 +21,8 @@ const calendariocontabil = require("./routes/calendariocontabil.js");
 const centrodecusto = require("./routes/centrodecusto.js");
 const itemcontabil = require("./routes/itemcontabil.js");
 const branch = require("./routes/branch.js");
+const department = require("./routes/department.js");
+const atlas = require("./routes/atlas.js");
 
 const app = express();
 
@@ -65,6 +67,8 @@ app.use("/calendariocontabil", calendariocontabil);
 app.use("/centrodecusto", centrodecusto);
 app.use("/itemcontabil", itemcontabil);
 app.use("/branch", branch);
+app.use("/department", department);
+app.use("/atlas", atlas);
 
 app.listen(process.env.PORT, function () {
   console.log("Node.js operational at port " + process.env.PORT);

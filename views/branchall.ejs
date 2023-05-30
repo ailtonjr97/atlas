@@ -46,7 +46,7 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Description:</label>
+        <label for="procuraBtn1">Name:</label>
       </div>
     </div>
     <div class="col">
@@ -57,7 +57,7 @@
           id="procuraBtn2"
           onkeyup="procura(2, 'procuraBtn2')"
         />
-        <label for="procuraBtn2">Requester:</label>
+        <label for="procuraBtn2">Address:</label>
       </div>
     </div>
     <div class="col">
@@ -68,7 +68,40 @@
           id="procuraBtn3"
           onkeyup="procura(3, 'procuraBtn3')"
         />
-        <label for="procuraBtn2">Branch:</label>
+        <label for="procuraBtn2">City:</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn4"
+          onkeyup="procura(4, 'procuraBtn4')"
+        />
+        <label for="procuraBtn2">Country:</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn5"
+          onkeyup="procura(5, 'procuraBtn5')"
+        />
+        <label for="procuraBtn2">Zip Code:</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn6"
+          onkeyup="procura(6, 'procuraBtn6')"
+        />
+        <label for="procuraBtn2">Active:</label>
       </div>
     </div>
   </div>
@@ -82,11 +115,11 @@
           <th>City</th>
           <th>Country</th>
           <th>Zip Code</th>
+          <th>Active</th>
         </tr>
       </thead>
       <tbody>
         <%branches.forEach(function(branch){ %>
-          <%if(branch.active){%>
         <tr>
           <td><p><%=branch.id%></p></td>
           <td><p><%=branch.name%></p></td>
@@ -96,7 +129,6 @@
           <td><p><%=branch.zipcode%></p></td>
           <td><p><%=branch.active%></p></td>
         </tr>
-        <%}%>
         <%})%>
       </tbody>
       <tbody></tbody>

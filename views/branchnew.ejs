@@ -76,7 +76,7 @@ input:focus + label {
 </style>
 
 
-<form action="/branches/newbranch" method="POST" enctype="multipart/form-data">
+<form action="/branch/newbranch" method="POST" enctype="multipart/form-data">
   <div class="row mt-2" id='rowMestra'>
     <div class="row" id='rowTerceira'>
       <div class="col-lg">
@@ -110,6 +110,23 @@ input:focus + label {
                 <label for="city">City:</label>
             </div>
         </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-lg">
+        <div class="form-floating">
+          <input type="number" class="form-control" id="zipcode" placeholder="Zip Code:" name="zipcode">
+          <label for="zipcode">Zip Code:</label>
+      </div>
+    </div>
+      <div class="col-lg">
+        <div class="form-floating">
+            <select class="form-select" id="active" aria-label="Floating label" name="active">
+                    <option value="True">Yes</option>
+                    <option value="False">No</option>
+            </select>
+            <label for="active">Is active:</label>
+        </div>
+    </div>
     </div>
   </div>
   <button type="submit" id='botaoSalva' class="btn btn-success mt-2" style="margin-left: 45%;">Save</button>

@@ -30,9 +30,9 @@
         <div class="col-lg">
             <div class="form-floating">
                 <select class="form-select" id="branch" aria-label="Floating label" name="branch">
-                    <option class='valor'>US</option>
-                    <option class='valor'>GERMANY</option>
-                    <option class='valor'>AUSTRALIA</option>
+                  <%branches.forEach((branch)=>{%>
+                    <option><%=branch.name%></option>
+                  <%})%>
                 </select>
                 <label for="branch">Branch:</label>
             </div>
@@ -40,11 +40,9 @@
         <div class="col">
             <div class="form-floating">
               <select class="form-select" id="department" aria-label="Floating label" name="department">
-                  <option >Marketing</option>
-                  <option >Accounting</option>
-                  <option >Human Resources</option>
-                  <option >Engineering</option>
-                  <option >Information Technology</option>
+                <%departments.forEach((department)=>{%>
+                  <option><%=department.name%></option>
+                  <%})%>
               </select>
             <label for="department">Department:</label>
             </div>

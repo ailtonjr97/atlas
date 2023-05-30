@@ -6,6 +6,9 @@ const passport = require("passport");
 dotenv.config();
 const app = express();
 const User = require("../models/user.js");
+const Branch = require("../models/branch.js");
+const Department = require("../models/departments.js");
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,7 +25,7 @@ app.use((req, res, next) => {
 router.get("/", async(req, res)=>{
   if (req.isAuthenticated()) {
     try {
-      let users = await User.find({"isActive": "True"}).sort({"name": 1});
+      let users = await User.find({"isActive": "True"}).sort({"id": 1});
       let results = await User.countDocuments({"isActive": "True"});
       let isAdmin = req.user.isAdmin;
       let loggedin = req.user.username
@@ -44,7 +47,12 @@ router.get("/", async(req, res)=>{
 router.get("/newuser", async(req, res)=>{
   if(req.isAuthenticated()){
     try {
-      res.render("usersnew");
+      let branches = await Branch.find();
+      let departments = await Department.find();
+      res.render("usersnew", {
+        branches: branches,
+        departments: departments
+      });
     } catch (error) {
       res.render("error.ejs");
     };
