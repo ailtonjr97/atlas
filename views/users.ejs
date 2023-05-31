@@ -11,7 +11,9 @@
 </style>
 
 <div id="loading"></div>
-
+<%languages.forEach((language)=>{%>
+  <!--English -->
+<%if(language.atlasLanguage == "English"){%>
 <div style="padding: 1.5%">
   <div class="row">
     <div class="col-md-4">
@@ -138,6 +140,139 @@
     </table>
   </div>
 </div>
+<%}%>
+
+<!--Portuguese -->
+<%if(language.atlasLanguage == "Portuguese"){%>
+  <div style="padding: 1.5%">
+    <div class="row">
+      <div class="col-md-4">
+        <%if(isAdmin == "True"){%>
+        <a class="button-8 mb-2" href="/users/newuser">Novo usuário</a>
+        <%if(users[0].isActive == "True"){%>
+          <a class="button-8 mb-2" href="/users/inactiveusers">Inativo</a>
+        <%}%>
+        <%if(users[0].isActive == "False"){%>
+          <a class="button-8 mb-2" href="/users/">Ativo</a>
+        <%}%>
+        <%}%>
+      </div>
+      <div class="col-lg-6">
+      </div>
+      <div class="col-sm-2">
+        <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
+          <span class="counter-value"><%=results%></span>
+          resultados
+        </button>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn0"
+            onkeyup="procura(0, 'procuraBtn0')"
+          />
+          <label for="procuraBtn0">ID:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn1"
+            onkeyup="procura(1, 'procuraBtn1')"
+          />
+          <label for="procuraBtn1">Nome:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn2"
+            onkeyup="procura(2, 'procuraBtn2')"
+          />
+          <label for="procuraBtn2">E-mail:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn3"
+            onkeyup="procura(3, 'procuraBtn3')"
+          />
+          <label for="procuraBtn2">Filial:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn4"
+            onkeyup="procura(4, 'procuraBtn4')"
+          />
+          <label for="procuraBtn2">Departamento:</label>
+        </div>
+      </div>
+    </div>
+    <div class="table-wrapper table-responsive table-striped">
+      <table class="fl-table" id="myTable">
+        <thead>
+          <tr style="height: 25px">
+            <th>ID</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Filial</th>
+            <th>Departamento</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%users.forEach(function(user){ %>
+          <tr>
+            <td>
+                <p><%=user.userId%></p>
+            </td>
+            <td>
+              <p><%=user.name%></p>
+            </td>
+            <td>
+              <p><%=user.username%></p>
+            </td>
+            <td>
+              <p><%=user.branch%></p>
+            </td>
+            <td>
+              <p><%=user.department%></p>
+            </td>
+            <td style="padding-bottom: 15px;">
+              <%if(isAdmin == "True"){%>
+              <a class="button-8" href="/users/edituser/<%=user._id%>">Editar</a>
+              <a class="button-8" href="">Inativar</a>
+              <a class="button-8" href="/users/resetpassword/<%=user._id%>">Resetar senha</a>
+              <%}%>
+              <%if(loggedin == user.username){%>
+              <a class="button-8" href="/users/changepassword/<%=user._id%>">Mudar Senha</a>
+              <%}%>
+            </td>
+          </tr>
+          <%})%>
+        </tbody>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  <%}%>
+  <%})%>
+
 <%- include('partials/footer') %>
 
 <script type="text/javascript" src="/js/carregador.js"></script>

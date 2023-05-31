@@ -20,8 +20,11 @@ app.use((req, res, next) => {
 
 router.get("/", async(req, res)=>{
     if(req.isAuthenticated()){
+        let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
         try {
-            res.render("languages");
+            res.render("languages", {
+                languages: languages
+            });
         } catch (error) {
             res.render("error.ejs");
         }

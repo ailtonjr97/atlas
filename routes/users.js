@@ -28,8 +28,10 @@ router.get("/", async(req, res)=>{
       let users = await User.find({"isActive": "True"}).sort({"name": 1});
       let results = await User.countDocuments({"isActive": "True"});
       let isAdmin = req.user.isAdmin;
-      let loggedin = req.user.username
+      let loggedin = req.user.username;
+      let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
       res.render("users", {
+        languages: languages,
         loggedin: loggedin,
         users: users,
         results: results,
@@ -37,6 +39,7 @@ router.get("/", async(req, res)=>{
       });
     } catch (error) {
       res.render("error.ejs");
+      console.log(error)
     };
   } else {
     req.session.returnTo = req.originalUrl;
