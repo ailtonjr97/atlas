@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/files.css" />
+
+
+<form action="/languages/" method="POST" enctype="multipart/form-data">
+  <div class="row mt-2" id='masterRow' style="max-width: 99%; margin-left: 1%">
+    <div class="row mt-1">
+        <div class="col-lg">
+            <div class="form-floating">
+                <select class="form-select" id="language" aria-label="Floating label" name="language">
+                    <option>English</option>
+                    <option>Portuguese</option>
+                    <option>Spanish</option>
+                </select>
+                <label for="language">Language:</label>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <br>
+  <button type="submit" id='botaoSalva' class="btn btn-success" style="margin-left: 45%;">Save</button>
+</form>
+<%- include('partials/footer') %>

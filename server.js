@@ -23,6 +23,7 @@ const itemcontabil = require("./routes/itemcontabil.js");
 const branch = require("./routes/branch.js");
 const department = require("./routes/department.js");
 const atlas = require("./routes/atlas.js");
+const languages = require("./routes/languages.js");
 
 const app = express();
 
@@ -69,6 +70,7 @@ app.use("/itemcontabil", itemcontabil);
 app.use("/branch", branch);
 app.use("/department", department);
 app.use("/atlas", atlas);
+app.use("/languages", languages);
 
 app.listen(process.env.PORT, function () {
   console.log("Node.js operational at port " + process.env.PORT);

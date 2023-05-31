@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
   department: String,
   userId: Number,
   isAdmin: String,
-  isActive: String
+  isActive: String,
+  atlasLanguage: String
 });
 
 userSchema.plugin(passportLocalMongoose);

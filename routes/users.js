@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 router.get("/", async(req, res)=>{
   if (req.isAuthenticated()) {
     try {
-      let users = await User.find({"isActive": "True"}).sort({"id": 1});
+      let users = await User.find({"isActive": "True"}).sort({"name": 1});
       let results = await User.countDocuments({"isActive": "True"});
       let isAdmin = req.user.isAdmin;
       let loggedin = req.user.username
@@ -74,7 +74,8 @@ router.post("/register", async (req, res)=> {
             department: req.body.department,
             userId: userId,
             isAdmin: req.body.isAdmin,
-            isActive: req.body.isActive
+            isActive: req.body.isActive,
+            atlasLanguage: "English"
           }
         });
         res.redirect("/users/")
