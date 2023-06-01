@@ -8,7 +8,6 @@ const upload = require("express-fileupload");
 const bodyParser = require("body-parser");
 dotenv.config();
 const initiation = require("./routes/initiation.js");
-const users = require("./routes/users.js");
 const tickets = require("./routes/tickets.js");
 const produtos = require("./routes/produtos.js");
 const anexos = require("./routes/anexos.js");
@@ -55,7 +54,6 @@ app.use(upload());
 mongoose.connect(process.env.MONGOSTRING);
 
 app.use("/", initiation);
-app.use("/users", users);
 app.use("/tickets", tickets);
 app.use("/produtos", produtos);
 app.use("/anexos", anexos);
