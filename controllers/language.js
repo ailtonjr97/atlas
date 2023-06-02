@@ -1,25 +1,7 @@
-const express = require("express");
-const router = express.Router();
-const dotenv = require("dotenv");
-const bodyParser = require("body-parser");
 const User = require("../models/user.js");
-dotenv.config();
-const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
-
-  next();
-});
-
-router.get("/", async(req, res)=>{
-    if(req.isAuthenticated()){
+let language = async(req, res)=>{
+    if(req.isAuthenticated() && req.user.isActive == "True"){
         let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
         try {
             res.render("languages", {
@@ -32,10 +14,10 @@ router.get("/", async(req, res)=>{
         req.session.returnTo = req.originalUrl;
         res.redirect("/login");
       };
-})
+}
 
-router.post("/", async(req, res)=>{
-    if(req.isAuthenticated()){
+let languagePost = async(req, res)=>{
+    if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
             await User.findByIdAndUpdate(req.user._id, {$set:{"atlasLanguage": req.body.language}});
             res.redirect("/home")
@@ -46,6 +28,9 @@ router.post("/", async(req, res)=>{
         req.session.returnTo = req.originalUrl;
         res.redirect("/login");
       };
-})
+}
 
-module.exports = router;
+module.exports =  {
+    language,
+    languagePost,
+};

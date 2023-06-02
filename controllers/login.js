@@ -1,13 +1,7 @@
-const express = require("express");
 const dotenv = require("dotenv");
-const bodyParser = require("body-parser");
 const passport = require("passport");
 const User = require("../models/user.js");
 dotenv.config();
-const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 passport.use(User.createStrategy());
 passport.serializeUser(function (user, done) {

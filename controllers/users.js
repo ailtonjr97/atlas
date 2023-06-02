@@ -1,16 +1,6 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const bodyParser = require("body-parser");
 const User = require("../models/user.js");
 const Branch = require("../models/branch.js");
 const Department = require("../models/departments.js");
-dotenv.config();
-const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-
 
 let users =  async(req, res)=>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
@@ -93,7 +83,6 @@ let users =  async(req, res)=>{
           req.user.username,
           User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1})
         ])
-          console.log(results)
         res.render("users", {
             languages: languages,
             loggedin: loggedin,
