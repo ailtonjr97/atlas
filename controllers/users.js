@@ -10,8 +10,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+
 let users =  async(req, res)=>{
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
         let users = await User.find({"isActive": "True"}).sort({"name": 1});
         let results = await User.countDocuments({"isActive": "True"});
@@ -36,7 +38,7 @@ let users =  async(req, res)=>{
   };
 
   let newuser =  async(req, res)=>{
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
         let branches = await Branch.find();
         let departments = await Department.find();
@@ -54,7 +56,7 @@ let users =  async(req, res)=>{
   };
 
   let registerUser =  async (req, res)=> {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
         await User.register({username: req.body.username }, req.body.password, async(err, user)=> {
           let userId = await User.countDocuments();
@@ -82,13 +84,16 @@ let users =  async(req, res)=>{
   };
 
  let inactiveusers = async(req, res)=>{
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
-        let isAdmin = req.user.isAdmin;
-        let users = await User.find({"isActive": "False"})
-        let results = await User.countDocuments({"isActive": "False"});
-        let loggedin = req.user.username
-        let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
+        const [isAdmin, users, results, loggedin, languages] = await Promise.all([
+          req.user.isAdmin,
+          User.find({"isActive": "False"}),
+          User.countDocuments({"isActive": "False"}),
+          req.user.username,
+          User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1})
+        ])
+          console.log(results)
         res.render("users", {
             languages: languages,
             loggedin: loggedin,
@@ -105,9 +110,37 @@ let users =  async(req, res)=>{
     };
   }
 
+  let activateUser = async (req, res)=>{
+    if(req.isAuthenticated() && req.user.isActive == "True"){
+      try {
+        await User.findByIdAndUpdate(req.params.id, {$set:{"isActive": "True"}});
+        res.redirect("/users")
+      } catch (error) {
+        res.render("error.ejs")
+      }
+    }else {
+      req.session.returnTo = req.originalUrl;
+      res.redirect("/login");
+    };
+  }
+
+  let inactivateUser = async (req, res)=>{
+    if(req.isAuthenticated && req.user.isActive == "True"){
+      try {
+        await User.findByIdAndUpdate(req.params.id, {$set:{"isActive": "False"}});
+        res.redirect("/users")
+      } catch (error) {
+        res.render("error.ejs")
+      }
+    }else {
+      req.session.returnTo = req.originalUrl;
+      res.redirect("/login");
+    };
+  }
+
   //Will reset password to 123456
 let passwordReset = async(req, res)=> {
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
         await User.updateMany({ _id: req.params.id },{
           $set: {
@@ -123,7 +156,7 @@ let passwordReset = async(req, res)=> {
   };
 
 let editUser = async(req, res) =>{
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
         let user = await User.findOne({"_id": req.params.id})
         res.render("usersedit",{
@@ -139,7 +172,7 @@ let editUser = async(req, res) =>{
   };
 
   let editUserPost = async(req, res) =>{
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
         let updates = req.body
         await User.findOneAndUpdate({"_id": req.params.id}, updates)
@@ -154,7 +187,7 @@ let editUser = async(req, res) =>{
   };
 
 let changePassword = async(req, res) =>{
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
         let loggedin = await req.user
         res.render("userschangepassword",{
@@ -170,7 +203,8 @@ let changePassword = async(req, res) =>{
   };
 
  let changePasswordPost =  (req, res) =>{
-    User.findById(req.params.id, (err, user) => {
+    if(req.isAuthenticated && req.user.isActive == "True"){
+      User.findById(req.params.id, (err, user) => {
         if (err) {
             res.render("error.ejs");
         } else {
@@ -184,7 +218,11 @@ let changePassword = async(req, res) =>{
             });
         }
     });
-  };
+    } else {
+      req.session.returnTo = req.originalUrl;
+      res.redirect("/login");
+    }
+    };
 
   module.exports =  {
     users,
@@ -195,5 +233,7 @@ let changePassword = async(req, res) =>{
     editUser,
     editUserPost,
     changePassword,
-    changePasswordPost
+    changePasswordPost,
+    activateUser,
+    inactivateUser
 };
