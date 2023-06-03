@@ -3,6 +3,7 @@ const router = express.Router();
 const {login, landing, authenticate, home, logout} = require('../controllers/login.js');
 const {users, newuser, registerUser, inactiveusers, passwordReset, editUser, editUserPost, changePassword, changePasswordPost, activateUser, inactivateUser} = require('../controllers/users.js');
 const {language, languagePost} = require('../controllers/language.js');
+const {atlas} = require("../controllers/atlas.js");
 
 //Login and authentication
 router.get("/", landing);
@@ -27,5 +28,8 @@ router.get("/users/inactivateuser/:id", inactivateUser);
 //Language change of Atlas
 router.get("/languages/", language);
 router.post("/languages/", languagePost);
+
+//Page showing (and trying to sell) Atlas to the user
+router.get("/atlas", atlas)
 
 module.exports = router;
