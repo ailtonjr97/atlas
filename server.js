@@ -4,14 +4,13 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const upload = require("express-fileupload");
 const bodyParser = require("body-parser");
 dotenv.config();
 const initiation = require("./routes/initiation.js");
 const tickets = require("./routes/tickets.js");
 const informations = require("./routes/informations.js");
 const usersprotheus = require("./routes/usersProtheus.js");
-const atlas = require("./routes/atlas.js");
+const logistic = require("./routes/logistic.js")
 
 const app = express();
 
@@ -38,7 +37,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(upload());
 
 mongoose.connect(process.env.MONGOSTRING);
 
@@ -46,7 +44,7 @@ app.use("/", initiation);
 app.use("/tickets", tickets);
 app.use("/informations", informations);
 app.use("/usersprotheus", usersprotheus);
-app.use("/atlas", atlas);
+app.use("/logistic", logistic)
 
 app.listen(process.env.PORT, function () {
   console.log("Node.js operational at port " + process.env.PORT);

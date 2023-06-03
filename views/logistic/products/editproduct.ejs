@@ -1,0 +1,44 @@
+<%- include('../../partials/header') %>
+<link rel="stylesheet" href="/css/tablenew.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+
+<style>
+    .row{
+    max-width: 98%;
+    margin-left: 1%;
+}
+</style>
+
+
+<form action="/logistic/editproduct/<%=product._id%>" method="POST">
+    <div class="row" style="margin-top: 1%;">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="input" class="form-control" id="name" placeholder="<%=product.name%>" name="name" value="<%=product.name%>">
+                <label for="name"><%=product.name%></label>
+              </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input type="input" class="form-control" id="code" placeholder="<%=product.code%>" name="code" value="<%=product.code%>">
+                <label for="code"><%=product.code%></label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="<%=product.description%>" id="description"><%=product.description%></textarea>
+                <label for="description"><%=product.description%></label>
+              </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </div>
+</form>
+
+
+<%- include('../../partials/footer') %>
