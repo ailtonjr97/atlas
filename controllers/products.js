@@ -70,6 +70,7 @@ let editProduct = async(req, res)=>{
 let editProductPost = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
+            console.log(req.body)
             await Product.findByIdAndUpdate(req.params.id, req.body);
             res.redirect("/logistic/products")
         } catch (error) {

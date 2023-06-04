@@ -5,7 +5,7 @@ let branches = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         let branches = await Branch.find();
         let results = await Branch.countDocuments();
-        res.render("branchall", {
+        res.render("information/branchall", {
             results: results,
             branches: branches
         });
@@ -23,7 +23,7 @@ let newBranch = async(req, res)=>{
             response.data.forEach(element => {
                 countries.push(element.name.common);
             });
-            res.render("branchnew",{
+            res.render("information/branchnew",{
                 countries: countries.sort()
             });
         } catch (error) {

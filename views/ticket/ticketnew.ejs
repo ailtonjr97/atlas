@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 
 <style>
   #rowMestra {
@@ -82,11 +82,33 @@ input:focus + label {
       <div class="col">
         <div class="form-floating">
           <select class="form-select" id="department" aria-label="Floating label" name="department">
-              <option >Marketing</option>
+              <%departments.forEach((department)=>{%>
+                <option><%=department.name%></option>
+              <%})%>
           </select>
-        <label for="department">New ticket to:</label>
+        <label for="department">To department:</label>
       </div>
       </div>
+      <div class="col">
+        <div class="form-floating">
+          <select class="form-select" id="branch" aria-label="Floating label" name="branch">
+            <%branches.forEach((branch)=>{%>
+              <option><%=branch.name%></option>
+            <%})%>
+          </select>
+        <label for="branch">To branch:</label>
+      </div>
+      </div>
+      <div class="col-lg">
+        <div class="form-floating">
+            <select class="form-select" id="urgency" aria-label="Floating label" name="urgency">
+                <option class='valor'>Normal</option>
+                <option class='valor'>Urgent</option>
+                <option class='valor'>Critical</option>
+            </select>
+            <label for="urgency">Urgency:</label>
+        </div>
+    </div>
     </div>
     <div class="row" id='rowTerceira'>
       <div class="col-lg">
@@ -95,28 +117,6 @@ input:focus + label {
           <label for="description">Write your ticket here...</label>
         </div>
       </div>
-    </div>
-    <div class="row mt-2">
-        <div class="col-lg">
-            <div class="form-floating">
-                <select class="form-select" id="branch" aria-label="Floating label" name="branch">
-                    <option class='valor'>Example 1</option>
-                    <option class='valor'>Example 2</option>
-                    <option class='valor'>Example 3</option>
-                </select>
-                <label for="branch">Branch:</label>
-            </div>
-        </div>
-        <div class="col-lg">
-            <div class="form-floating">
-                <select class="form-select" id="urgency" aria-label="Floating label" name="urgency">
-                    <option class='valor'>Normal</option>
-                    <option class='valor'>Urgent</option>
-                    <option class='valor'>Critical</option>
-                </select>
-                <label for="urgency">Urgency:</label>
-            </div>
-        </div>
     </div>
   </div>
   <br>
@@ -150,4 +150,4 @@ file.addEventListener('change', (e) => {
 </script>
 
 
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>

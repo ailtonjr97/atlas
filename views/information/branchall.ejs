@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('../partials/header') %>
 <link rel="stylesheet" href="/css/table.css" />
 <link rel="stylesheet" href="/css/button8.css" />
 <link rel="stylesheet" href="/css/loading.css" />
@@ -15,25 +15,19 @@
 <div style="padding: 1.5%">
   <div class="row">
     <div class="col-md-4">
-      <a class="button-8 mb-2" onclick="confirmation('This table will take 15 seconds to update. Please do not closa Chrome while the actions takes place. When done, a message of error or success will appear. Do you really want to update this table?' , '/produtos/atualizar')">Update products table</a>
-      <a class="button-8 mb-2" href="">New product</a>
+      <a class="button-8 mb-2" href="/informations/newbranch">New branch</a>
     </div>
     <div class="col-lg-6">
-      <%if(atualizado == 1){%>
-        <button type="button" class="btn btn-success mb-2" id="execSuc" style="margin-left: 15%;">Success!</button>
-      <%}else if (atualizado == 2){%>
-        <button type="button" class="btn btn-danger mb-2" id="execErr">Error.</button>
-      <%}%>
     </div>
     <div class="col-sm-2">
       <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
-        <span class="counter-value"><%=resultados%></span>
-        resultados
+        <span class="counter-value"><%=results%></span>
+        results
       </button>
     </div>
   </div>
   <div class="row mb-2">
-    <div class="col-sm-2">
+    <div class="col">
       <div class="form-floating">
         <input
           type="text"
@@ -41,10 +35,10 @@
           id="procuraBtn0"
           onkeyup="procura(0, 'procuraBtn0')"
         />
-        <label for="procuraBtn0">Branch:</label>
+        <label for="procuraBtn0">ID:</label>
       </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col">
       <div class="form-floating">
         <input
           type="text"
@@ -52,10 +46,10 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Code:</label>
+        <label for="procuraBtn1">Name:</label>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col">
       <div class="form-floating">
         <input
           type="text"
@@ -63,10 +57,10 @@
           id="procuraBtn2"
           onkeyup="procura(2, 'procuraBtn2')"
         />
-        <label for="procuraBtn2">Description:</label>
+        <label for="procuraBtn2">Address:</label>
       </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col">
       <div class="form-floating">
         <input
           type="text"
@@ -74,10 +68,10 @@
           id="procuraBtn3"
           onkeyup="procura(3, 'procuraBtn3')"
         />
-        <label for="procuraBtn3">Type:</label>
+        <label for="procuraBtn2">City:</label>
       </div>
     </div>
-    <div class="col-sm-2">
+    <div class="col">
       <div class="form-floating">
         <input
           type="text"
@@ -85,7 +79,29 @@
           id="procuraBtn4"
           onkeyup="procura(4, 'procuraBtn4')"
         />
-        <label for="procuraBtn4">Unit:</label>
+        <label for="procuraBtn2">Country:</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn5"
+          onkeyup="procura(5, 'procuraBtn5')"
+        />
+        <label for="procuraBtn2">Zip Code:</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn6"
+          onkeyup="procura(6, 'procuraBtn6')"
+        />
+        <label for="procuraBtn2">Active:</label>
       </div>
     </div>
   </div>
@@ -93,35 +109,33 @@
     <table class="fl-table" id="myTable">
       <thead>
         <tr style="height: 25px">
-          <th>Branch</th>
-          <th>Code</th>
-          <th>Description</th>
-          <th>Type</th>
-          <th>Unit</th>
-          <th>Action</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>Country</th>
+          <th>Zip Code</th>
+          <th>Active</th>
         </tr>
       </thead>
       <tbody>
-        <%produtos.forEach(function(produto){ %>
+        <%branches.forEach(function(branch){ %>
         <tr>
-          <td><%=produto.filial%></td>
-          <td><%=produto.cod%></td>
-          <td><%=produto.desc%></td>
-          <td><%=produto.tipo%></td>
-          <td><%=produto.um%></td>
-          <td>
-            <a class="button-8 mb-2" onclick="confirmation('Esse produto será atualizado. Deseja prosseguir?' , '/produtos/atualizarunico/<%=produto._id%>/<%=produto.cod%>')">Update</a>
-            <a class="button-8 mb-2" target="_blank" href="/produtos/detalhes/<%=produto.cod%>">Details</a>
-          </td>
+          <td><p><%=branch.id%></p></td>
+          <td><p><%=branch.name%></p></td>
+          <td><p><%=branch.address%></p></td>
+          <td><p><%=branch.city%></p></td>
+          <td><p><%=branch.country%></p></td>
+          <td><p><%=branch.zipcode%></p></td>
+          <td><p><%=branch.active%></p></td>
         </tr>
         <%})%>
       </tbody>
-
       <tbody></tbody>
     </table>
   </div>
 </div>
-<%- include('partials/footer') %>
+<%- include('../partials/footer') %>
 
 <script type="text/javascript" src="/js/carregador.js"></script>
 <script type="text/javascript" src="/js/confirmation.js"></script>

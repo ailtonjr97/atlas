@@ -5,7 +5,7 @@ let departments = async(req, res)=>{
         try {
             let results = await Department.countDocuments();
             let departments = await Department.find();
-            res.render("departmentall", {
+            res.render("information/departmentall", {
                 results: results,
                 departments: departments
             })
@@ -21,7 +21,7 @@ let departments = async(req, res)=>{
 let newDepartment = async(req, res)=>{
     if(req.isAuthenticated()){
         try {
-            res.render("departmentnew")
+            res.render("information/departmentnew")
         } catch (error) {
             res.render("error.ejs")
         }

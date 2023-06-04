@@ -15,7 +15,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 const login = async(req, res)=>{
-    res.render("login")
+    res.render("home/login")
 }
 
 const landing = async(req, res)=>{
@@ -47,11 +47,11 @@ const home = async(req, res)=>{
     if (req.isAuthenticated()) {
       try {
         let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
-        res.render("home", {
+        res.render("home/home", {
           languages: languages
         })
       } catch (error) {
-        res.sendFile("/images/error.jpg")
+        res.render("error.es")
       }
     } else {
       res.redirect("/login");

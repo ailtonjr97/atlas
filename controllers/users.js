@@ -10,7 +10,7 @@ let users =  async(req, res)=>{
         let isAdmin = req.user.isAdmin;
         let loggedin = req.user.username;
         let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
-        res.render("users", {
+        res.render("users/users", {
           languages: languages,
           loggedin: loggedin,
           users: users,
@@ -32,7 +32,7 @@ let users =  async(req, res)=>{
       try {
         let branches = await Branch.find();
         let departments = await Department.find();
-        res.render("usersnew", {
+        res.render("users/usersnew", {
           branches: branches,
           departments: departments
         });
@@ -83,7 +83,7 @@ let users =  async(req, res)=>{
           req.user.username,
           User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1})
         ])
-        res.render("users", {
+        res.render("users/users", {
             languages: languages,
             loggedin: loggedin,
             users: users,
@@ -148,7 +148,7 @@ let editUser = async(req, res) =>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
         let user = await User.findOne({"_id": req.params.id})
-        res.render("usersedit",{
+        res.render("users/usersedit",{
           user: user
         })
       } catch (error) {
@@ -179,7 +179,7 @@ let changePassword = async(req, res) =>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
         let loggedin = await req.user
-        res.render("userschangepassword",{
+        res.render("users/userschangepassword",{
           loggedin: loggedin
         })
       } catch (error) {

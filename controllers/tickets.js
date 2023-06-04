@@ -1,10 +1,12 @@
-const Ticket = require("../models/ticket.js")
+const Ticket = require("../models/ticket.js");
+const Department = require("../models/departments.js");
+const Branch = require("../models/branch.js");
 
 let ticketall = async(req, res) => {
     if (req.isAuthenticated()){
       Ticket.find().sort({"idticket": -1}).then((tickets)=>{
         Ticket.countDocuments({"inactive": {$eq: false}}).then((results)=>{
-          res.render("ticketall",{
+          res.render("ticket/ticketall",{
             results: results,
             tickets: tickets
           })
@@ -19,7 +21,14 @@ let ticketall = async(req, res) => {
 let newTicket = async(req, res)=>{
     if(req.isAuthenticated()){
       try {
-        res.render("ticketnew")
+        const[department, branch] = await Promise.all([
+          Department.find(),
+          Branch.find(),
+        ])
+        res.render("ticket/ticketnew", {
+          departments: department,
+          branches: branch
+        })
       } catch (error) {
         res.send("Error. Contact your IT department.")
       }
@@ -30,25 +39,17 @@ let newTicket = async(req, res)=>{
   }
   
 let newTicketPost = async(req, res)=>{
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && user.req.isActive == "True"){
       try {
-        let counting = await Ticket.countDocuments();
-        const ticket = new Ticket({
-          idticket: counting,
-          department: req.body.department,
-          description: req.body.description,
-          branch: req.body.branch,
-          urgency: req.body.urgency,
-          requester: req.user.name,
-          designated: "",
-          response: "",
-          inactive: false,
-        });
-        Ticket.create(ticket).then(()=>{
-          res.redirect("/tickets/")
-        });
+        const [] = await Promise.all([
+          await Ticket.create(req.body),
+          Ticket.findOneAndUpdate({}, {$set: {
+            
+          }}).sort({_id:-1})
+        ])
+        res.redirect("/tickets");
       } catch (error) {
-        res.send("Error. Contact your IT department.")
+        res.render("error.ejs")
       }
     } else {
       req.session.returnTo = req.originalUrl;
@@ -76,7 +77,7 @@ let myTickets = async(req, res)=>{
       try {
         Ticket.find({"requester": req.user.name}).sort({"idticket": -1}).then((tickets)=>{
           Ticket.countDocuments({"requester": req.user.name}).then((results)=>{
-            res.render("ticketsmy", {
+            res.render("ticket/ticketsmy", {
               tickets: tickets,
               results: results
             });
