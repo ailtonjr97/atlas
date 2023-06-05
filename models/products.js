@@ -5,7 +5,15 @@ const productSchema = new mongoose.Schema({
   name: String,
   description: String,
   quantity: Number,
-  isActive: Boolean
+  isActive: Boolean,
+  quantity: Number,
+  entries: [{
+    receiptNumber: Number,
+    receiptDate: String,
+    receiptJsDate: Date,
+    receiptQuantity: Number,
+    receiptComment: String
+  }]
 });
 
 module.exports = mongoose.model("Product", productSchema);

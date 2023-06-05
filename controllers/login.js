@@ -15,11 +15,11 @@ passport.deserializeUser(function (id, done) {
 });
 
 const login = async(req, res)=>{
-    res.render("home/login")
+    res.render("home/login");
 }
 
 const landing = async(req, res)=>{
-  res.render("landing")
+  res.render("home/landing");
 }
 
 const authenticate = async(req, res)=>{

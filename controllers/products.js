@@ -70,11 +70,42 @@ let editProduct = async(req, res)=>{
 let editProductPost = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
-            console.log(req.body)
             await Product.findByIdAndUpdate(req.params.id, req.body);
             res.redirect("/logistic/products")
         } catch (error) {
             res.render("error.ejs")
+        }
+    } else {
+        req.session.returnTo = req.originalUrl;
+        res.redirect("/login");
+      };
+}
+
+let addProduct = async(req, res)=>{
+    if(req.isAuthenticated() && req.user.isActive == "True"){
+        try {
+            if(req.method == "GET"){
+                let product = await Product.findById(req.params.id);
+                res.render("logistic/products/addproduct", {
+                    products: product
+                });
+            } else{
+                let receiptJsDate = new Date();
+                //Taking Date from JS an converting to local time of Brazil (UTC -03:00)
+                receiptJsDate.setHours(receiptJsDate.getHours() - 3);
+                let data = [{
+                    "receiptNumber": req.body.receiptNumber,
+                    "receiptDate": req.body.receiptDate,
+                    "receiptJsDate": receiptJsDate,
+                    "receiptQuantity": req.body.receiptQuantity,
+                    "receiptComment": req.body.receiptComment 
+                }]
+                await Product.findByIdAndUpdate(req.params.id, {$inc: {"quantity": req.body.receiptQuantity}, $push: {"entries": data}});
+                res.redirect("/logistic/products");
+            }
+        } catch (error) {
+            console.log(error);
+            res.render("error.ejs");
         }
     } else {
         req.session.returnTo = req.originalUrl;
@@ -87,5 +118,6 @@ module.exports = {
     newProduct,
     newProductPost,
     editProduct,
-    editProductPost
+    editProductPost,
+    addProduct
 };
