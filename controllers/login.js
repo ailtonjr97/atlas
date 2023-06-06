@@ -19,7 +19,7 @@ const login = async(req, res)=>{
 }
 
 const landing = async(req, res)=>{
-  res.render("landing")
+  res.render("home/landing")
 }
 
 const authenticate = async(req, res)=>{
