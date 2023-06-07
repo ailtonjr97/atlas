@@ -3,7 +3,7 @@ const Department = require("../models/departments.js");
 const Branch = require("../models/branch.js");
 
 let ticketall = async(req, res) => {
-    if (req.isAuthenticated()){
+    if (req.isAuthenticated() && req.user.isActive == "True"){
       Ticket.find().sort({"idticket": -1}).then((tickets)=>{
         Ticket.countDocuments({"inactive": {$eq: false}}).then((results)=>{
           res.render("ticket/ticketall",{
@@ -19,7 +19,7 @@ let ticketall = async(req, res) => {
   };
   
 let newTicket = async(req, res)=>{
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
         const[department, branch] = await Promise.all([
           Department.find(),
@@ -39,7 +39,7 @@ let newTicket = async(req, res)=>{
   }
   
 let newTicketPost = async(req, res)=>{
-    if(req.isAuthenticated() && user.req.isActive == "True"){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
         const [] = await Promise.all([
           await Ticket.create(req.body),
@@ -58,7 +58,7 @@ let newTicketPost = async(req, res)=>{
   };
   
 let inactivate =  async(req, res)=>{
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
         Ticket.findOneAndUpdate({"_id": req.params.id}, {$set: {inactive: true}}).then(()=>{
           res.redirect("/tickets/")
@@ -73,7 +73,7 @@ let inactivate =  async(req, res)=>{
   };
   
 let myTickets = async(req, res)=>{
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
         Ticket.find({"requester": req.user.name}).sort({"idticket": -1}).then((tickets)=>{
           Ticket.countDocuments({"requester": req.user.name}).then((results)=>{
@@ -93,7 +93,7 @@ let myTickets = async(req, res)=>{
   }
   
 let response = async(req, res)=>{
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated()  && req.user.isActive == "True"){
       try {
         Ticket.findOneAndUpdate({"idticket": req.body.idticket}, {$set: {"response": req.body.response}}).then(()=>{
           res.redirect("/tickets/")

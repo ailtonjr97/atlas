@@ -178,9 +178,9 @@ let editUser = async(req, res) =>{
 let changePassword = async(req, res) =>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
-        let loggedin = await req.user
+        let user = await User.findById(req.params.id)
         res.render("users/userschangepassword",{
-          loggedin: loggedin
+          user: user
         })
       } catch (error) {
         res.render("error.ejs")
