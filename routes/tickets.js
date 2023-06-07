@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {ticketall, newTicket, newTicketPost, inactivate, myTickets, response} = require('../controllers/tickets.js');
+const {ticketall, newTicket, newTicketPost, inactivate, myTickets, response} = require('../controllers/ticket/tickets.js');
 
 //Tickets CRUD
 router.get("/", ticketall);

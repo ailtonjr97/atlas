@@ -1,4 +1,4 @@
-const Branch = require("../models/branch.js")
+const Branch = require("../../models/informations/branch.js")
 const axios = require("axios")
 
 let branches = async(req, res)=>{

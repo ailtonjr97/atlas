@@ -1,6 +1,6 @@
-const User = require("../models/user.js");
-const Branch = require("../models/branch.js");
-const Department = require("../models/departments.js");
+const User = require("../../models/user/user.js");
+const Branch = require("../../models/informations/branch.js");
+const Department = require("../../models/informations/departments.js");
 
 let users =  async(req, res)=>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
@@ -192,14 +192,16 @@ let changePassword = async(req, res) =>{
   };
 
  let changePasswordPost =  (req, res) =>{
-    if(req.isAuthenticated && req.user.isActive == "True"){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
       User.findById(req.params.id, (err, user) => {
         if (err) {
+          console.log(err)
             res.render("error.ejs");
         } else {
             user.changePassword(req.body.oldpassword, 
             req.body.newpassword, function (err) {
                 if (err) {
+                  console.log(err)
                     res.render("error.ejs")
                 } else {
                     res.redirect('/users/')

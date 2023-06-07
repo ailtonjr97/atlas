@@ -9,7 +9,6 @@ dotenv.config();
 const initiation = require("./routes/initiation.js");
 const tickets = require("./routes/tickets.js");
 const informations = require("./routes/informations.js");
-const usersprotheus = require("./routes/usersProtheus.js");
 const logistic = require("./routes/logistic.js")
 
 const app = express();
@@ -43,7 +42,6 @@ mongoose.connect(process.env.MONGOSTRING);
 app.use("/", initiation);
 app.use("/tickets", tickets);
 app.use("/informations", informations);
-app.use("/usersprotheus", usersprotheus);
 app.use("/logistic", logistic)
 
 app.listen(process.env.PORT, function () {

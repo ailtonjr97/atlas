@@ -1,6 +1,6 @@
 const dotenv = require("dotenv");
 const passport = require("passport");
-const User = require("../models/user.js");
+const User = require("../../models/user/user.js");
 dotenv.config();
 
 passport.use(User.createStrategy());

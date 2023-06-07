@@ -1,6 +1,6 @@
-const Ticket = require("../models/ticket.js");
-const Department = require("../models/departments.js");
-const Branch = require("../models/branch.js");
+const Ticket = require("../../models/ticket/ticket.js");
+const Department = require("../../models/informations/departments.js");
+const Branch = require("../../models/informations/branch.js");
 
 let ticketall = async(req, res) => {
     if (req.isAuthenticated() && req.user.isActive == "True"){
@@ -41,12 +41,14 @@ let newTicket = async(req, res)=>{
 let newTicketPost = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
-        const [] = await Promise.all([
-          await Ticket.create(req.body),
-          Ticket.findOneAndUpdate({}, {$set: {
-            
-          }}).sort({_id:-1})
-        ])
+        await Ticket.create(req.body)
+        let last_id = await Ticket.find({}, {_id: 1}).sort({_id:-1}).limit(1)
+        await Ticket.findByIdAndUpdate(last_id[0]._id, {$set: {
+          "idticket": await Ticket.countDocuments(),
+          "requester": req.user.name,
+          "inactive": false,
+          "response": ''
+        }})
         res.redirect("/tickets");
       } catch (error) {
         res.render("error.ejs")
@@ -93,6 +95,7 @@ let myTickets = async(req, res)=>{
   }
   
 let response = async(req, res)=>{
+  console.log(req.body)
     if(req.isAuthenticated()  && req.user.isActive == "True"){
       try {
         Ticket.findOneAndUpdate({"idticket": req.body.idticket}, {$set: {"response": req.body.response}}).then(()=>{

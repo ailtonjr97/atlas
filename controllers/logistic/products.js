@@ -1,4 +1,4 @@
-const Product = require("../models/products.js")
+const Product = require("../../models/logistic/products.js")
 
 let products = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){

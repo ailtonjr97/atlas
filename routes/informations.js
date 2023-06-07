@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const{branches, newBranch, newBranchPost} = require("../controllers/branch.js")
-const{departments, newDepartment, newDepartmentPost} = require("../controllers/departments.js")
-const{warehouse} = require("../controllers/warehouse.js")
+const{branches, newBranch, newBranchPost} = require("../controllers/informations/branch.js")
+const{departments, newDepartment, newDepartmentPost} = require("../controllers/informations/departments.js")
+const{warehouse, newWarehouse} = require("../controllers/informations/warehouse.js")
 
 //Branches visualization and CRUD operations
 router.get("/branches", branches);
@@ -16,6 +16,7 @@ router.post("/newdepartment", newDepartmentPost);
 
 //Warehouse CRUD
 router.get("/warehouse", warehouse);
+router.get("/newwarehouse", newWarehouse);
 
 
 module.exports = router;

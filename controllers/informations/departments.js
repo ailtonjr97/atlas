@@ -1,4 +1,4 @@
-const Department = require("../models/departments.js");
+const Department = require("../../models/informations/departments.js");
 
 let departments = async(req, res)=>{
     if(req.isAuthenticated()){

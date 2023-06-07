@@ -1,4 +1,4 @@
-const User = require("../models/user.js");
+const User = require("../../models/user/user.js");
 
 let language = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
