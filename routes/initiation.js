@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {login, landing, authenticate, home, logout} = require('../controllers/initiation/login.js');
+const {login, loginError, landing, authenticate, home, logout} = require('../controllers/initiation/login.js');
 const {users, newuser, registerUser, inactiveusers, passwordReset, editUser, editUserPost, changePassword, changePasswordPost, activateUser, inactivateUser} = require('../controllers/user/users.js');
 const {language, languagePost} = require('../controllers/user/language.js');
 const {atlas} = require("../controllers/initiation/atlas.js");
@@ -8,6 +8,7 @@ const {atlas} = require("../controllers/initiation/atlas.js");
 //Login and authentication
 router.get("/", landing);
 router.get("/login", login);
+router.get("/loginerror", loginError);
 router.post("/authenticate", authenticate);
 router.get("/home", home);
 router.get("/logout", logout);

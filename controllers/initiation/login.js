@@ -14,8 +14,13 @@ passport.deserializeUser(function (id, done) {
   });
 });
 
+
 const login = async(req, res)=>{
     res.render("home/login");
+}
+
+const loginError = async(req, res)=>{
+  res.render("home/loginerror");
 }
 
 const landing = async(req, res)=>{
@@ -31,7 +36,7 @@ const authenticate = async(req, res)=>{
     if (err) {
       res.send(err);
     } else {
-      passport.authenticate("local")(req, res, function () {
+      passport.authenticate("local", { failureRedirect: '/loginError', failureMessage: true })(req, res, function () {
         if (user) {
           res.redirect(req.session.returnTo || "/home");
           delete req.session.returnTo;
@@ -67,6 +72,7 @@ const logout = async(req, res)=>{
 
 module.exports =  {
     login,
+    loginError,
     landing,
     authenticate,
     home,
