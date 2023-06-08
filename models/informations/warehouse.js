@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const warehouseSchema = new mongoose.Schema({
   id: Number,
   name: String,
+  code: String,
   description: String,
   branch: String
 });

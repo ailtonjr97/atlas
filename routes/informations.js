@@ -17,6 +17,7 @@ router.post("/newdepartment", newDepartmentPost);
 //Warehouse CRUD
 router.get("/warehouse", warehouse);
 router.get("/newwarehouse", newWarehouse);
+router.post("/newwarehouse", newWarehouse);
 
 
 module.exports = router;

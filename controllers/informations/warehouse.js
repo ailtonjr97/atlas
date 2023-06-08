@@ -6,7 +6,7 @@ let warehouse = async(req, res)=>{
         try {
             const [results, warehouses] = await Promise.all([
                 Warehouse.countDocuments(),
-                Warehouse.find()
+                Warehouse.find(),
             ])
             res.render("information/warehouse.ejs", {
                 results: results,
@@ -23,13 +23,21 @@ let warehouse = async(req, res)=>{
 
 let newWarehouse = async (req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
-        if(req.method == "GET"){
-            let branches = await Branch.find().sort({"name": -1})
-            res.render("information/warehousenew.ejs", {
-                branches: branches
-            })
-        }else{
-
+        try {
+            if(req.method == "GET"){
+                let branches = await Branch.find().sort({"id": 1})
+                res.render("information/warehousenew.ejs", {
+                    branches: branches
+                })
+            }else{
+                await Warehouse.create(req.body);
+                let counting = await Warehouse.countDocuments()
+                await Warehouse.findOneAndUpdate({"code": req.body.code}, {$set: {"id": counting}})
+                res.redirect("/informations/warehouse")
+            }
+        } catch (error) {
+            res.render("error.ejs")
+            console.log(error)
         }
     } else {
         req.session.returnTo = req.originalUrl;
