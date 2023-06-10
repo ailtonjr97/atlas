@@ -1,4 +1,6 @@
 const Product = require("../../models/logistic/products.js")
+const Warehouse = require("../../models/informations/warehouse.js");
+const warehouse = require("../../models/informations/warehouse.js");
 
 let products = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
@@ -85,22 +87,30 @@ let addProduct = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
             if(req.method == "GET"){
-                let product = await Product.findById(req.params.id);
+                const [product, warehouse] = await Promise.all([
+                    Product.findById(req.params.id),
+                    Warehouse.find().sort({"name": -1})
+                ])
                 res.render("logistic/products/addproduct", {
-                    products: product
+                    products: product,
+                    warehouses: warehouse
                 });
             } else{
+                //Taking Date from JS an converting to local time of Brazil (-03:00)
                 let receiptJsDate = new Date();
-                //Taking Date from JS an converting to local time of Brazil (UTC -03:00)
                 receiptJsDate.setHours(receiptJsDate.getHours() - 3);
                 let data = [{
                     "receiptNumber": req.body.receiptNumber,
                     "receiptDate": req.body.receiptDate,
                     "receiptJsDate": receiptJsDate,
                     "receiptQuantity": req.body.receiptQuantity,
-                    "receiptComment": req.body.receiptComment 
+                    "receiptComment": req.body.receiptComment,
+                    "receiptWarehouse": req.body.receiptWarehouse
                 }]
-                await Product.findByIdAndUpdate(req.params.id, {$inc: {"quantity": req.body.receiptQuantity}, $push: {"entries": data}});
+                await Product.findByIdAndUpdate(req.params.id, {
+                    $inc: {"quantity": req.body.receiptQuantity},
+                    $push: {"entries": data}
+                });
                 res.redirect("/logistic/products");
             }
         } catch (error) {

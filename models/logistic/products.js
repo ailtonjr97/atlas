@@ -12,7 +12,8 @@ const productSchema = new mongoose.Schema({
     receiptDate: String,
     receiptJsDate: Date,
     receiptQuantity: Number,
-    receiptComment: String
+    receiptComment: String,
+    receiptWarehouse: String
   }]
 });
 

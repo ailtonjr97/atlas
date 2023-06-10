@@ -25,9 +25,8 @@
         <div class="form-floating">
           <select class="form-select" id="branch" aria-label="Floating label branch" name="branch" required>
             <%branches.forEach((branch)=>{%>
-              <option><%=branch.id%> - <%=branch.name%></option>
+              <option><%=branch.name%></option>
             <%})%>
-            <option value=""></option>
           </select>
           <label for="branch">Branches:</label>
         </div>
