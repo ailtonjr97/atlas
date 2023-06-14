@@ -89,7 +89,7 @@ let addProduct = async(req, res)=>{
             if(req.method == "GET"){
                 const [product, warehouse] = await Promise.all([
                     Product.findById(req.params.id),
-                    Warehouse.find().sort({"name": -1})
+                    Warehouse.find().sort({"name": 1})
                 ])
                 res.render("logistic/products/addproduct", {
                     products: product,
@@ -107,10 +107,16 @@ let addProduct = async(req, res)=>{
                     "receiptComment": req.body.receiptComment,
                     "receiptWarehouse": req.body.receiptWarehouse
                 }]
-                await Product.findByIdAndUpdate(req.params.id, {
-                    $inc: {"quantity": req.body.receiptQuantity},
-                    $push: {"entries": data}
-                });
+                let productWarehouse = await Product.find({"_id": req.params.id}, {"name": 1, "code": 1, "_id": 0});
+                await Promise.all([
+                    Product.findByIdAndUpdate(req.params.id, {
+                        $inc: {"quantity": req.body.receiptQuantity},
+                        $push: {"entries": data}
+                    }),
+                    Warehouse.findOneAndUpdate({"code": req.body.receiptWarehouse}, {
+                        $push: {"products": [{"name": productWarehouse[0].name, "code": productWarehouse[0].code, "quantity": req.body.receiptQuantity}]}
+                    })
+                ]);
                 res.redirect("/logistic/products");
             }
         } catch (error) {

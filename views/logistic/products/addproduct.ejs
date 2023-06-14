@@ -7,7 +7,7 @@
 }
 </style>
 
-<form action="/logistic/addproduct/<%=products._id%>" method="POST">
+<form action="/logistic/productentry/<%=products._id%>" method="POST">
     <div class="row mt-2 mb-2">
         <div class="col">
             <div class="form-floating mb-3">
@@ -31,7 +31,7 @@
             <div class="form-floating">
                 <select class="form-select" id="warehouse" aria-label="Floating label select warehouse" name="receiptWarehouse">
                     <%warehouses.forEach((warehouse)=>{%>
-                        <option><%=warehouse.name%> (<%=warehouse.branch%>)</option>
+                        <option value="<%=warehouse.code%>"><%=warehouse.name%> (<%=warehouse.branch%>)</option>
                     <%})%>
                 </select>
                 <label for="warehouse">Warehouse:</label>

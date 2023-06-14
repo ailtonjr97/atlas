@@ -5,7 +5,12 @@ const warehouseSchema = new mongoose.Schema({
   name: String,
   code: String,
   description: String,
-  branch: String
+  branch: String,
+  products: [{
+    name: String,
+    code: String,
+    quantity: Number
+  }]
 });
 
 module.exports = mongoose.model("Warehouse", warehouseSchema);
