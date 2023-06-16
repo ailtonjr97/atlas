@@ -1,6 +1,6 @@
 const Product = require("../../models/logistic/products.js")
 const Warehouse = require("../../models/informations/warehouse.js");
-const warehouse = require("../../models/informations/warehouse.js");
+const ProductMovement = require("../../models/informations/productsMovements.js");
 
 let products = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
@@ -96,26 +96,35 @@ let addProduct = async(req, res)=>{
                     warehouses: warehouse
                 });
             } else{
-                //Taking Date from JS an converting to local time of Brazil (-03:00)
-                let receiptJsDate = new Date();
-                receiptJsDate.setHours(receiptJsDate.getHours() - 3);
-                let data = [{
+                const [productWarehouse, movementIndex] = await Promise.all([
+                    Product.find({"_id": req.params.id}, {"name": 1, "code": 1, "_id": 0}),
+                    ProductMovement.countDocuments()
+                ])
+                let dataProducts = [{
                     "receiptNumber": req.body.receiptNumber,
                     "receiptDate": req.body.receiptDate,
-                    "receiptJsDate": receiptJsDate,
                     "receiptQuantity": req.body.receiptQuantity,
                     "receiptComment": req.body.receiptComment,
                     "receiptWarehouse": req.body.receiptWarehouse
                 }]
-                let productWarehouse = await Product.find({"_id": req.params.id}, {"name": 1, "code": 1, "_id": 0});
+                let dataMovements = [{
+                    "id": movementIndex,
+                    "productCode": productWarehouse[0].code,
+                    "productName": productWarehouse[0].name,
+                    "movement": "Entry",
+                    "quantity": req.body.receiptQuantity,
+                    "documentDate": req.body.receiptDate,
+                    "comment": req.body.receiptComment
+                }]
                 await Promise.all([
                     Product.findByIdAndUpdate(req.params.id, {
                         $inc: {"quantity": req.body.receiptQuantity},
-                        $push: {"entries": data}
+                        $push: {"entries": dataProducts}
                     }),
                     Warehouse.findOneAndUpdate({"code": req.body.receiptWarehouse}, {
                         $push: {"products": [{"name": productWarehouse[0].name, "code": productWarehouse[0].code, "quantity": req.body.receiptQuantity}]}
-                    })
+                    }),
+                    ProductMovement.create(dataMovements)
                 ]);
                 res.redirect("/logistic/products");
             }

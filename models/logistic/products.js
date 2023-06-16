@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
   entries: [{
     receiptNumber: Number,
     receiptDate: String,
-    receiptJsDate: Date,
+    receiptJsDate: {type: Date, default: Date.now},
     receiptQuantity: Number,
     receiptComment: String,
     receiptWarehouse: String
