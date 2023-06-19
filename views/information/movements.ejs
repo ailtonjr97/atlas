@@ -13,15 +13,16 @@
 <div id="loading"></div>
 
 <div style="padding: 1.5%">
-    <div class="d-flex justify-content-start">
-        <a class="button-8 mb-2" href="/informations/newwarehouse">New Warehouse</a>
+  <div class="row">
+    <div class="col-lg-10">
     </div>
-    <div class="d-flex justify-content-end">
-        <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
-            <span class="counter-value"><%=results%></span>
-                results
-            </button>
+    <div class="col-sm-2">
+      <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
+        <span class="counter-value"><%=results%></span>
+        results
+      </button>
     </div>
+  </div>
   <div class="row mb-2">
     <div class="col">
       <div class="form-floating">
@@ -42,7 +43,7 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Name:</label>
+        <label for="procuraBtn1">Code:</label>
       </div>
     </div>
     <div class="col">
@@ -53,7 +54,7 @@
           id="procuraBtn2"
           onkeyup="procura(2, 'procuraBtn2')"
         />
-        <label for="procuraBtn2">Description:</label>
+        <label for="procuraBtn2">Name:</label>
       </div>
     </div>
     <div class="col">
@@ -64,33 +65,72 @@
           id="procuraBtn3"
           onkeyup="procura(3, 'procuraBtn3')"
         />
-        <label for="procuraBtn2">Branch:</label>
+        <label for="procuraBtn2">Movement:</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn4"
+          onkeyup="procura(4, 'procuraBtn4')"
+        />
+        <label for="procuraBtn2">Quantity:</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn5"
+          onkeyup="procura(5, 'procuraBtn5')"
+        />
+        <label for="procuraBtn2">Document Date:</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="procuraBtn6"
+          onkeyup="procura(6, 'procuraBtn6')"
+        />
+        <label for="procuraBtn2">Comment:</label>
       </div>
     </div>
   </div>
-  <!-- <div class="table-wrapper table-responsive table-striped">
+  <div class="table-wrapper table-responsive table-striped">
     <table class="fl-table" id="myTable">
       <thead>
         <tr style="height: 25px">
           <th>ID</th>
+          <th>Code</th>
           <th>Name</th>
-          <th>Description</th>
-          <th>Branch</th>
+          <th>Movement</th>
+          <th>Quantity</th>
+          <th>Document Date</th>
+          <th>Comment</th>
         </tr>
       </thead>
       <tbody>
-        <%warehouses.forEach(function(warehouse){ %>
+        <%productMovements.forEach(function(movements){ %>
         <tr>
-          <td><p><%=warehouse.id%></p></td>
-          <td><p><%=warehouse.name%></p></td>
-          <td><p><%=warehouse.description%></p></td>
-          <td><p><%=warehouse.branch%></p></td>
+          <td><p><%=movements.id%></p></td>
+          <td><p><%=movements.productCode%></p></td>
+          <td><p><%=movements.productName%></p></td>
+          <td><p><%=movements.movement%></p></td>
+          <td><p><%=movements.quantity%></p></td>
+          <td><p><%=movements.documentDate%></p></td>
+          <td><p><%=movements.comment%></p></td>
         </tr>
         <%})%>
       </tbody>
       <tbody></tbody>
     </table>
-  </div> -->
+  </div>
 </div>
 <%- include('../partials/footer') %>
 
