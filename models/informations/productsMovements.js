@@ -4,6 +4,7 @@ const productsMovements = new mongoose.Schema({
   id: Number,
   productCode: String,
   productName: String,
+  productPrice: Number,
   movement: String,
   quantity: Number,
   documentDate: String,

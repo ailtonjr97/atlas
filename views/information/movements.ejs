@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="/css/table.css" />
 <link rel="stylesheet" href="/css/button8.css" />
 <link rel="stylesheet" href="/css/loading.css" />
-<link rel="stylesheet" href="/css/contador.css" />
 <style>
   body {
     font-family: Helvetica;
@@ -17,7 +16,7 @@
     <div class="col-lg-10">
     </div>
     <div class="col-sm-2">
-      <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
+      <button type="button" class="button-8 mb-2" id="result" style="float: right;">
         <span class="counter-value"><%=results%></span>
         results
       </button>
@@ -121,7 +120,12 @@
           <td><p><%=movements.id%></p></td>
           <td><p><%=movements.productCode%></p></td>
           <td><p><%=movements.productName%></p></td>
-          <td><p><%=movements.movement%></p></td>
+          <%if(movements.movement == "Entry"){%>
+            <td><button type="button" class="btn btn-success"><%=movements.movement%></button></td>
+          <%}%>
+          <%if(movements.movement == "Exit"){%>
+            <td><button type="button" class="btn btn-danger"><%=movements.movement%></button></td>
+          <%}%>
           <td><p><%=movements.quantity%></p></td>
           <td><p><%=movements.documentDate%></p></td>
           <td><p><%=movements.comment%></p></td>
@@ -137,4 +141,3 @@
 <script type="text/javascript" src="/js/carregador.js"></script>
 <script type="text/javascript" src="/js/confirmation.js"></script>
 <script type="text/javascript" src="/js/procura.js"></script>
-<script type="text/javascript" src="/js/contador.js"></script>

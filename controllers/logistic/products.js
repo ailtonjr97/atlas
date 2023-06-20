@@ -104,6 +104,7 @@ let addProduct = async(req, res)=>{
                     "receiptNumber": req.body.receiptNumber,
                     "receiptDate": req.body.receiptDate,
                     "receiptQuantity": req.body.receiptQuantity,
+                    "receiptPrice": req.body.receiptPrice,
                     "receiptComment": req.body.receiptComment,
                     "receiptWarehouse": req.body.receiptWarehouse
                 }]
@@ -113,6 +114,7 @@ let addProduct = async(req, res)=>{
                     "productName": productWarehouse[0].name,
                     "movement": "Entry",
                     "quantity": req.body.receiptQuantity,
+                    "productPrice": req.body.receiptPrice,
                     "documentDate": req.body.receiptDate,
                     "comment": req.body.receiptComment
                 }]
