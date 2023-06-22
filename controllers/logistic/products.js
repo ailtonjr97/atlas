@@ -140,11 +140,59 @@ let addProduct = async(req, res)=>{
       };
 }
 
+let exitProduct = async(req, res) =>{
+    if(req.isAuthenticated() && req.user.isActive == "True"){
+        try {
+            if(req.method == "GET"){
+                const [product, warehouse, inStorage] = await Promise.all([
+                    Product.findById(req.params.id),
+                    Warehouse.find().sort({"name": 1}),
+                    Product.findById(req.params.id, {"quantity": 1, "_id": 0})
+                ])
+                res.render("logistic/products/exitproduct", {
+                    products: product,
+                    warehouses: warehouse,
+                    inStorage: inStorage
+                });
+            } else{
+                const [productWarehouse, movementIndex] = await Promise.all([
+                    Product.find({"_id": req.params.id}, {"name": 1, "code": 1, "_id": 0}),
+                    ProductMovement.countDocuments()
+                ])
+                let dataMovements = [{
+                    "id": movementIndex,
+                    "productCode": productWarehouse[0].code,
+                    "productName": productWarehouse[0].name,
+                    "movement": "Exit",
+                    "warehouse": req.body.receiptWarehouse,
+                    "quantity": req.body.receiptQuantity,
+                    "productPrice": req.body.receiptPrice,
+                    "documentDate": req.body.receiptDate,
+                    "comment": req.body.receiptComment
+                }]
+                await Promise.all([
+                    Product.findByIdAndUpdate(req.params.id, {
+                        $inc: {"quantity": (req.body.receiptQuantity) * -1}
+                    }),
+                    ProductMovement.create(dataMovements)
+                ]);
+                res.redirect("/logistic/products");
+            }
+        } catch (error) {
+            res.render("error.ejs")
+        }
+    } else {
+        req.session.returnTo = req.originalUrl;
+        res.redirect("/login");
+      };
+}
+
 module.exports = {
     products,
     newProduct,
     newProductPost,
     editProduct,
     editProductPost,
-    addProduct
+    addProduct,
+    exitProduct
 };

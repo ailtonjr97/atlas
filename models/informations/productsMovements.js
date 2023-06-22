@@ -6,6 +6,7 @@ const productsMovements = new mongoose.Schema({
   productName: String,
   productPrice: Number,
   movement: String,
+  warehouse: String,
   quantity: Number,
   documentDate: String,
   jsDate: {type: Date, default: Date.now},

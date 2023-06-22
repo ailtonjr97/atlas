@@ -5,7 +5,7 @@ let movements = async (req,res)=>{
         try {
             const [results, productMovements] = await Promise.all([
                 ProductsMovements.countDocuments(),
-                ProductsMovements.find()
+                ProductsMovements.find().sort({"id": -1})
             ])
             res.render("information/movements.ejs", {
                 results: results,
