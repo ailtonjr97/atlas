@@ -43,7 +43,7 @@ let newBranchPost = async(req, res)=>{
             await Branch.create(result);
             let counter = await  Branch.countDocuments();
             await Branch.findOneAndUpdate({"name": req.body.name}, {$set: {"id": counter}});
-            res.redirect("/branch");
+            res.redirect("/informations/branches");
         } catch (error) {
             res.render("error.ejs")
         };

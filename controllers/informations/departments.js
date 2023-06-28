@@ -1,7 +1,7 @@
 const Department = require("../../models/informations/departments.js");
 
 let departments = async(req, res)=>{
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
             let results = await Department.countDocuments();
             let departments = await Department.find();
@@ -19,7 +19,7 @@ let departments = async(req, res)=>{
 };
 
 let newDepartment = async(req, res)=>{
-    if(req.isAuthenticated()){
+    if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
             res.render("information/departmentnew")
         } catch (error) {
@@ -32,15 +32,20 @@ let newDepartment = async(req, res)=>{
 };
 
 let newDepartmentPost = async(req, res)=>{
-    try {
-        let result = req.body;
-        await Department.create(result);
-        let counter = await  Department.countDocuments();
-        await Department.findOneAndUpdate({"name": req.body.name}, {$set: {"id": counter}});
-        res.redirect("/department");
-    } catch (error) {
-        res.render("error.ejs")
-    };
+    if(req.isAuthenticated() && req.user.isActive == "True"){
+        try {
+            let result = req.body;
+            await Department.create(result);
+            let counter = await  Department.countDocuments();
+            await Department.findOneAndUpdate({"name": req.body.name}, {$set: {"id": counter}});
+            res.redirect("information/department");
+        } catch (error) {
+            res.render("error.ejs")
+        };
+    } else {
+        req.session.returnTo = req.originalUrl;
+        res.redirect("/login");
+      };
 };
 
 module.exports = {
