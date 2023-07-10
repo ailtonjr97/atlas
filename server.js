@@ -9,7 +9,7 @@ dotenv.config();
 const initiation = require("./routes/initiation.js");
 const tickets = require("./routes/tickets.js");
 const informations = require("./routes/informations.js");
-const logistic = require("./routes/logistic.js");
+const logistica = require("./routes/logistica.js");
 
 const app = express();
 
@@ -42,7 +42,7 @@ mongoose.connect(process.env.MONGOSTRING);
 app.use("/", initiation);
 app.use("/tickets", tickets);
 app.use("/informations", informations);
-app.use("/logistic", logistic)
+app.use("/logistica", logistica)
 
 app.listen(process.env.PORT, function () {
   console.log("Node.js operational at port " + process.env.PORT);

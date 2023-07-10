@@ -1,26 +1,62 @@
-const Product = require("../../models/logistic/products.js")
+const Produtos = require("../../models/logistica/produtos.js")
 const Warehouse = require("../../models/informations/warehouse.js");
 const ProductMovement = require("../../models/informations/productsMovements.js");
+const axios = require("axios")
 
-let products = async(req, res)=>{
-    if(req.isAuthenticated() && req.user.isActive == "True"){
+
+const produtosAtualizar = async(req, res)=>{
+    if(req.isAuthenticated() && req.user.isActive == "True" && req.user.isAdmin == "True"){
         try {
-            const [products, results] = await Promise.all([
-                Product.find().sort({"name": -1}),
-                Product.countDocuments()
-            ])
-            res.render("logistic/products/products.ejs", {
-                products: products,
-                results: results
-            })
-        } catch (error) {
-            res.render("error.ejs");
-        };
+            const response = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all?page=10&limit=30000", {auth: {username: "admin", password: process.env.SENHAPITOTVS}})
+            await Produtos.deleteMany();
+            Produtos.create(response.data.objects);
+            res.redirect("/logistica/produtos/consultar")
+          } catch (error) {
+              res.send("Erro ao executar")
+          }
     } else {
         req.session.returnTo = req.originalUrl;
         res.redirect("/login");
       };
-};
+}
+
+const produtosConsultar = async(req, res)=>{
+    if(req.isAuthenticated() && req.user.isActive == "True"){
+        try {
+            const [produtos, contagem, admin] = await Promise.all([
+                Produtos.find().sort({"desc": 1}),
+                Produtos.countDocuments(),
+                req.user.isAdmin
+            ])
+            res.render("logistica/produtos/consultar", {
+                "produtos": produtos,
+                "contagem": contagem,
+                "admin": admin
+            })
+        } catch (error) {
+            res.render("error")
+        }
+    } else {
+        req.session.returnTo = req.originalUrl;
+        res.redirect("/login");
+    };
+}
+
+const produtosDetalhes = async(req, res)=>{
+    if(req.isAuthenticated() && req.user.isActive == "True"){
+        try {
+            const detalhes = await Produtos.find({"_id" : req.params.id})
+            res.render("logistica/produtos/detalhe", {
+                "detalhes": detalhes[0]
+            })
+        } catch (error) {
+            res.render("error")
+        }
+    } else {
+        req.session.returnTo = req.originalUrl;
+        res.redirect("/login");
+    };
+}
 
 let newProduct = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
@@ -188,11 +224,7 @@ let exitProduct = async(req, res) =>{
 }
 
 module.exports = {
-    products,
-    newProduct,
-    newProductPost,
-    editProduct,
-    editProductPost,
-    addProduct,
-    exitProduct
+    produtosAtualizar,
+    produtosConsultar,
+    produtosDetalhes
 };
