@@ -9,7 +9,7 @@ dotenv.config();
 const initiation = require("./routes/initiation.js");
 const tickets = require("./routes/tickets.js");
 const informations = require("./routes/informations.js");
-const logistic = require("./routes/logistic.js")
+const logistic = require("./routes/logistic.js");
 
 const app = express();
 
