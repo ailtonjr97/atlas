@@ -1,4 +1,4 @@
-<%- include('../../partials/header') %>
+<%- include('../partials/header') %>
 <link rel="stylesheet" href="/css/table.css" />
 <link rel="stylesheet" href="/css/button8.css" />
 <link rel="stylesheet" href="/css/loading.css" />
@@ -15,7 +15,7 @@
   <div class="row">
     <div class="col-md-4">
       <%if(admin == "True"){%>
-      <a class="button-8 mb-2" href="/logistica/produtos/atualizar">Atualizar tabela</a>
+      <a class="button-8 mb-2" href="/comercial/clientes/atualizar">Atualizar tabela</a>
       <%}%>
     </div>
     <div class="col-lg-6">
@@ -47,7 +47,7 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Descrição:</label>
+        <label for="procuraBtn1">Nome:</label>
       </div>
     </div>
   </div>
@@ -56,17 +56,17 @@
       <thead>
         <tr style="height: 25px">
           <th>Código</th>
-          <th>Descrição</th>
+          <th>Nome</th>
           <th>Ações</th>
         </tr>
       </thead>
       <tbody>
-        <%produtos.forEach(function(produto){ %>
+        <%clientes.forEach(function(cliente){ %>
         <tr>
-          <td><p><%=produto.cod%></p></td>
-          <td style="width: 40%; white-space: normal;"><p><%=produto.desc%></p></td>
+          <td><p><%=cliente.cod%></p></td>
+          <td style="width: 40%; white-space: normal;"><p><%=cliente.nome%></p></td>
           <td>
-            <a class="button-8" target="_blank" href="/logistica/produtos/detalhes/<%=produto.id%>">Detalhes</a>
+            <a class="button-8" target="_blank" href="/comercial/clientes/detalhes/<%=cliente._id%>">Detalhes</a>
           </td>
         </tr>
         <%})%>
@@ -75,7 +75,7 @@
     </table>
   </div>
 </div>
-<%- include('../../partials/footer') %>
+<%- include('../partials/footer') %>
 
 <script type="text/javascript" src="/js/carregador.js"></script>
 <script type="text/javascript" src="/js/confirmation.js"></script>

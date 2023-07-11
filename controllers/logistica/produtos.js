@@ -223,8 +223,22 @@ let exitProduct = async(req, res) =>{
       };
 }
 
+const apiProdutosIntranet = async(req, res)=>{
+  const auth = {login: process.env.LOGININTRANET, password: process.env.SENHAINTRANET}
+
+  const b64auth = (req.headers.authorization || '').split(' ')[1] || ''
+  const [login, password] = Buffer.from(b64auth, 'base64').toString().split(':')
+
+  if (login && password && login === auth.login && password === auth.password) {
+    res.send(await Produtos.find())
+  }else{
+    res.send("Negado")
+  }
+}
+
 module.exports = {
     produtosAtualizar,
     produtosConsultar,
-    produtosDetalhes
+    produtosDetalhes,
+    apiProdutosIntranet
 };

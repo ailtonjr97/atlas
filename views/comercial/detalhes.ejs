@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/css/tablenew.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+
+<style>
+    .row{
+    max-width: 98%;
+    margin-left: 1%;
+}
+</style>
+
+
+    <div class="row mt-3">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input readonly type="text" class="form-control" id="nome" placeholder="Nome:" name="nome" value="<%=detalhes.nome%>">
+                <label for="nome">Nome:</label>
+              </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input readonly type="text" class="form-control" id="cod" placeholder="Code:" name="code" value="<%=detalhes.cod%>">
+                <label for="code">Código:</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <input readonly type="text" class="form-control" id="tipo" placeholder="Tipo:" name="tipo" value="<%=detalhes.tipo%>">
+                <label for="tipo">Tipo:</label>
+            </div>
+        </div>
+    </div>
+
+
+<%- include('../partials/footer') %>
