@@ -7,7 +7,8 @@ const axios = require("axios")
 const produtosAtualizar = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True" && req.user.isAdmin == "True"){
         try {
-            const response = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all?limit=30000", {auth: {username: "admin", password: process.env.SENHAPITOTVS}})
+            const limitador = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all", {auth: {username: "admin", password: process.env.SENHAPITOTVS}})
+            const response = await axios.get(process.env.APITOTVS + "CONSULTA_PRO/get_all?limit=" + limitador.data.meta.total, {auth: {username: "admin", password: process.env.SENHAPITOTVS}})
             await Produtos.deleteMany();
             Produtos.create(response.data.objects);
             res.redirect("/logistica/produtos/consultar")

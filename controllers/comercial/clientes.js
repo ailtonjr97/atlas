@@ -4,8 +4,9 @@ const Clientes = require("../../models/comercial/clientes.js")
 const atualizar = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True" && req.user.isAdmin == "True"){
         try {
+            const limitador = await axios.get(process.env.APITOTVS + 'CONSULTA_SA1/get_all', {auth: {username: "admin", password: process.env.SENHAPITOTVS}})
             const [requisicao, exclui] = await Promise.all([
-                axios.get(process.env.APITOTVS + 'CONSULTA_SA1/get_all?limit=20000', {auth: {username: "admin", password: process.env.SENHAPITOTVS}}),
+                axios.get(process.env.APITOTVS + 'CONSULTA_SA1/get_all?limit=' + limitador.data.meta.total, {auth: {username: "admin", password: process.env.SENHAPITOTVS}}),
                 Clientes.deleteMany()
             ]) 
             Clientes.create(requisicao.data.objects)
