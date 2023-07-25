@@ -4,8 +4,8 @@ let language = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
         try {
-            res.render("languages", {
-                languages: languages
+            res.render("users/languages", {
+                languages: languages[0]
             });
         } catch (error) {
             res.render("error.ejs");

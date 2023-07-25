@@ -51,9 +51,8 @@ const authenticate = async(req, res)=>{
 const home = async(req, res)=>{
     if (req.isAuthenticated()) {
       try {
-        let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
         res.render("home/home", {
-          languages: languages
+          languages: req.user.atlasLanguage
         })
       } catch (error) {
         res.render("error.es")

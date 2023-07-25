@@ -15,15 +15,31 @@
 <div style="padding: 1.5%">
   <div class="row">
     <div class="col-md-4">
-      <a class="button-8 mb-2" href="/tickets/newticket">New ticket</a>
-      <a class="button-8 mb-2" href="/tickets/mytickets">My tickets</a>
+      <a class="button-8 mb-2" href="/tickets/newticket">
+        <%if(languages.atlasLanguage == "English"){%>
+        New ticket
+        <%}else{%>
+          Novo chamado
+        <%}%>
+      </a>
+      <a class="button-8 mb-2" href="/tickets/mytickets">
+        <%if(languages.atlasLanguage == "English"){%>
+            My tickets
+          <%}else{%>
+            Meus chamados
+          <%}%>
+      </a>
     </div>
     <div class="col-lg-6">
     </div>
     <div class="col-sm-2">
       <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
         <span class="counter-value"><%=results%></span>
-        results
+        <%if(languages.atlasLanguage == "English"){%>
+          results
+        <%}else{%>
+          resultados
+        <%}%>
       </button>
     </div>
   </div>
@@ -47,7 +63,13 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Description:</label>
+        <label for="procuraBtn1">
+          <%if(languages.atlasLanguage == "English"){%>
+            Description:
+          <%}else{%>
+            Descrição:
+          <%}%>
+        </label>
       </div>
     </div>
     <div class="col">
@@ -58,7 +80,13 @@
           id="procuraBtn2"
           onkeyup="procura(2, 'procuraBtn2')"
         />
-        <label for="procuraBtn2">Requester:</label>
+        <label for="procuraBtn2">
+          <%if(languages.atlasLanguage == "English"){%>
+            Resquester:
+          <%}else{%>
+            Requisitante:
+          <%}%>
+        </label>
       </div>
     </div>
     <div class="col">
@@ -69,7 +97,13 @@
           id="procuraBtn3"
           onkeyup="procura(3, 'procuraBtn3')"
         />
-        <label for="procuraBtn2">Branch:</label>
+        <label for="procuraBtn2">
+          <%if(languages.atlasLanguage == "English"){%>
+            Branch:
+          <%}else{%>
+            Filial:
+          <%}%>
+        </label>
       </div>
     </div>
   </div>
@@ -78,10 +112,34 @@
       <thead>
         <tr style="height: 25px">
           <th>ID</th>
-          <th>Description</th>
-          <th>Requester</th>
-          <th>Branch</th>
-          <th>Action</th>
+          <th>
+            <%if(languages.atlasLanguage == "English"){%>
+              Description
+            <%}else{%>
+              Descrição
+            <%}%>
+          </th>
+          <th>
+            <%if(languages.atlasLanguage == "English"){%>
+              Requester
+            <%}else{%>
+              Requisitante
+            <%}%>
+          </th>
+          <th>
+            <%if(languages.atlasLanguage == "English"){%>
+              Branch
+            <%}else{%>
+              Filial
+            <%}%>
+          </th>
+          <th>
+            <%if(languages.atlasLanguage == "English"){%>
+              Action
+            <%}else{%>
+              Ação
+            <%}%>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -103,11 +161,21 @@
           <td>
             <%if(ticket.response == ''){%>
             <button type="button" class="button-8" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Respond
+              <%if(languages.atlasLanguage == "English"){%>
+                Respond
+              <%}else{%>
+                Responder
+              <%}%>
             </button>
             <%}%>
             <%if(ticket.response != ''){%>
-            <a class="button-8 mb-2" href="/tickets/inactivate/<%=ticket._id%>">Inactivate</a>
+            <a class="button-8 mb-2" href="/tickets/inactivate/<%=ticket._id%>">
+              <%if(languages.atlasLanguage == "English"){%>
+                Inactivate
+              <%}else{%>
+                Inativar
+              <%}%>
+            </a>
             <%}%>
             <!-- Modal -->
             <form action="/tickets/response" method="post">
@@ -115,18 +183,43 @@
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Response of ticket <%=ticket.idticket%></h5>
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      <%if(languages.atlasLanguage == "English"){%>
+                        Response of ticket
+                      <%}else{%>
+                        Resposta do chamado
+                      <%}%> 
+                      <%=ticket.idticket%>
+                    </h5>
                   </div>
                   <div class="modal-body">
                     <div class="form-floating">
                       <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="response"></textarea>
-                      <label for="floatingTextarea">Write here your response...</label>
+                      <label for="floatingTextarea">
+                        <%if(languages.atlasLanguage == "English"){%>
+                          Write here your response...
+                        <%}else{%>
+                          Escreve aqui sua resposta...
+                        <%}%>
+                      </label>
                     </div>
                     <input style="display: none;" type="text" name="idticket" value="<%=ticket.idticket%>">
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                      <%if(languages.atlasLanguage == "English"){%>
+                        Close
+                      <%}else{%>
+                        Fechar
+                      <%}%>
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                      <%if(languages.atlasLanguage == "English"){%>
+                        Save
+                      <%}else{%>
+                        Salvar
+                      <%}%>
+                    </button>
                   </div>
                 </div>
               </div>

@@ -15,15 +15,31 @@
 <div style="padding: 1.5%">
   <div class="row">
     <div class="col-md-4">
-      <a class="button-8 mb-2" href="/tickets/newticket">New ticket</a>
-      <a class="button-8 mb-2" href="/tickets/">Tickets</a>
+      <a class="button-8 mb-2" href="/tickets/newticket">
+        <%if(languages.atlasLanguage == "English"){%>
+          New ticket
+        <%}else{%>
+          Novo chamado
+        <%}%>
+      </a>
+      <a class="button-8 mb-2" href="/tickets/">
+        <%if(languages.atlasLanguage == "English"){%>
+          Tickets
+        <%}else{%>
+          Chamados
+        <%}%>
+      </a>
     </div>
     <div class="col-lg-6">
     </div>
     <div class="col-sm-2">
       <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
         <span class="counter-value"><%=results%></span>
-        results
+        <%if(languages.atlasLanguage == "English"){%>
+          results
+        <%}else{%>
+          resultados
+        <%}%>
       </button>
     </div>
   </div>
@@ -47,7 +63,13 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Description:</label>
+        <label for="procuraBtn1">
+          <%if(languages.atlasLanguage == "English"){%>
+            Description:
+          <%}else{%>
+            Descrição:
+          <%}%>
+        </label>
       </div>
     </div>
     <div class="col">
@@ -58,7 +80,13 @@
           id="procuraBtn2"
           onkeyup="procura(2, 'procuraBtn2')"
         />
-        <label for="procuraBtn1">Response:</label>
+        <label for="procuraBtn1">
+          <%if(languages.atlasLanguage == "English"){%>
+            Response:
+          <%}else{%>
+            Resposta:
+          <%}%>
+        </label>
       </div>
     </div>
   </div>
@@ -67,8 +95,20 @@
       <thead>
         <tr style="height: 25px">
           <th>ID</th>
-          <th>Description</th>
-          <th>Response</th>
+          <th>
+            <%if(languages.atlasLanguage == "English"){%>
+              Description:
+            <%}else{%>
+              Descrição:
+            <%}%>
+          </th>
+          <th>
+            <%if(languages.atlasLanguage == "English"){%>
+              Response
+            <%}else{%>
+              Resposta
+            <%}%>
+          </th>
         </tr>
       </thead>
       <tbody>

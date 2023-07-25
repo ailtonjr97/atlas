@@ -15,14 +15,24 @@
 <div style="padding: 1.5%">
   <div class="row">
     <div class="col-md-4">
-      <a class="button-8 mb-2" href="/informations/newbranch">New branch</a>
+      <a class="button-8 mb-2" href="/informations/newbranch">
+        <%if(languages == "English"){%>
+          New branch
+        <%}else{%>
+          Nova filial
+        <%}%>
+      </a>
     </div>
     <div class="col-lg-6">
     </div>
     <div class="col-sm-2">
       <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
         <span class="counter-value"><%=results%></span>
-        results
+        <%if(languages == "English"){%>
+          results
+        <%}else{%>
+          resultados
+        <%}%>
       </button>
     </div>
   </div>
@@ -46,7 +56,13 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Name:</label>
+        <label for="procuraBtn1">
+          <%if(languages == "English"){%>
+            Name:
+          <%}else{%>
+            Nome:
+          <%}%>
+        </label>
       </div>
     </div>
     <div class="col">
@@ -57,7 +73,13 @@
           id="procuraBtn2"
           onkeyup="procura(2, 'procuraBtn2')"
         />
-        <label for="procuraBtn2">Address:</label>
+        <label for="procuraBtn2">
+          <%if(languages == "English"){%>
+            Address:
+          <%}else{%>
+            Endereço:
+          <%}%>
+        </label>
       </div>
     </div>
     <div class="col">
@@ -68,7 +90,13 @@
           id="procuraBtn3"
           onkeyup="procura(3, 'procuraBtn3')"
         />
-        <label for="procuraBtn2">City:</label>
+        <label for="procuraBtn2">
+          <%if(languages == "English"){%>
+            City:
+          <%}else{%>
+            Cidade:
+          <%}%>
+        </label>
       </div>
     </div>
     <div class="col">
@@ -79,7 +107,13 @@
           id="procuraBtn4"
           onkeyup="procura(4, 'procuraBtn4')"
         />
-        <label for="procuraBtn2">Country:</label>
+        <label for="procuraBtn2">
+          <%if(languages == "English"){%>
+            Country:
+          <%}else{%>
+            País:
+          <%}%>
+        </label>
       </div>
     </div>
     <div class="col">
@@ -90,7 +124,13 @@
           id="procuraBtn5"
           onkeyup="procura(5, 'procuraBtn5')"
         />
-        <label for="procuraBtn2">Zip Code:</label>
+        <label for="procuraBtn2">
+          <%if(languages == "English"){%>
+            Zip code:
+          <%}else{%>
+            CEP:
+          <%}%>
+        </label>
       </div>
     </div>
     <div class="col">
@@ -101,7 +141,13 @@
           id="procuraBtn6"
           onkeyup="procura(6, 'procuraBtn6')"
         />
-        <label for="procuraBtn2">Active:</label>
+        <label for="procuraBtn2">
+          <%if(languages == "English"){%>
+            Active:
+          <%}else{%>
+            Ativo:
+          <%}%>
+        </label>
       </div>
     </div>
   </div>
@@ -110,12 +156,48 @@
       <thead>
         <tr style="height: 25px">
           <th>ID</th>
-          <th>Name</th>
-          <th>Address</th>
-          <th>City</th>
-          <th>Country</th>
-          <th>Zip Code</th>
-          <th>Active</th>
+          <th>
+            <%if(languages == "English"){%>
+              Name
+            <%}else{%>
+              Nome
+            <%}%>
+          </th>
+          <th>
+            <%if(languages == "English"){%>
+              Address
+            <%}else{%>
+              Endereço
+            <%}%>
+          </th>
+          <th>
+            <%if(languages == "English"){%>
+              City
+            <%}else{%>
+              Cidade
+            <%}%>
+          </th>
+          <th>
+            <%if(languages == "English"){%>
+              Country
+            <%}else{%>
+              País
+            <%}%>
+          </th>
+          <th>
+            <%if(languages == "English"){%>
+              Zip Code
+            <%}else{%>
+              CEP
+            <%}%>
+          </th>
+          <th>
+            <%if(languages == "English"){%>
+              Active
+            <%}else{%>
+              Ativos
+            <%}%>
+          </th>
         </tr>
       </thead>
       <tbody>

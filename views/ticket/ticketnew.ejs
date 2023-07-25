@@ -86,7 +86,13 @@ input:focus + label {
                 <option><%=department.name%></option>
               <%})%>
           </select>
-        <label for="department">To department:</label>
+        <label for="department">
+          <%if(languages.atlasLanguage == "English"){%>
+            Department:
+          <%}else{%>
+            Setor:
+          <%}%>
+        </label>
       </div>
       </div>
       <div class="col">
@@ -96,7 +102,13 @@ input:focus + label {
               <option><%=branch.name%></option>
             <%})%>
           </select>
-        <label for="branch">To branch:</label>
+        <label for="branch">
+          <%if(languages.atlasLanguage == "English"){%>
+            Branch:
+          <%}else{%>
+            Filial:
+          <%}%>
+        </label>
       </div>
       </div>
       <div class="col-lg">
@@ -106,15 +118,27 @@ input:focus + label {
                 <option class='valor'>Urgent</option>
                 <option class='valor'>Critical</option>
             </select>
-            <label for="urgency">Urgency:</label>
+            <label for="urgency">
+              <%if(languages.atlasLanguage == "English"){%>
+                Urgency:
+              <%}else{%>
+                Urgência:
+              <%}%>
+            </label>
         </div>
     </div>
     </div>
     <div class="row" id='rowTerceira'>
       <div class="col-lg">
         <div class="form-floating">
-          <textarea class="form-control" placeholder="Write your ticket here..." id="description" name="description"></textarea>
-          <label for="description">Write your ticket here...</label>
+          <textarea class="form-control" id="description" name="description" <%if(languages.atlasLanguage == "English"){%> placeholder="Write your ticket here..." <%}%> <%if(languages.atlasLanguage == "Portuguese"){%> placeholder="Escreva seu ticket aqui..." <%}%>></textarea>
+          <label for="description">
+            <%if(languages.atlasLanguage == "English"){%>
+              Write your ticket here...
+            <%}else{%>
+              Escreva seu ticket aqui...
+            <%}%>
+          </label>
         </div>
       </div>
     </div>
@@ -124,13 +148,23 @@ input:focus + label {
   <div class="file-input" style="margin-left: 2%;">
     <input type="file" id="file" class="file" name="postImage">
     <label for="file">
-      New anex
+      <%if(languages.atlasLanguage == "English"){%>
+        New anex
+      <%}else{%>
+        Novo anexo
+      <%}%>
       <p class="file-name" style="width: 500px;"></p>
     </label>
   </div>
 
   <br>
-  <button type="submit" id='botaoSalva' class="btn btn-success" style="margin-left: 45%;">Open ticket</button>
+  <button type="submit" id='botaoSalva' class="btn btn-success" style="margin-left: 45%;">
+    <%if(languages.atlasLanguage == "English"){%>
+      Open ticket
+    <%}else{%>
+      Abrir chamado
+    <%}%>
+  </button>
 </form>
 
 <script type="text/javascript">

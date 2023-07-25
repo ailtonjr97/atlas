@@ -3,11 +3,15 @@ const axios = require("axios")
 
 let branches = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
-        let branches = await Branch.find();
-        let results = await Branch.countDocuments();
+        const [branches, results, languages] = await Promise.all([
+            await Branch.find(),
+            await Branch.countDocuments(),
+            req.user.atlasLanguage
+        ])
         res.render("information/branchall", {
             results: results,
-            branches: branches
+            branches: branches,
+            languages: languages
         });
     } else {
     req.session.returnTo = req.originalUrl;
@@ -18,13 +22,15 @@ let branches = async(req, res)=>{
 let newBranch = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
+            let languages = req.user.atlasLanguage
             let countries = [];
             let response = await axios.get("https://restcountries.com/v3.1/all");
             response.data.forEach(element => {
                 countries.push(element.name.common);
             });
             res.render("information/branchnew",{
-                countries: countries.sort()
+                countries: countries.sort(),
+                languages: languages
             });
         } catch (error) {
             console.log(error)

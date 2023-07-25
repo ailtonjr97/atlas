@@ -1,16 +1,19 @@
 const Ticket = require("../../models/ticket/ticket.js");
 const Department = require("../../models/informations/departments.js");
 const Branch = require("../../models/informations/branch.js");
+const User = require("../../models/user/user.js");
 
 let ticketall = async(req, res) => {
     if (req.isAuthenticated() && req.user.isActive == "True"){
-      Ticket.find().sort({"idticket": -1}).then((tickets)=>{
-        Ticket.countDocuments({"inactive": {$eq: false}}).then((results)=>{
-          res.render("ticket/ticketall",{
-            results: results,
-            tickets: tickets
-          })
-        })
+      const [tickets, results, languages] = await Promise.all([
+        Ticket.find().sort({"idticket": -1}),
+        Ticket.countDocuments({"inactive": {$eq: false}}),
+        req.user.atlasLanguage
+      ])
+      res.render("ticket/ticketall",{
+        tickets: tickets,
+        results: results,
+        languages: languages
       })
     } else {
       req.session.returnTo = req.originalUrl;
@@ -21,16 +24,18 @@ let ticketall = async(req, res) => {
 let newTicket = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
-        const[department, branch] = await Promise.all([
+        const[department, branch, languages] = await Promise.all([
           Department.find(),
           Branch.find(),
+          req.user.atlasLanguage
         ])
         res.render("ticket/ticketnew", {
           departments: department,
-          branches: branch
+          branches: branch,
+          languages: languages
         })
       } catch (error) {
-        res.send("Error. Contact your IT department.")
+        res.render("error.ejs")
       }
     } else {
       req.session.returnTo = req.originalUrl;
@@ -66,7 +71,7 @@ let inactivate =  async(req, res)=>{
           res.redirect("/tickets/")
         });
       } catch (error) {
-        res.send("Error. Contact your IT department.")
+        res.render("error.ejs")
       };
     } else {
       req.session.returnTo = req.originalUrl;
@@ -77,16 +82,18 @@ let inactivate =  async(req, res)=>{
 let myTickets = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
       try {
-        Ticket.find({"requester": req.user.name}).sort({"idticket": -1}).then((tickets)=>{
-          Ticket.countDocuments({"requester": req.user.name}).then((results)=>{
-            res.render("ticket/ticketsmy", {
-              tickets: tickets,
-              results: results
-            });
-          });
+        const [tickets, results, languages] = await Promise.all([
+          Ticket.find({"requester": req.user.name}).sort({"idticket": -1}),
+          Ticket.countDocuments({"requester": req.user.name}),
+          req.user.atlasLanguage
+        ])
+        res.render("ticket/ticketsmy", {
+          tickets: tickets,
+          results: results,
+          languages: languages
         });
       } catch (error) {
-        res.send("Error. Contact your IT department." + error)
+        res.render("error.ejs")
       };
     } else {
       req.session.returnTo = req.originalUrl;
@@ -102,7 +109,7 @@ let response = async(req, res)=>{
           res.redirect("/tickets/")
         })
       } catch (error) {
-        res.send("Error. Contact your IT department.")
+        res.render("error.ejs")
       }
     }else {
       req.session.returnTo = req.originalUrl;

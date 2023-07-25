@@ -1,102 +1,48 @@
 <%- include('../partials/header') %>
-
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+<link rel="stylesheet" href="/css/contador.css" />
 <style>
-  #rowMestra {
-    max-width: 99%;
-    margin-left: 1%
+  body {
+    font-family: Helvetica;
+    -webkit-font-smoothing: antialiased;
   }
-
-  #titulo {
-    text-align: center;
-  }
-
-  .validadeInput {
-    width: 222px;
-    height: 58px;
-  }
-
-  #validadeDescritivo {
-    font-size: 14px;
-    padding-top: 0;
-    padding-left: 2px;
-  }
-
-  .validadeDiv {
-    border-color: gray;
-    background-clip: padding-box;
-    opacity: .50;
-  }
-
-  .btn-anexo {
-    background-color: indigo;
-    color: white;
-    padding: 0.5rem;
-    font-family: sans-serif;
-    border-radius: 0.3rem;
-    cursor: pointer;
-    margin-top: 1rem;
-}
-
-.file {
-  opacity: 0;
-  width: 0.1px;
-  height: 0.1px;
-  position: absolute;
-}
-
-.file-input label {
-  display: block;
-  position: relative;
-  width: 200px;
-  height: 50px;
-  border-radius: 5px;
-  background: #22577A;
-  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform .2s ease-out;
-}
-
-.file-name {
-  position: absolute;
-  bottom: -35px;
-  left: 10px;
-  font-size: 0.85rem;
-  color: #555;
-}
-
-input:hover + label,
-input:focus + label {
-  transform: scale(1.02);
-}
 </style>
 
 
 <form action="/informations/newbranch" method="POST">
-  <div class="row mt-2" id='rowMestra'>
+  <div class="row mt-2" id='rowMestra' style="width: 99%; margin-left: 1%;">
     <div class="row" id='rowTerceira'>
       <div class="col-lg">
         <div class="form-floating">
-            <input type="text" class="form-control" id="name" placeholder="Name:" name="name">
-            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" <%if(languages == "English"){%> placeholder="Name:" <%}else{%> placeholder="Nome:" <%}%>>
+            <label for="name">
+              <%if(languages == "English"){%>
+                Name:
+              <%}else{%>
+                Nome:
+              <%}%>
+            </label>
         </div>
       </div>
     </div>
     <div class="row mt-2">
         <div class="col-lg">
-            <div class="form-floating">
-                <input type="text" class="form-control" id="address" placeholder="Address:" name="address">
-                <label for="address">Address:</label>
-            </div>
+          <div class="form-floating">
+              <input type="text" class="form-control" id="address" name="address" <%if(languages == "English"){%> placeholder="Address:" <%}else{%> placeholder="Endereço:" <%}%>>
+              <label for="address">
+                <%if(languages == "English"){%>
+                  Adress:
+                <%}else{%>
+                  Endereço:
+                <%}%>
+              </label>
+          </div>
         </div>
         <div class="col-lg">
             <div class="form-floating">
                 <select class="form-select" id="country" aria-label="Floating label" name="country">
-                    <option value=""></option>
                     <%countries.forEach((country)=>{%>
                         <option><%=country%></option>
                     <%})%>
