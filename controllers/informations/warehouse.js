@@ -4,13 +4,15 @@ const Branch = require("../../models/informations/branch.js");
 let warehouse = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
-            const [results, warehouses] = await Promise.all([
+            const [results, warehouses, languages] = await Promise.all([
                 Warehouse.countDocuments(),
                 Warehouse.find(),
+                req.user.atlasLanguage
             ])
             res.render("information/warehouse.ejs", {
                 results: results,
-                warehouses: warehouses
+                warehouses: warehouses,
+                languages: languages
             })
         } catch (error) {
             res.render("error.ejs")

@@ -14,14 +14,24 @@
 <div style="padding: 1.5%">
   <div class="row">
     <div class="col-md-4">
-      <a class="button-8 mb-2" href="/logistic/newproduct">New product</a>
+      <a class="button-8 mb-2" href="/logistic/products/newproduct">
+        <%if(languages == "English"){%>
+          New product
+        <%}else{%>
+          Novo produto
+        <%}%>
+      </a>
     </div>
     <div class="col-lg-6">
     </div>
     <div class="col-sm-2">
       <button type="button" class="button-8 mb-2" id="result" style="float: right;">
         <span class="counter-value"><%=results%></span>
-        results
+        <%if(languages == "English"){%>
+          results
+        <%}else{%>
+          resultados
+        <%}%>
       </button>
     </div>
   </div>
@@ -34,7 +44,13 @@
           id="procuraBtn0"
           onkeyup="procura(0, 'procuraBtn0')"
         />
-        <label for="procuraBtn0">Code:</label>
+        <label for="procuraBtn0">
+          <%if(languages == "English"){%>
+            Code:
+          <%}else{%>
+            Código:
+          <%}%>
+        </label>
       </div>
     </div>
     <div class="col">
@@ -45,7 +61,13 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Name:</label>
+        <label for="procuraBtn1">
+          <%if(languages == "English"){%>
+            Name:
+          <%}else{%>
+            Name:
+          <%}%>
+        </label>
       </div>
     </div>
   </div>
@@ -53,9 +75,27 @@
     <table class="fl-table" id="myTable">
       <thead>
         <tr style="height: 25px">
-          <th>Code</th>
-          <th>Name</th>
-          <th>Actions</th>
+          <th>
+            <%if(languages == "English"){%>
+              Code
+            <%}else{%>
+              Código
+            <%}%>
+          </th>
+          <th>
+            <%if(languages == "English"){%>
+              Name
+            <%}else{%>
+              Nome
+            <%}%>
+          </th>
+          <th>
+            <%if(languages == "English"){%>
+              Actions
+            <%}else{%>
+              Ações
+            <%}%>
+          </th>
         </tr>
       </thead>
       <tbody>

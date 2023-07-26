@@ -10,32 +10,56 @@
 </style>
 
 
-<form action="/logistic/newproduct" method="POST">
+<form action="/logistic/products/newproduct" method="POST">
     <div class="row" style="margin-top: 1%;">
         <div class="col">
             <div class="form-floating mb-3">
-                <input type="input" class="form-control" id="name" placeholder="Name:" name="name">
-                <label for="name">Name:</label>
+                <input type="input" class="form-control" id="name" <%if(languages == "English"){%>placeholder="Name:"<%}else{%> placeholder="Nome:" <%}%> name="name">
+                <label for="name">
+                    <%if(languages == "English"){%>
+                        Name:
+                      <%}else{%>
+                        Nome:
+                      <%}%>
+                </label>
               </div>
         </div>
         <div class="col">
             <div class="form-floating mb-3">
-                <input type="input" class="form-control" id="code" placeholder="Code:" name="code">
-                <label for="code">Code:</label>
+                <input type="input" class="form-control" id="code" <%if(languages == "English"){%>placeholder="Code:"<%}else{%> placeholder="Código:" <%}%> name="code">
+                <label for="code">
+                    <%if(languages == "English"){%>
+                        Code:
+                      <%}else{%>
+                        Código:
+                      <%}%>
+                </label>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col">
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Description" id="description" name="description"></textarea>
-                <label for="description">Description:</label>
+                <textarea class="form-control" <%if(languages == "English"){%>placeholder="Description::"<%}else{%> placeholder="Descrição:" <%}%> id="description" name="description"></textarea>
+                <label for="description">
+                    <%if(languages == "English"){%>
+                        Description:
+                      <%}else{%>
+                        Descrição:
+                      <%}%>
+                </label>
               </div>
         </div>
     </div>
     <div class="row justify-content-center mt-3">
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-success">Save</button>
+            <button type="submit" class="btn btn-success">
+                <%if(languages == "English"){%>
+                    Save
+                  <%}else{%>
+                    Salvar
+                  <%}%>
+            </button>
         </div>
     </div>
 </form>

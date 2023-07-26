@@ -47,35 +47,70 @@
                         <option><%=country%></option>
                     <%})%>
                 </select>
-                <label for="country">Country:</label>
+                <label for="country">
+                  <%if(languages == "English"){%>
+                    Country:
+                  <%}else{%>
+                    País:
+                  <%}%>
+                </label>
             </div>
         </div>
         <div class="col-lg">
             <div class="form-floating">
-                <input type="text" class="form-control" id="city" placeholder="City:" name="city">
-                <label for="city">City:</label>
+                <input name="city" type="text" class="form-control" id="city" <%if(languages == "English"){%>placeholder="City:"<%}else{%>placeholder="Cidade:"<%}%>>
+                <label for="city">
+                  <%if(languages == "English"){%>
+                    City:
+                  <%}else{%>
+                    Cidade:
+                  <%}%>
+                </label>
             </div>
         </div>
     </div>
     <div class="row mt-2">
       <div class="col-lg">
         <div class="form-floating">
-          <input type="number" class="form-control" id="zipcode" placeholder="Zip Code:" name="zipcode">
-          <label for="zipcode">Zip Code:</label>
+          <input type="number" class="form-control" id="zipcode" <%if(languages == "English"){%>placeholder="Zip Code:"<%}else{%>placeholder="CEP:"<%}%> name="zipcode">
+          <label for="zipcode">
+            <%if(languages == "English"){%>
+              Zip Code:
+            <%}else{%>
+              CEP:
+            <%}%>
+          </label>
       </div>
     </div>
       <div class="col-lg">
         <div class="form-floating">
             <select class="form-select" id="active" aria-label="Floating label" name="active">
-                    <option value="True">Yes</option>
-                    <option value="False">No</option>
+              <%if(languages == "English"){%>
+                <option value="True">Yes</option>
+                <option value="False">No</option>
+              <%}else{%>
+                <option value="True">Sim</option>
+                <option value="False">Não</option>
+              <%}%>
             </select>
-            <label for="active">Is active:</label>
+            <label for="active">
+              <%if(languages == "English"){%>
+                Is active:
+              <%}else{%>
+                Está ativa:
+              <%}%>
+            </label>
         </div>
     </div>
     </div>
   </div>
-  <button type="submit" id='botaoSalva' class="btn btn-success mt-2" style="margin-left: 45%;">Save</button>
+  <button type="submit" id='botaoSalva' class="btn btn-success mt-3" style="margin-left: 45%;">
+    <%if(languages == "English"){%>
+      Save
+    <%}else{%>
+      Salvar
+    <%}%>
+  </button>
 </form>
 
 

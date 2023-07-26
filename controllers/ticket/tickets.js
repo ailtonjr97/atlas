@@ -102,7 +102,6 @@ let myTickets = async(req, res)=>{
   }
   
 let response = async(req, res)=>{
-  console.log(req.body)
     if(req.isAuthenticated()  && req.user.isActive == "True"){
       try {
         Ticket.findOneAndUpdate({"idticket": req.body.idticket}, {$set: {"response": req.body.response}}).then(()=>{

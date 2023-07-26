@@ -173,6 +173,15 @@
                   <%}%>
                 </a>
               </li>
+              <li>
+                <a class="dropdown-item" href="/logistic/carriers/all">
+                  <%if(languages == "English"){%>
+                    Carriers
+                  <%}else{%>
+                    Transportadoras
+                  <%}%>
+                </a>
+              </li>
             </ul>
           </li>
           <!-- <li class="nav-item dropdown">
@@ -296,7 +305,7 @@
             aria-expanded="false"
             style="width: 70%"
           >
-            <i class="fa fa-user"></i>
+            <i class="fa fa-user" <%if(languages == "English"){%> style="padding-left: 22%;" <%}%>> </i>
             <span class="descricao-menu">
               <%if(languages == "English"){%>
                 User

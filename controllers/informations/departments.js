@@ -3,11 +3,15 @@ const Department = require("../../models/informations/departments.js");
 let departments = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
-            let results = await Department.countDocuments();
-            let departments = await Department.find();
+            const[results, departments, languages] = await Promise.all([
+                Department.countDocuments(),
+                Department.find(),
+                req.user.atlasLanguage
+            ])
             res.render("information/departmentall", {
                 results: results,
-                departments: departments
+                departments: departments,
+                languages: languages
             })
         } catch (error) {
             res.render("error.ejs");
@@ -20,8 +24,11 @@ let departments = async(req, res)=>{
 
 let newDepartment = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
+        let languages = await req.user.atlasLanguage
         try {
-            res.render("information/departmentnew")
+            res.render("information/departmentnew", {
+                languages: languages
+            })
         } catch (error) {
             res.render("error.ejs")
         }
@@ -38,7 +45,7 @@ let newDepartmentPost = async(req, res)=>{
             await Department.create(result);
             let counter = await  Department.countDocuments();
             await Department.findOneAndUpdate({"name": req.body.name}, {$set: {"id": counter}});
-            res.redirect("information/department");
+            res.redirect("departments");
         } catch (error) {
             res.render("error.ejs")
         };

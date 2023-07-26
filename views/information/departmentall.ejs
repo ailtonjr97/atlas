@@ -15,14 +15,24 @@
 <div style="padding: 1.5%">
   <div class="row">
     <div class="col-md-4">
-      <a class="button-8 mb-2" href="/informations/newdepartment">New department</a>
+      <a class="button-8 mb-2" href="/informations/newdepartment">
+        <%if(languages == "English"){%>
+          New department
+        <%}else{%>
+          Novo setor
+        <%}%>
+      </a>
     </div>
     <div class="col-lg-6">
     </div>
     <div class="col-sm-2">
       <button type="button" class="button-8 mb-2" id="result" style="display: none; float: right;">
         <span class="counter-value"><%=results%></span>
-        results
+        <%if(languages == "English"){%>
+          results
+        <%}else{%>
+          resultados
+        <%}%>
       </button>
     </div>
   </div>
@@ -46,7 +56,13 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Name:</label>
+        <label for="procuraBtn1">
+          <%if(languages == "English"){%>
+            Name:
+          <%}else{%>
+            Nome:
+          <%}%>
+        </label>
       </div>
     </div>
   </div>
@@ -55,7 +71,13 @@
       <thead>
         <tr style="height: 25px">
           <th>ID</th>
-          <th>Name</th>
+          <th>
+            <%if(languages == "English"){%>
+              Name
+            <%}else{%>
+              Nome
+            <%}%>
+          </th>
         </tr>
       </thead>
       <tbody>

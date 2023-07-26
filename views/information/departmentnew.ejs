@@ -10,11 +10,23 @@
         <div class="col">
             <div class="form-floating">
               <input class="form-control" id="name" name="name">
-              <label for="name">Name:</label>
+              <label for="name">
+                <%if(languages == "English"){%>
+                  Name:
+                <%}else{%>
+                  Nome:
+                <%}%>
+              </label>
             </div>
         </div>
     </div>
   </div>
-  <button type="submit" id='botaoSalva' class="btn btn-success mt-2" style="margin-left: 45%;">Save</button>
+  <button type="submit" id='botaoSalva' class="btn btn-success mt-2" style="margin-left: 45%;">
+    <%if(languages == "English"){%>
+      Save
+    <%}else{%>
+      Salvar
+    <%}%>
+  </button>
 </form>
 <%- include('../partials/footer') %>

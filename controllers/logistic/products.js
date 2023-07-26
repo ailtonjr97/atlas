@@ -1,4 +1,4 @@
-const Products = require("../../models/logistic/products.js")
+const Product = require("../../models/logistic/products.js")
 const Warehouse = require("../../models/informations/warehouse.js");
 const ProductMovement = require("../../models/informations/productsMovements.js");
 
@@ -7,9 +7,8 @@ let productsAll = async(req, res)=>{
         const [products, results, languages] = await Promise.all([
             Products.find().sort({"description": 1}),
             Products.countDocuments(),
-            req.user
+            req.user.atlasLanguage
         ])
-        console.log(languages)
         res.render("logistic/products/products", {
             products: products,
             results: results,
@@ -24,7 +23,10 @@ let productsAll = async(req, res)=>{
 
 let newProduct = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
-        res.render("logistic/products/newproduct");
+        let languages = await req.user.atlasLanguage
+        res.render("logistic/products/newproduct", {
+            languages: languages
+        });
     } else {
         req.session.returnTo = req.originalUrl;
         res.redirect("/login");
@@ -44,8 +46,8 @@ let newProductPost = async(req, res)=>{
             ]);
             res.redirect("/logistic/products");
         } catch (error) {
-            console.log(error);
             res.render("error.ejs");
+            console.log(error)
         };
     } else {
         req.session.returnTo = req.originalUrl;
@@ -131,7 +133,6 @@ let addProduct = async(req, res)=>{
                 res.redirect("/logistic/products");
             }
         } catch (error) {
-            console.log(error);
             res.render("error.ejs");
         }
     } else {
@@ -201,5 +202,7 @@ const apiProdutosIntranet = async(req, res)=>{
 }
 
 module.exports = {
-    productsAll
+    productsAll,
+    newProduct,
+    newProductPost
 };
