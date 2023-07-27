@@ -105,9 +105,27 @@
           <td><p><%=product.code%></p></td>
           <td style="width: 40%; white-space: normal;"><p><%=product.name%></p></td>
           <td>
-            <a class="button-8" href="/logistic/editproduct/<%=product._id%>">Edit</a>
-            <a class="button-8" href="/logistic/productentry/<%=product._id%>">Entry</a>
-            <a class="button-8" href="/logistic/productexit/<%=product._id%>">Exit</a>
+            <a class="button-8" href="/logistic/products/edit/<%=product._id%>">
+              <%if(languages == "English"){%>
+                Edit
+              <%}else{%>
+                Editar
+              <%}%>
+            </a>
+            <a class="button-8" href="/logistic/productentry/<%=product._id%>">
+              <%if(languages == "English"){%>
+                Entry
+              <%}else{%>
+                Entrada
+              <%}%>
+            </a>
+            <a class="button-8" href="/logistic/productexit/<%=product._id%>">
+              <%if(languages == "English"){%>
+                Exit
+              <%}else{%>
+                Saída
+              <%}%>
+            </a>
           </td>
         </tr>
         <%}%>

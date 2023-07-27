@@ -5,8 +5,8 @@ const ProductMovement = require("../../models/informations/productsMovements.js"
 let productsAll = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         const [products, results, languages] = await Promise.all([
-            Products.find().sort({"description": 1}),
-            Products.countDocuments(),
+            Product.find().sort({"description": 1}),
+            Product.countDocuments(),
             req.user.atlasLanguage
         ])
         res.render("logistic/products/products", {
@@ -36,15 +36,14 @@ let newProduct = async(req, res)=>{
 let newProductPost = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
-            let data = req.body;
             await Promise.all([
-                await Product.create(data),
+                await Product.create(req.body),
                 Product.findOneAndUpdate({"code": req.body.code}, {$set: {
                     "quantity": 0,
                     "isActive": true
                 }})
             ]);
-            res.redirect("/logistic/products");
+            res.redirect("/logistic/products/all");
         } catch (error) {
             res.render("error.ejs");
             console.log(error)
@@ -58,9 +57,13 @@ let newProductPost = async(req, res)=>{
 let editProduct = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
-            let product = await Product.findById(req.params.id);
+            const [product, languages] = await Promise.all([
+                Product.findById(req.params.id),
+                req.user.atlasLanguage
+            ])
             res.render("logistic/products/editproduct", {
-                product: product
+                product: product,
+                languages: languages
             })
         } catch (error) {
             res.render("error.ejs")
@@ -204,5 +207,6 @@ const apiProdutosIntranet = async(req, res)=>{
 module.exports = {
     productsAll,
     newProduct,
-    newProductPost
+    newProductPost,
+    editProduct
 };
