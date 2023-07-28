@@ -7,17 +7,43 @@
 --z-fixed: 100}*,::before,::after
 {box-sizing: border-box}
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300&family=Roboto+Mono:wght@400;600&display=swap');
+
+h1 {
+    font-family: 'Libre Bodoni', serif;
+    color: #d1d1d1;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.span-title{
+    font-family: 'Libre Bodoni', serif;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 200;
+}
+
 body {
     position: relative;
     margin: var(--header-height) 0 0 0;
     padding: 0 1rem;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
-    transition: .5s
+    transition: .5s;
+    background-color: #363636;
+}
+
+main {
+    width: 100%;
+    background-color: #363636;
 }
 
 a {
     text-decoration: none
+}
+
+.card{
+    background-color: #161616;
 }
 
 .header {
@@ -30,12 +56,12 @@ a {
     align-items: center;
     justify-content: space-between;
     padding: 0 1rem;
-    background-color: var(--white-color);
+    background-color: #363636;
     z-index: var(--z-fixed);transition: .5s
 }
 
 .header_toggle {
-    color: var(--first-color);
+    color: #ffffff;
     font-size: 1.5rem;
     cursor: pointer
 }
@@ -59,7 +85,7 @@ a {
     left: -30%;
     width: var(--nav-width);
     height: 100vh;
-    background-color: var(--first-color);
+    background-color: #161616;;
     padding: .5rem 1rem 0 0;
     transition: .5s;
     z-index: var(--z-fixed)
@@ -71,6 +97,17 @@ a {
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden
+}
+
+.nav_close{
+    
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    margin-bottom: 1.5rem;
+}
+
+.nav::-webkit-scrollbar {
+    display: none;
 }
 
 .nav_logo, .nav_link {
@@ -97,7 +134,7 @@ a {
 
 .nav_link {
     position: relative;
-    color: var(--first-color-light);
+    color: #ffffff;
     margin-bottom: 1.5rem;
     transition: .3s
 } 
@@ -139,12 +176,12 @@ a {
     {
         body {
             margin: calc(var(--header-height) + 1rem) 0 0 0;
-            padding-left: calc(var(--nav-width) + 2rem)
+            padding-left: calc(var(--nav-width) + 1rem)
         }
         
         .header{
             height: calc(var(--header-height) + 1rem);
-            padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
+            padding: 0 2rem 0 calc(var(--nav-width) + 1rem)
         }
         
         .header_img{
