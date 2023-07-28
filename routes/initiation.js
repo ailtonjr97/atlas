@@ -4,6 +4,7 @@ const {login, loginError, landing, authenticate, home, logout} = require('../con
 const {users, newuser, registerUser, inactiveusers, passwordReset, editUser, editUserPost, changePassword, changePasswordPost, activateUser, inactivateUser} = require('../controllers/user/users.js');
 const {language, languagePost} = require('../controllers/user/language.js');
 const {atlas} = require("../controllers/initiation/atlas.js");
+const {indicador} = require("../controllers/initiation/indicador.js");
 
 //Login and authentication
 router.get("/", landing);
@@ -32,5 +33,8 @@ router.post("/languages/", languagePost);
 
 //Page showing (and trying to sell) Atlas to the user
 router.get("/atlas", atlas)
+
+//indicadores
+router.get("/indicador", indicador)
 
 module.exports = router;
