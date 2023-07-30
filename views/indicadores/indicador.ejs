@@ -1,1 +1,70 @@
 <%- include('../partials/sidebar') %>
+
+<style>
+    iframe{
+        width: 150%;
+        height: 100%;
+        border-radius: 5px;
+    }
+
+    .card-body{
+        padding: 0;
+        height: 500px;
+    }
+
+    .apagador{
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: fixed;
+        width: 15%;
+        height: 100%;
+        z-index:99;
+        background-color: #363636;
+    }
+</style>
+
+<html>
+    <body>
+        <main>
+            <div class="row">
+              <div class="col">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <!-- <div class="apagador"> 
+                        </div> -->
+                        <iframe class="iframe1"  src="https://app.powerbi.com/view?r=eyJrIjoiM2RlOWYzODEtY2VmMi00ZmI1LWI3N2MtZjQ0MzdkMWYzNWJlIiwidCI6IjY1NzZmNTU2LTAzNjYtNDJlNS1hMmIwLWNmMTkwZGViMzkzNyJ9&pageName=ReportSection" frameborder="0"></iframe>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </main>
+    </body>
+</html>
+
+<script>
+function waitForElm(selector) {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector));
+        }
+
+        const observer = new MutationObserver(mutations => {
+            if (document.querySelector(selector)) {
+                resolve(document.querySelector(selector));
+                observer.disconnect();
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+}
+
+waitForElm('.displayAreaViewport').then((elm) => {
+    document.getElementsByClassName("displayAreaViewport")[0].style.backgroundColor = "#363636"
+});
+</script>
