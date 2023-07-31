@@ -10,20 +10,20 @@
         <div class="col-lg">
             <div class="form-floating">
                 <select class="form-select" id="language" aria-label="Floating label" name="language">
-                  <%if(languages.atlasLanguage == "English"){%>
+                  <%if(languages == "English"){%>
                     <option>English</option>
                     <option>Portuguese</option>
                   <%}%>
-                  <%if(languages.atlasLanguage == "Portuguese"){%>
+                  <%if(languages == "Portuguese"){%>
                     <option value="English">Inglês</option>
                     <option value="Portuguese">Português</option>
                   <%}%>
                 </select>
                 <label for="language">
-                  <%if(languages.atlasLanguage == "English"){%>
+                  <%if(languages == "English"){%>
                     Language
                   <%}%>
-                  <%if(languages.atlasLanguage == "Portuguese"){%>
+                  <%if(languages == "Portuguese"){%>
                     Idioma
                   <%}%>
                 </label>
@@ -34,10 +34,10 @@
 
   <br>
   <button type="submit" id='botaoSalva' class="btn btn-success" style="margin-left: 45%;">
-    <%if(languages.atlasLanguage == "Portuguese"){%>
+    <%if(languages == "Portuguese"){%>
       Salvar
     <%}%>
-    <%if(languages.atlasLanguage == "English"){%>
+    <%if(languages == "English"){%>
       Save
     <%}%>
   </button>

@@ -2,10 +2,9 @@ const User = require("../../models/user/user.js");
 
 let language = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
-        let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
         try {
             res.render("users/languages", {
-                languages: languages[0]
+                languages: req.user.atlasLanguage
             });
         } catch (error) {
             res.render("error.ejs");
