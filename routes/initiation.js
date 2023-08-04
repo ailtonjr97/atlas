@@ -4,7 +4,7 @@ const {login, loginError, landing, authenticate, home, logout} = require('../con
 const {users, newuser, registerUser, inactiveusers, passwordReset, editUser, editUserPost, changePassword, changePasswordPost, activateUser, inactivateUser} = require('../controllers/user/users.js');
 const {language, languagePost} = require('../controllers/user/language.js');
 const {atlas} = require("../controllers/initiation/atlas.js");
-const {indicador} = require("../controllers/initiation/indicador.js");
+const {indicador, indicadorComercialVendas} = require("../controllers/initiation/indicador.js");
 
 //Login and authentication
 router.get("/", landing);
@@ -36,5 +36,6 @@ router.get("/atlas", atlas)
 
 //indicadores
 router.get("/indicador", indicador)
+router.get("/indicador/comercial/vendas", indicadorComercialVendas)
 
 module.exports = router;
