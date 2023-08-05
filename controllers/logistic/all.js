@@ -1,10 +1,10 @@
-const indicador = async(req, res)=>{
+let topicsLogistic = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
             const[languages] = await Promise.all([
                 req.user.atlasLanguage
             ])
-            res.render("indicadores/indicador",{
+            res.render("logistic/all", {
                 languages: languages
             })
         } catch (error) {
@@ -17,11 +17,6 @@ const indicador = async(req, res)=>{
       };
 }
 
-const indicadorComercialVendas = async(req, res)=>{
-    res.render("indicadores/indicadorComercialVendas")
-}
-
 module.exports = {
-    indicador,
-    indicadorComercialVendas
+    topicsLogistic
 }
