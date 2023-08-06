@@ -1,0 +1,68 @@
+<%- include('../partials/sidebar') %>
+<head>
+    <link rel="stylesheet" href="css/cardsSectors.css">
+</head>
+
+<html>
+    <body>
+        <div class="container mt-3">
+            <h2 class="mb-3">
+                <%if(languages == "English"){%>
+                    Informations
+                  <%}else{%>
+                    Informações
+                  <%}%>
+            </h2>
+            <div class="row">
+                    <div class="col-sm-3">
+                        <a href="/logistic/products/all">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="https://cdn-icons-png.flaticon.com/512/6712/6712276.png" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="text-align: center;">
+                                        <%if(languages == "English"){%>
+                                            Branches
+                                          <%}else{%>
+                                            Filiais
+                                          <%}%>
+                                    </h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="/logistic/carriers/all">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="https://cdn-icons-png.flaticon.com/512/1642/1642054.png" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="text-align: center;">
+                                        <%if(languages == "English"){%>
+                                            Departments
+                                          <%}else{%>
+                                            Setores
+                                          <%}%>
+                                    </h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-3">
+                        <a href="/logistic/carriers/all">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="https://cdn-icons-png.flaticon.com/512/3773/3773184.png" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title" style="text-align: center;">
+                                        <%if(languages == "English"){%>
+                                            Warehouses
+                                          <%}else{%>
+                                            Armazéns
+                                          <%}%>
+                                    </h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,10 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const{topicsInformations} = require("../controllers/informations/all.js")
 const{branches, newBranch, newBranchPost} = require("../controllers/informations/branch.js")
 const{departments, newDepartment, newDepartmentPost} = require("../controllers/informations/departments.js")
 const{warehouse, newWarehouse} = require("../controllers/informations/warehouse.js")
 const{movements} = require("../controllers/informations/movements.js")
 
+router.get("/", topicsInformations)
 
 router.get("/branches", branches);
 router.get("/newbranch", newBranch);

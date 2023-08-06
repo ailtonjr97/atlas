@@ -78,7 +78,7 @@ let editProductPost = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
             await Product.findByIdAndUpdate(req.params.id, req.body);
-            res.redirect("/logistic/products")
+            res.redirect("/logistic/products/all")
         } catch (error) {
             res.render("error.ejs")
         }
@@ -92,13 +92,15 @@ let addProduct = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
             if(req.method == "GET"){
-                const [product, warehouse] = await Promise.all([
+                const [product, warehouse, languages] = await Promise.all([
                     Product.findById(req.params.id),
-                    Warehouse.find().sort({"name": 1})
+                    Warehouse.find().sort({"name": 1}),
+                    req.user.atlasLanguages
                 ])
                 res.render("logistic/products/addproduct", {
                     products: product,
-                    warehouses: warehouse
+                    warehouses: warehouse,
+                    languages: languages
                 });
             } else{
                 const [productWarehouse, movementIndex] = await Promise.all([
@@ -133,7 +135,7 @@ let addProduct = async(req, res)=>{
                     }),
                     ProductMovement.create(dataMovements)
                 ]);
-                res.redirect("/logistic/products");
+                res.redirect("/logistic/products/all");
             }
         } catch (error) {
             res.render("error.ejs");
@@ -148,15 +150,17 @@ let exitProduct = async(req, res) =>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
             if(req.method == "GET"){
-                const [product, warehouse, inStorage] = await Promise.all([
+                const [product, warehouse, inStorage, languages] = await Promise.all([
                     Product.findById(req.params.id),
                     Warehouse.find().sort({"name": 1}),
-                    Product.findById(req.params.id, {"quantity": 1, "_id": 0})
+                    Product.findById(req.params.id, {"quantity": 1, "_id": 0}),
+                    req.user.atlasLanguages
                 ])
                 res.render("logistic/products/exitproduct", {
                     products: product,
                     warehouses: warehouse,
-                    inStorage: inStorage
+                    inStorage: inStorage,
+                    languages: languages
                 });
             } else{
                 const [productWarehouse, movementIndex] = await Promise.all([
@@ -180,7 +184,7 @@ let exitProduct = async(req, res) =>{
                     }),
                     ProductMovement.create(dataMovements)
                 ]);
-                res.redirect("/logistic/products");
+                res.redirect("/logistic/products/all");
             }
         } catch (error) {
             res.render("error.ejs")
@@ -208,5 +212,8 @@ module.exports = {
     productsAll,
     newProduct,
     newProductPost,
-    editProduct
+    editProduct,
+    editProductPost,
+    addProduct,
+    exitProduct
 };
