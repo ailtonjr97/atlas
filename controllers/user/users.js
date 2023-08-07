@@ -147,9 +147,13 @@ let passwordReset = async(req, res)=> {
 let editUser = async(req, res) =>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
-        let user = await User.findOne({"_id": req.params.id})
+        const[user, languages] = await Promise.all([
+          User.findOne({"_id": req.params.id}),
+          req.user.atlasLanguage
+        ])
         res.render("users/usersedit",{
-          user: user
+          user: user,
+          languages: languages
         })
       } catch (error) {
         res.render("error.ejs")
