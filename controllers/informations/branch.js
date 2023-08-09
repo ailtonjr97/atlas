@@ -2,21 +2,15 @@ const Branch = require("../../models/informations/branch.js")
 const axios = require("axios")
 
 let branches = async(req, res)=>{
-    if(req.isAuthenticated() && req.user.isActive == "True"){
         const [branches, results, languages] = await Promise.all([
             await Branch.find(),
             await Branch.countDocuments(),
-            req.user.atlasLanguage
         ])
         res.render("information/branchall", {
             results: results,
             branches: branches,
             languages: languages
         });
-    } else {
-    req.session.returnTo = req.originalUrl;
-    res.redirect("/login");
-  };
 };
 
 let newBranch = async(req, res)=>{
