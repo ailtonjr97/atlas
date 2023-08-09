@@ -32,9 +32,11 @@ let users =  async(req, res)=>{
       try {
         let branches = await Branch.find();
         let departments = await Department.find();
+        let languages = req.user.atlasLanguages
         res.render("users/usersnew", {
           branches: branches,
-          departments: departments
+          departments: departments,
+          languages: languages
         });
       } catch (error) {
         res.render("error.ejs");
@@ -46,7 +48,7 @@ let users =  async(req, res)=>{
   };
 
   let registerUser =  async (req, res)=> {
-    if(req.isAuthenticated() && req.user.isActive == "True"){
+    if(req.isAuthenticated() && req.user.isActive == "True" && req.user.isAdmin == "True"){
       try {
         await User.register({username: req.body.username }, req.body.password, async(err, user)=> {
           let userId = await User.countDocuments();

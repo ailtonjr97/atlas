@@ -36,7 +36,7 @@ const authenticate = async(req, res)=>{
     if (err) {
       res.send(err);
     } else {
-      passport.authenticate("local", { failureRedirect: '/loginError', failureMessage: true })(req, res, function () {
+      passport.authenticate("local", { failureRedirect: '/login'})(req, res, function () {
         if (user) {
           res.redirect(req.session.returnTo || "/home");
           delete req.session.returnTo;
