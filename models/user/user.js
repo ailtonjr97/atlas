@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
   userId: Number,
   isAdmin: String,
   isActive: String,
-  atlasLanguage: String
+  atlasLanguage: String,
+  photoName: String
 });
 
 userSchema.plugin(passportLocalMongoose);

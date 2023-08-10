@@ -1,1 +1,13 @@
-teste view
+<%- include('../../partials/sidebar') %>
+
+<form action="/logistic/carriers/all" method="post" enctype="multipart/form-data">
+    <div class="row mt-3">
+        <div class="col-lg-6">
+            <input type="file" name="anexo" id="anexo">
+            <label for="anexo">Escolha seu anexo</label>
+        </div>
+        <div class="col">
+            <input type="submit" value="Enviar">
+        </div>
+    </div>
+</form>

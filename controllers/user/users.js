@@ -2,6 +2,7 @@ const User = require("../../models/user/user.js");
 const Branch = require("../../models/informations/branch.js");
 const Department = require("../../models/informations/departments.js");
 
+
 let users =  async(req, res)=>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
@@ -50,22 +51,26 @@ let users =  async(req, res)=>{
   let registerUser =  async (req, res)=> {
     if(req.isAuthenticated() && req.user.isActive == "True" && req.user.isAdmin == "True"){
       try {
-        await User.register({username: req.body.username }, req.body.password, async(err, user)=> {
-          let userId = await User.countDocuments();
-          await User.findOneAndUpdate({"username": req.body.username}, {
-            $set: {
-              name: req.body.name,
-              branch: req.body.branch,
-              department: req.body.department,
-              userId: userId,
-              isAdmin: req.body.isAdmin,
-              isActive: req.body.isActive,
-              atlasLanguage: "English"
-            }
+        if(req.file.mimetype == 'image/png' || req.file.mimetype == 'image/jpeg'){
+          await User.register({username: req.body.username }, req.body.password, async(err, user)=> {
+            let userId = await User.countDocuments();
+            await User.findOneAndUpdate({"username": req.body.username}, {
+              $set: {
+                name: req.body.name,
+                branch: req.body.branch,
+                department: req.body.department,
+                userId: userId,
+                isAdmin: req.body.isAdmin,
+                isActive: req.body.isActive,
+                atlasLanguage: "English",
+                photoName: req.file.filename
+              }
+            });
+            res.redirect("/users/")
           });
-          res.redirect("/users/")
+        }else{
+          res.send('Only images are allowed of user photos (jpeg, png)')
         }
-      );
     } catch (error) {
       res.render("error.ejs")
     }
@@ -149,13 +154,17 @@ let passwordReset = async(req, res)=> {
 let editUser = async(req, res) =>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
-        const[user, languages] = await Promise.all([
+        const[user, languages, branches, departments] = await Promise.all([
           User.findOne({"_id": req.params.id}),
-          req.user.atlasLanguage
+          req.user.atlasLanguage,
+          Branch.find({}),
+          Department.find({})
         ])
         res.render("users/usersedit",{
           user: user,
-          languages: languages
+          languages: languages,
+          branches: branches,
+          departments: departments
         })
       } catch (error) {
         res.render("error.ejs")

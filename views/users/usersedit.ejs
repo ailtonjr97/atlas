@@ -25,9 +25,9 @@
             <div class="form-floating">
                 <select class="form-select" id="branch" aria-label="Floating label" name="branch">
                     <option class='valor'><%=user.branch%></option>
-                    <option class='valor'>US</option>
-                    <option class='valor'>GERMANY</option>
-                    <option class='valor'>AUSTRALIA</option>
+                    <%branches.forEach((branch)=>{%>
+                      <option class='valor'><%=branch.name%></option>
+                    <%})%>
                 </select>
                 <label for="branch">Branch:</label>
             </div>
@@ -36,11 +36,9 @@
             <div class="form-floating">
               <select class="form-select" id="department" aria-label="Floating label" name="department">
                 <option class='valor'><%=user.department%></option>
-                  <option >Marketing</option>
-                  <option >Accounting</option>
-                  <option >Human Resources</option>
-                  <option >Engineering</option>
-                  <option >Information Technology</option>
+                <%departments.forEach((department)=>{%>
+                  <option class='valor'><%=department.name%></option>
+                <%})%>
               </select>
             <label for="department">Department:</label>
             </div>
@@ -68,13 +66,12 @@
             </div>
           </div>
     </div>
-    <div class="file-input mt-2">
-        <input type="file" id="file" class="file" name="postImage">
-        <label for="file">
-          New anex
-          <p class="file-name" style="width: 500px;"></p>
-        </label>
+    <div class="row">
+      <div class="col">
+        <label for="file">User Photo: </label>
+        <input type="file" id="file" name="userPhoto" accept="image/png, image/jpeg" >
       </div>
+    </div>
   </div>
 
   <br>
