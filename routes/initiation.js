@@ -5,45 +5,19 @@ const {users, newuser, registerUser, inactiveusers, passwordReset, editUser, edi
 const {language, languagePost} = require('../controllers/user/language.js');
 const {atlas} = require("../controllers/initiation/atlas.js");
 const {indicador, indicadorComercialVendas} = require("../controllers/initiation/indicador.js");
-const {GridFsStorage} = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
 const multer = require('multer');
-const mongoose = require("mongoose");
-const crypto = require('crypto');
-const path = require("path");
 
-const conn = mongoose.createConnection(process.env.MONGOSTRING)
-
-conn.once('open', () =>{
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('userPhoto');
-})
-
-const storage = new GridFsStorage({
-    url: process.env.MONGOSTRING,
-    file: (req, file) => {
-        if(file.mimetype == 'image/png' || file.mimetype == 'image/jpeg'){
-            return new Promise((resolve, reject) => {
-                crypto.randomBytes(16, (err, buf) => {
-                  if (err) {
-                    return reject(err);
-                  }
-                  const filename = buf.toString('hex') + path.extname(file.originalname);
-                  const fileInfo = {
-                    filename: file.originalname + "_" + Date.now(),
-                    bucketName: 'userPhoto',
-                    originalName: file.originalname,
-                    sizeMB: file.size / 1000000
-                  };
-                  resolve(fileInfo);
-                });
-            });
-        }else{
-            return (new Error('Only images are allowed'));
-        }
+const storageUserPhotos = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, '/tmp/my-uploads')
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix)
     }
-  });
-  const upload = multer({ storage });
+  })
+
+const upload = multer({ storageUserPhotos });
 
 //Login and authentication
 router.get("/", landing);
