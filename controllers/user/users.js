@@ -1,6 +1,7 @@
 const User = require("../../models/user/user.js");
 const Branch = require("../../models/informations/branch.js");
 const Department = require("../../models/informations/departments.js");
+const path = require('path')
 
 
 let users =  async(req, res)=>{
@@ -230,6 +231,12 @@ let changePassword = async(req, res) =>{
     }
     };
 
+let photosUsers = async(req, res)=>{
+  res.sendFile(req.params.id, {root: path.join('storage/userPhotos')})
+}
+
+
+
   module.exports =  {
     users,
     newuser,
@@ -241,5 +248,6 @@ let changePassword = async(req, res) =>{
     changePassword,
     changePasswordPost,
     activateUser,
-    inactivateUser
+    inactivateUser,
+    photosUsers
 };

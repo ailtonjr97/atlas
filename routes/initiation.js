@@ -1,23 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const {login, loginError, landing, authenticate, home, logout} = require('../controllers/initiation/login.js');
-const {users, newuser, registerUser, inactiveusers, passwordReset, editUser, editUserPost, changePassword, changePasswordPost, activateUser, inactivateUser} = require('../controllers/user/users.js');
+const {users, newuser, registerUser, inactiveusers, passwordReset, editUser, editUserPost, changePassword, changePasswordPost, activateUser, inactivateUser, photosUsers} = require('../controllers/user/users.js');
 const {language, languagePost} = require('../controllers/user/language.js');
 const {atlas} = require("../controllers/initiation/atlas.js");
 const {indicador, indicadorComercialVendas} = require("../controllers/initiation/indicador.js");
 const multer = require('multer');
 
-const storageUserPhotos = multer.diskStorage({
+const storageUserPhoto = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, '/tmp/my-uploads')
+      cb(null, 'storage/userPhotos')
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+      cb(null, file.fieldname + '-' + Date.now() + '.' + file.mimetype.split('/')[1])
     }
   })
 
-const upload = multer({ storageUserPhotos });
+const upload = multer({ storage: storageUserPhoto  });
 
 //Login and authentication
 router.get("/", landing);
@@ -39,6 +38,7 @@ router.get("/users/changepassword/:id", changePassword);
 router.post("/users/changepassword/:id", changePasswordPost);
 router.get("/users/activateuser/:id", activateUser);
 router.get("/users/inactivateuser/:id", inactivateUser);
+router.get("/users/photos/:id", photosUsers);
 
 //Language change of Atlas
 router.get("/languages/", language);
