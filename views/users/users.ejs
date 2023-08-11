@@ -11,19 +11,18 @@
 </style>
 
 <div id="loading"></div>
-<%languages.forEach((language)=>{%>
   <!--English -->
-<%if(language.atlasLanguage == "English"){%>
+<%if(languages == "English"){%>
 <div style="padding: 1.5%">
   <div class="row">
     <div class="col-md-4">
       <%if(isAdmin == "True"){%>
-      <a class="button-8 mb-2" href="/users/newuser">Novo usuário</a>
+      <a class="button-8 mb-2" href="/users/newuser">New user</a>
       <%if(users[0].isActive == "True"){%>
-        <a class="button-8 mb-2" href="/users/inactiveusers">Inativos</a>
+        <a class="button-8 mb-2" href="/users/inactiveusers">Inactives</a>
       <%}%>
       <%if(users[0].isActive == "False"){%>
-        <a class="button-8 mb-2" href="/users/">Ativos</a>
+        <a class="button-8 mb-2" href="/users/">Actives</a>
       <%}%>
       <%}%>
     </div>
@@ -56,7 +55,7 @@
           id="procuraBtn1"
           onkeyup="procura(1, 'procuraBtn1')"
         />
-        <label for="procuraBtn1">Nome:</label>
+        <label for="procuraBtn1">Name:</label>
       </div>
     </div>
     <div class="col">
@@ -118,7 +117,7 @@
 <%}%>
 
 <!--Portuguese -->
-<%if(language.atlasLanguage == "Portuguese"){%>
+<%if(languages == "Portuguese"){%>
   <div style="padding: 1.5%">
     <div class="row">
       <div class="col-md-4">
@@ -251,7 +250,6 @@
     </div>
   </div>
   <%}%>
-  <%})%>
 
 <%- include('../partials/footer') %>
 

@@ -11,7 +11,7 @@ let users =  async(req, res)=>{
         let results = await User.countDocuments({"isActive": "True"});
         let isAdmin = req.user.isAdmin;
         let loggedin = req.user.username;
-        let languages = await User.find({"userId": req.user.userId}, {_id: 0, "atlasLanguage": 1});
+        let languages = req.user.atlasLanguage
         res.render("users/users", {
           languages: languages,
           loggedin: loggedin,
