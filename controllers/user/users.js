@@ -180,10 +180,11 @@ let editUser = async(req, res) =>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
         let updates = req.body
-        await User.findOneAndUpdate({"_id": req.params.id}, updates)
-        res.redirect("/users/")
+        await User.findOneAndUpdate({"_id": req.params.id}, updates);
+        await User.findOneAndUpdate({"_id": req.params.id}, {"photoName": req.file.filename});
+        res.redirect("/users/");
       } catch (error) {
-        res.render("error.ejs")
+        res.render("error.ejs");
       }
     } else {
       req.session.returnTo = req.originalUrl;
