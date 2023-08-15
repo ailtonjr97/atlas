@@ -52,7 +52,7 @@ let users =  async(req, res)=>{
   let registerUser =  async (req, res)=> {
     if(req.isAuthenticated() && req.user.isActive == "True" && req.user.isAdmin == "True"){
       try {
-        if(req.file.mimetype == 'image/png' || req.file.mimetype == 'image/jpeg'){
+        if(!req.file){
           await User.register({username: req.body.username }, req.body.password, async(err, user)=> {
             let userId = await User.countDocuments();
             await User.findOneAndUpdate({"username": req.body.username}, {
@@ -64,16 +64,37 @@ let users =  async(req, res)=>{
                 isAdmin: req.body.isAdmin,
                 isActive: req.body.isActive,
                 atlasLanguage: "English",
-                photoName: req.file.filename
+                photoName: 'no-img'
               }
             });
             res.redirect("/users/")
           });
-        }else{
-          res.send('Only images are allowed of user photos (jpeg, png)')
+        } else{
+          if(req.file.mimetype == 'image/png' || req.file.mimetype == 'image/jpeg'){
+            await User.register({username: req.body.username }, req.body.password, async(err, user)=> {
+              let userId = await User.countDocuments();
+              await User.findOneAndUpdate({"username": req.body.username}, {
+                $set: {
+                  name: req.body.name,
+                  branch: req.body.branch,
+                  department: req.body.department,
+                  userId: userId,
+                  isAdmin: req.body.isAdmin,
+                  isActive: req.body.isActive,
+                  atlasLanguage: "English",
+                  photoName: req.file.filename
+                }
+              });
+              res.redirect("/users/")
+            });
+          }else{
+            res.send('Only images are allowed of user photos (jpeg, png)')
+          }
         }
     } catch (error) {
       res.render("error.ejs")
+      console.log(req)
+      console.log(error)
     }
     } else {
       req.session.returnTo = req.originalUrl;
