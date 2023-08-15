@@ -63,7 +63,7 @@ let users =  async(req, res)=>{
                 userId: userId,
                 isAdmin: req.body.isAdmin,
                 isActive: req.body.isActive,
-                atlasLanguage: "English",
+                atlasLanguage: "Portuguese",
                 photoName: 'no-img'
               }
             });
@@ -200,10 +200,17 @@ let editUser = async(req, res) =>{
   let editUserPost = async(req, res) =>{
     if (req.isAuthenticated() && req.user.isActive == "True") {
       try {
-        let updates = req.body
-        await User.findOneAndUpdate({"_id": req.params.id}, updates);
-        await User.findOneAndUpdate({"_id": req.params.id}, {"photoName": req.file.filename});
-        res.redirect("/users/");
+        if(!req.file){
+          let updates = req.body
+          await User.findOneAndUpdate({"_id": req.params.id}, updates);
+          await User.findOneAndUpdate({"_id": req.params.id}, {"photoName": 'no-img'});
+          res.redirect("/users/");
+        }else{
+          let updates = req.body
+          await User.findOneAndUpdate({"_id": req.params.id}, updates);
+          await User.findOneAndUpdate({"_id": req.params.id}, {"photoName": req.file.filename});
+          res.redirect("/users/");
+        }
       } catch (error) {
         res.render("error.ejs");
       }

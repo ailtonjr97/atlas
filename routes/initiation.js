@@ -19,11 +19,11 @@ const storageUserPhoto = multer.diskStorage({
 const upload = multer({ storage: storageUserPhoto  });
 
 //Login and authentication
-router.get("/", landing);
+router.get("/", login);
 router.get("/login", login);
 router.get("/loginerror", loginError);
 router.post("/authenticate", authenticate);
-router.get("/home", home);
+router.get("/home", indicador);
 router.get("/logout", logout);
 
 //Users functions, like add, remove, and edit
