@@ -11,6 +11,7 @@ const tickets = require("./routes/tickets.js");
 const informations = require("./routes/informations.js");
 const logistic = require("./routes/logistic.js");
 const comercial = require("./routes/comercial.js");
+const api = require("./routes/api.js");
 
 const app = express();
 
@@ -43,8 +44,9 @@ mongoose.connect(process.env.MONGOSTRING);
 app.use("/", initiation);
 app.use("/tickets", tickets);
 app.use("/informations", informations);
-app.use("/logistic", logistic)
-app.use("/comercial", comercial)
+app.use("/logistic", logistic);
+app.use("/comercial", comercial);
+app.use("/api", api);
 
 app.listen(process.env.PORT, function () {
   console.log("Node.js operational at port " + process.env.PORT);
