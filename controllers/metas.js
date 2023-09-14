@@ -6,7 +6,7 @@ const metas = async(req, res)=>{
         try {
             res.render('metas/home', {
                 results: await Metas.countDocuments(),
-                metas: await Metas.find()
+                metas: await Metas.find().sort({'id': 1})
             })
         } catch (error) {
             console.log(error)
@@ -29,24 +29,23 @@ const atualizar = async(req, res)=>{
 const atualizarPost = async(req, res)=>{
     if(req.isAuthenticated() && req.user.isActive == "True"){
         try {
-            // Reading our test file
+            await Metas.deleteMany()
             const file = reader.readFile('storage/metas/' + req.file.filename)
             
             let data = []
             
             const sheets = file.SheetNames
             
-            for(let i = 0; i < sheets.length; i++)
-            {
+            for(let i = 0; i < sheets.length; i++){
             const temp = reader.utils.sheet_to_json(
                     file.Sheets[file.SheetNames[i]])
             temp.forEach((res) => {
                 data.push(res)
             })
-            }
-            
-            // Printing data
-            console.log(data)
+        }
+
+        await Metas.create(data)
+        res.redirect('/metas')
         } catch (error) {
             console.log(error)
             res.render('error')
