@@ -12,7 +12,10 @@ const metas = async(req, res)=>{
             console.log(error)
             res.render('error')
         }
-    }
+    } else {
+        req.session.returnTo = req.originalUrl;
+        res.redirect("/login");
+      };
 }
 
 const atualizar = async(req, res)=>{
@@ -23,7 +26,10 @@ const atualizar = async(req, res)=>{
             console.log(error)
             res.render('error')
         }
-    }
+    } else {
+        req.session.returnTo = req.originalUrl;
+        res.redirect("/login");
+      };
 }
 
 const atualizarPost = async(req, res)=>{
@@ -50,11 +56,24 @@ const atualizarPost = async(req, res)=>{
             console.log(error)
             res.render('error')
         }
-    }
+    } else {
+        req.session.returnTo = req.originalUrl;
+        res.redirect("/login");
+      };
+}
+
+const metasApi = async(req, res)=>{
+        try {
+            res.send(await Metas.find().sort({'id': 1}))
+        } catch (error) {
+            console.log(error)
+            res.render('error')
+        }
 }
 
 module.exports = {
     metas,
     atualizar,
-    atualizarPost
+    atualizarPost,
+    metasApi
 }

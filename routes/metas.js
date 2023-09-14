@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {metas, atualizar, atualizarPost} = require('../controllers/metas');
+const {metas, atualizar, atualizarPost, metasApi} = require('../controllers/metas');
 const multer = require('multer')
 
 const storageMetasFile = multer.diskStorage({
@@ -17,5 +17,6 @@ const upload = multer({ storage: storageMetasFile });
 router.get("/", metas);
 router.get("/atualizar", atualizar);
 router.post("/atualizar", upload.single('anexo'), atualizarPost);
+router.get("/consultar", metasApi);
 
 module.exports = router;
