@@ -12,6 +12,7 @@ const informations = require("./routes/informations.js");
 const logistic = require("./routes/logistic.js");
 const comercial = require("./routes/comercial.js");
 const api = require("./routes/api.js");
+const metas = require("./routes/metas.js");
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use("/informations", informations);
 app.use("/logistic", logistic);
 app.use("/comercial", comercial);
 app.use("/api", api);
+app.use("/metas", metas);
 
 app.listen(process.env.PORT, function () {
   console.log("Node.js operational at port " + process.env.PORT);

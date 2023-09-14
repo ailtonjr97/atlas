@@ -1,0 +1,149 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/table.css" />
+<link rel="stylesheet" href="/css/button8.css" />
+<link rel="stylesheet" href="/css/loading.css" />
+<link rel="stylesheet" href="/css/contador.css" />
+<style>
+  body {
+    font-family: Helvetica;
+    -webkit-font-smoothing: antialiased;
+  }
+</style>
+
+<div id="loading"></div>
+
+
+  <div style="padding: 1.5%">
+    <div class="row">
+      <div class="col-md-4">
+      </div>
+      <div class="col-lg-6">
+      </div>
+      <div class="col-sm-2">
+        <button type="button" class="button-8" id="result" style="display: none; float: right;">
+          <span class="counter-value"><%=results%></span>
+          resultados
+        </button>
+        <a href="/metas/atualizar">
+            <button type="button" class="button-8 mb-2" id="result" style="float: right; margin-right: 2%;">Atualizar</button>
+        </a>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn0"
+            onkeyup="procura(0, 'procuraBtn0')"
+          />
+          <label for="procuraBtn0">ID:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn1"
+            onkeyup="procura(1, 'procuraBtn1')"
+          />
+          <label for="procuraBtn1">Código cliente:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn2"
+            onkeyup="procura(2, 'procuraBtn2')"
+          />
+          <label for="procuraBtn2">Código vendedor:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn3"
+            onkeyup="procura(3, 'procuraBtn3')"
+          />
+          <label for="procuraBtn2">Código grupo:</label>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="procuraBtn4"
+            onkeyup="procura(4, 'procuraBtn4')"
+          />
+          <label for="procuraBtn2">Código linha:</label>
+        </div>
+      </div>
+    </div>
+    <div class="table-wrapper table-responsive table-striped">
+      <table class="fl-table" id="myTable">
+        <thead>
+          <tr style="height: 25px">
+            <th>ID</th>
+            <th>Código cliente</th>
+            <th>Código vendedor</th>
+            <th>Código grupo</th>
+            <th>Código linha</th>
+            <th>Data</th>
+            <th>Meta RC impostos</th>
+            <th>Tipo</th>
+            <th>Loja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%metas.forEach(function(meta){ %>
+          <tr>
+            <td>
+                <p><%=meta.id%></p>
+            </td>
+            <td>
+                <p><%=meta.codcliente%></p>
+            </td>
+            <td>
+                <p><%=meta.codvendedor%></p>
+            </td>
+            <td>
+                <p><%=meta.codgrupo%></p>
+            </td>
+            <td>
+                <p><%=meta.codlinha%></p>
+            </td>
+            <td>
+                <p><%=meta.data%></p>
+            </td>
+            <td>
+                <p><%=meta.meta_r_c_impostos%></p>
+            </td>
+            <td>
+                <p><%=meta.tipo%></p>
+            </td>
+            <td>
+                <p><%=meta.loja%></p>
+            </td>
+            <td style="padding-bottom: 15px;">
+            </td>
+          </tr>
+          <%})%>
+        </tbody>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+<%- include('../partials/footer') %>
+
+<script type="text/javascript" src="/js/carregador.js"></script>
+<script type="text/javascript" src="/js/confirmation.js"></script>
+<script type="text/javascript" src="/js/procura.js"></script>
+<script type="text/javascript" src="/js/contador.js"></script>

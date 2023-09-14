@@ -1,0 +1,32 @@
+<%- include('../partials/sidebar') %>
+<link rel="stylesheet" href="/css/button8.css" />
+
+<html>
+    <body style="background-color: white;">
+        <main style="background-color: white;">
+            <div class="row mt-2">
+                <div class="col d-flex justify-content-center">
+                    <h2>Atualizar a tabela de metas.</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    <p>Favor anexar um arquivo excel com o formato correto (colunas) para atualizar a tabela de metas. Após feito o upload do arquivo, os dados anteriores da tabela serão excluídos.</p>
+                </div>
+            </div>
+            <form action="/metas/atualizar" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col d-flex justify-content-center">
+                        <input type="file" name="anexo" id="anexo">
+                        <label for="anexo"></label>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col d-flex justify-content-center">
+                        <button type="submit" class="button-8">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </body>
+</html>
