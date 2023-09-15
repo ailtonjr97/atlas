@@ -90,46 +90,41 @@
       <table class="fl-table" id="myTable">
         <thead>
           <tr style="height: 25px">
-            <th>ID</th>
             <th>Código cliente</th>
+            <th>Loja</th>
             <th>Código vendedor</th>
             <th>Código grupo</th>
-            <th>Código linha</th>
-            <th>Data</th>
-            <th>Meta RC impostos</th>
-            <th>Tipo</th>
-            <th>Loja</th>
+            <th>Código Linha</th>
+            <th>Quantidade</th>
+            <th>Receita bruta</th>
+            <th>Receita líquida</th>
           </tr>
         </thead>
         <tbody>
           <%metas.forEach(function(meta){ %>
-          <tr>
             <td>
-                <p><%=meta.id%></p>
+                <p><%=meta.Codcliente%></p>
             </td>
             <td>
-                <p><%=meta.codcliente%></p>
+                <p><%=meta.Loja%></p>
             </td>
             <td>
-                <p><%=meta.codvendedor%></p>
+                <p><%=meta.Codvendedor%></p>
             </td>
             <td>
-                <p><%=meta.codgrupo%></p>
+                <p><%=meta.Codgrupo%></p>
             </td>
             <td>
-                <p><%=meta.codlinha%></p>
+                <p><%=meta.Codlinha%></p>
             </td>
             <td>
-                <p><%=meta.data%></p>
+                <p><%=meta.Qtde%></p>
             </td>
             <td>
-                <p><%=meta.meta_r_c_impostos%></p>
+                <p><%=meta.Com_impostos%></p>
             </td>
             <td>
-                <p><%=meta.tipo%></p>
-            </td>
-            <td>
-                <p><%=meta.loja%></p>
+              <p><%=meta.Sem_impostos%></p>
             </td>
             <td style="padding-bottom: 15px;">
             </td>
