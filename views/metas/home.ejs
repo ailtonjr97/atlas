@@ -38,7 +38,7 @@
             id="procuraBtn0"
             onkeyup="procura(0, 'procuraBtn0')"
           />
-          <label for="procuraBtn0">ID:</label>
+          <label for="procuraBtn0">Data:</label>
         </div>
       </div>
       <div class="col">
@@ -60,7 +60,7 @@
             id="procuraBtn2"
             onkeyup="procura(2, 'procuraBtn2')"
           />
-          <label for="procuraBtn2">Código vendedor:</label>
+          <label for="procuraBtn2">Loja:</label>
         </div>
       </div>
       <div class="col">
@@ -71,7 +71,7 @@
             id="procuraBtn3"
             onkeyup="procura(3, 'procuraBtn3')"
           />
-          <label for="procuraBtn2">Código grupo:</label>
+          <label for="procuraBtn2">Código vendedor:</label>
         </div>
       </div>
       <div class="col">
@@ -82,7 +82,7 @@
             id="procuraBtn4"
             onkeyup="procura(4, 'procuraBtn4')"
           />
-          <label for="procuraBtn2">Código linha:</label>
+          <label for="procuraBtn2">Código grupo:</label>
         </div>
       </div>
     </div>
@@ -90,6 +90,7 @@
       <table class="fl-table" id="myTable">
         <thead>
           <tr style="height: 25px">
+            <th>Data</th>
             <th>Código cliente</th>
             <th>Loja</th>
             <th>Código vendedor</th>
@@ -102,6 +103,9 @@
         </thead>
         <tbody>
           <%metas.forEach(function(meta){ %>
+            <td>
+              <p><%=meta.Data%></p>
+            </td>
             <td>
                 <p><%=meta.Codcliente%></p>
             </td>
