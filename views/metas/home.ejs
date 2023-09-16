@@ -125,10 +125,10 @@
                 <p><%=meta.Qtde%></p>
             </td>
             <td>
-                <p><%=meta.Com_impostos%></p>
+                <p>R$ <%=(Math.round(meta.Com_impostos * 100) / 100).toFixed(2)%></p>
             </td>
             <td>
-              <p><%=meta.Sem_impostos%></p>
+              <p>R$ <%=(Math.round(meta.Sem_impostos * 100) / 100).toFixed(2)%></p>
             </td>
             <td style="padding-bottom: 15px;">
             </td>
